@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "name-of-the-rose-cobol"
+version = "0.1.0"
+description = "Evidence-bound semiotic and ontology exploration of VAULT-CBS COBOL for GitHub Copilot"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+dependencies = []
+
+[project.scripts]
+rose = "rose.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["rose*"]

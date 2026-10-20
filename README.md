@@ -11,7 +11,8 @@ separate. Start with transaction posting, GL accounting and the US CTR path in
 **v0.1.0 POC:** 12 objects, 98 properties, 16 links, 8 descriptive actions,
 22 rules, 15 source files and 5 Copilot profiles. This is an exploration and
 documentation tool; it does not execute financial actions or certify compliance.
-GitHub publication and a live Copilot smoke test remain separate delivery gates.
+The GitHub workflow publishes v0.1.0 only after validation passes on main.
+A live Copilot smoke test remains a separate delivery gate.
 
 ## Try it in two minutes
 

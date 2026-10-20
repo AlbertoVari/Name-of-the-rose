@@ -1,0 +1,3489 @@
+{
+  "@context": {
+    "@vocab": "urn:rose:vocab:",
+    "description": "http://purl.org/dc/terms/description",
+    "evidence": {
+      "@container": "@set"
+    },
+    "label": "http://www.w3.org/2000/01/rdf-schema#label",
+    "properties": {
+      "@container": "@set"
+    },
+    "rose": "urn:rose:vocab:"
+  },
+  "@graph": [
+    {
+      "@id": "urn:rose:action.aggregate_cash",
+      "@type": "rose:ActionType",
+      "description": "Describes AGGR key guard, directional accumulation and CTR assessment. The ontology never accumulates real customer funds or initiates reporting.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 175,
+          "excerpt_sha256": "ee09936ae731954e1a9f436857a15aeb18fc4b09b915f769b5d8ba5134f605c8",
+          "path": "src/BSACTRO.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L93-L175",
+          "start_line": 93
+        }
+      ],
+      "inputs": [
+        {
+          "@id": "urn:rose:object.cash_event"
+        },
+        {
+          "@id": "urn:rose:object.cash_daily_aggregate"
+        }
+      ],
+      "label": "Explain customer/day aggregation",
+      "outputs": [
+        {
+          "@id": "urn:rose:object.cash_daily_aggregate"
+        },
+        {
+          "@id": "urn:rose:object.cash_assessment"
+        }
+      ],
+      "rule_ids": [
+        {
+          "@id": "urn:rose:rule.bsa_customer_day_key"
+        },
+        {
+          "@id": "urn:rose:rule.bsa_directional_accumulation"
+        },
+        {
+          "@id": "urn:rose:rule.bsa_ctr_assessment"
+        }
+      ]
+    },
+    {
+      "@id": "urn:rose:action.assess_cash",
+      "@type": "rose:ActionType",
+      "description": "Describes CHEK, STRC or SARQ with explicit function context. The required flag is interpreted according to the selected branch and is not a general filing instruction.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 45,
+          "excerpt_sha256": "d7162bba2b4e5101c85924a33841e4706420d8e0e87a70f5c9a569e77d9a961b",
+          "path": "src/BSACTRO.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L37-L45",
+          "start_line": 37
+        },
+        {
+          "end_line": 88,
+          "excerpt_sha256": "0f6f148b311f2efa0337a402b35ef9947f2a6b853ffd7f26c77307c4e26154e4",
+          "path": "src/BSACTRO.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L56-L88",
+          "start_line": 56
+        },
+        {
+          "end_line": 241,
+          "excerpt_sha256": "132280b5d7d7a3e56dde17ee817384d5c9a423be903e794fd6ff4fda356d6b3e",
+          "path": "src/BSACTRO.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L182-L241",
+          "start_line": 182
+        }
+      ],
+      "inputs": [
+        {
+          "@id": "urn:rose:object.cash_event"
+        },
+        {
+          "@id": "urn:rose:object.cash_daily_aggregate"
+        },
+        {
+          "@id": "urn:rose:object.ctr_filing"
+        }
+      ],
+      "label": "Explain operation-specific cash assessment",
+      "outputs": [
+        {
+          "@id": "urn:rose:object.cash_assessment"
+        }
+      ],
+      "rule_ids": [
+        {
+          "@id": "urn:rose:rule.bsa_ctr_assessment"
+        },
+        {
+          "@id": "urn:rose:rule.bsa_contextual_signals"
+        }
+      ],
+      "uncertainties": [
+        "Inputs are the union of branch-specific context, not a requirement that each branch consumes every listed object."
+      ]
+    },
+    {
+      "@id": "urn:rose:action.evaluate_trial_balance",
+      "@type": "rose:ActionType",
+      "description": "Describes arithmetic equality over supplied or fallback totals, including its coverage limitation; does not certify a balanced complete ledger.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 264,
+          "excerpt_sha256": "e31137c43188e08903afb0991bf3b2ff413915d27ff6bf4925ea41a27728263e",
+          "path": "src/GLPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L241-L264",
+          "start_line": 241
+        },
+        {
+          "end_line": 172,
+          "excerpt_sha256": "d2d046c8a5b433f7314fbb865fbc982825f5194797449d9cea9e8ca41589af8c",
+          "path": "src/EODPROC0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/EODPROC0.cob#L155-L172",
+          "start_line": 155
+        }
+      ],
+      "inputs": [
+        {
+          "@id": "urn:rose:object.gl_account"
+        },
+        {
+          "@id": "urn:rose:object.trial_balance"
+        }
+      ],
+      "label": "Explain trial-balance calculation",
+      "outputs": [
+        {
+          "@id": "urn:rose:object.trial_balance"
+        }
+      ],
+      "rule_ids": [
+        {
+          "@id": "urn:rose:rule.gl_trial_balance"
+        }
+      ]
+    },
+    {
+      "@id": "urn:rose:action.manage_ctr_state",
+      "@type": "rose:ActionType",
+      "description": "Describes CRTE/FILE/QURY/VOID transitions in the supplied US CTR record. This is an explanatory action with no external filing side effect.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 57,
+          "excerpt_sha256": "86f33687528f0887c5ab169242a9b098ee0ba48c7e8043730807e19062fb69c0",
+          "path": "src/CTRFIL0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/CTRFIL0.cob#L37-L57",
+          "start_line": 37
+        },
+        {
+          "end_line": 181,
+          "excerpt_sha256": "487afe08582cb6c20dbc781e5af23f78047052fb32b8df8eb15f69a317dac53a",
+          "path": "src/CTRFIL0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/CTRFIL0.cob#L64-L181",
+          "start_line": 64
+        }
+      ],
+      "inputs": [
+        {
+          "@id": "urn:rose:object.cash_daily_aggregate"
+        },
+        {
+          "@id": "urn:rose:object.ctr_filing"
+        }
+      ],
+      "label": "Explain CTR record lifecycle",
+      "outputs": [
+        {
+          "@id": "urn:rose:object.ctr_filing"
+        }
+      ],
+      "rule_ids": [
+        {
+          "@id": "urn:rose:rule.ctr_create"
+        },
+        {
+          "@id": "urn:rose:rule.ctr_lifecycle"
+        },
+        {
+          "@id": "urn:rose:rule.process_local_identifiers"
+        }
+      ]
+    },
+    {
+      "@id": "urn:rose:action.map_gl_instruction",
+      "@type": "rose:ActionType",
+      "description": "Describes TXNPOST0 account routing for the GL output. It does not post to the GL or assert a journal exists.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 310,
+          "excerpt_sha256": "f33e6da56e29e5d0536816644879a43a4503752bed89a33f94fb5f0088ee8508",
+          "path": "src/TXNPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L260-L310",
+          "start_line": 260
+        }
+      ],
+      "inputs": [
+        {
+          "@id": "urn:rose:object.transaction"
+        },
+        {
+          "@id": "urn:rose:object.account"
+        }
+      ],
+      "label": "Explain GL instruction mapping",
+      "outputs": [
+        {
+          "@id": "urn:rose:object.gl_instruction"
+        }
+      ],
+      "rule_ids": [
+        {
+          "@id": "urn:rose:rule.txn_gl_routing"
+        },
+        {
+          "@id": "urn:rose:rule.workflow_integration_boundaries"
+        }
+      ]
+    },
+    {
+      "@id": "urn:rose:action.post_gl_side",
+      "@type": "rose:ActionType",
+      "description": "Describes the POST branch on one supplied GL account; explanatory only, with the caller responsibility for the other side retained.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 40,
+          "excerpt_sha256": "dcb6ca98210d9c45ea3e22bd255a5c63922a6a1da9ba1446b984b5d71ee3929c",
+          "path": "src/GLPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L38-L40",
+          "start_line": 38
+        },
+        {
+          "end_line": 236,
+          "excerpt_sha256": "264a745072fa629a7d9028639110e568c07d44d57b88016027646486fa5d532e",
+          "path": "src/GLPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L54-L236",
+          "start_line": 54
+        }
+      ],
+      "inputs": [
+        {
+          "@id": "urn:rose:object.gl_entry"
+        },
+        {
+          "@id": "urn:rose:object.gl_account"
+        }
+      ],
+      "label": "Explain one GL side",
+      "outputs": [
+        {
+          "@id": "urn:rose:object.gl_account"
+        }
+      ],
+      "rule_ids": [
+        {
+          "@id": "urn:rose:rule.gl_post_guards"
+        },
+        {
+          "@id": "urn:rose:rule.gl_normal_side"
+        },
+        {
+          "@id": "urn:rose:rule.gl_local_rollback"
+        }
+      ]
+    },
+    {
+      "@id": "urn:rose:action.post_transaction",
+      "@type": "rose:ActionType",
+      "description": "Describes TXNPOST0 validation and in-memory account/transaction changes, including its GL instruction output; this ontology action is explanatory and never executes financial changes.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 51,
+          "excerpt_sha256": "a5dd2e86959bf47ec2856da42efa92639075f84190ed9af675a4b2eb9cfc7094",
+          "path": "src/TXNPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L25-L51",
+          "start_line": 25
+        }
+      ],
+      "inputs": [
+        {
+          "@id": "urn:rose:object.transaction"
+        },
+        {
+          "@id": "urn:rose:object.account"
+        }
+      ],
+      "label": "Explain account posting",
+      "outputs": [
+        {
+          "@id": "urn:rose:object.transaction"
+        },
+        {
+          "@id": "urn:rose:object.account"
+        },
+        {
+          "@id": "urn:rose:object.gl_instruction"
+        }
+      ],
+      "rule_ids": [
+        {
+          "@id": "urn:rose:rule.txn_positive_amount"
+        },
+        {
+          "@id": "urn:rose:rule.txn_direction_and_reversal"
+        },
+        {
+          "@id": "urn:rose:rule.txn_account_restrictions"
+        },
+        {
+          "@id": "urn:rose:rule.txn_available_funds"
+        },
+        {
+          "@id": "urn:rose:rule.txn_cd_penalty"
+        },
+        {
+          "@id": "urn:rose:rule.txn_balance_transition"
+        },
+        {
+          "@id": "urn:rose:rule.txn_local_ctr_flag"
+        },
+        {
+          "@id": "urn:rose:rule.txn_caller_binding"
+        },
+        {
+          "@id": "urn:rose:rule.workflow_integration_boundaries"
+        }
+      ]
+    },
+    {
+      "@id": "urn:rose:action.prepare_audit_record",
+      "@type": "rose:ActionType",
+      "description": "Describes AUDTLOG0 WRIT stamping and READ nonblank-key check, and the observed EOD account annotation. This action neither writes a durable trail nor operates a bank.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 51,
+          "excerpt_sha256": "9d62ea92fef5ba9004616b7374726ea9e293b908f47c571ecbf14f152fc16f6b",
+          "path": "src/AUDTLOG0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/AUDTLOG0.cob#L35-L51",
+          "start_line": 35
+        },
+        {
+          "end_line": 91,
+          "excerpt_sha256": "8ab9519517fcc4ad918a8735893a06f90a9efd841a127731d7f7e22712f9367b",
+          "path": "src/AUDTLOG0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/AUDTLOG0.cob#L56-L91",
+          "start_line": 56
+        },
+        {
+          "end_line": 400,
+          "excerpt_sha256": "7ade84dc0e2a6280069f040a9e6e167ab129ca03049554d6371dcf29ce864d79",
+          "path": "src/EODPROC0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/EODPROC0.cob#L387-L400",
+          "start_line": 387
+        }
+      ],
+      "inputs": [
+        {
+          "@id": "urn:rose:object.audit_event"
+        }
+      ],
+      "label": "Explain audit record preparation",
+      "outputs": [
+        {
+          "@id": "urn:rose:object.audit_event"
+        }
+      ],
+      "rule_ids": [
+        {
+          "@id": "urn:rose:rule.process_local_identifiers"
+        },
+        {
+          "@id": "urn:rose:rule.audit_record_preparation"
+        }
+      ]
+    },
+    {
+      "@id": "urn:rose:link.account_primary_customer",
+      "@type": "rose:LinkType",
+      "description": "ACCT-PRIMARY-CIF denotes a CIF key; this slice does not resolve or validate the target record.",
+      "epistemic_status": "inferred",
+      "evidence": [
+        {
+          "end_line": 11,
+          "excerpt_sha256": "ce75cae6599c8b757a24ca237d166e7894a340da74d459b1d6a8fdbc524c202e",
+          "path": "copybooks/CPYACCT.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYACCT.cpy#L9-L11",
+          "start_line": 9
+        },
+        {
+          "end_line": 7,
+          "excerpt_sha256": "b3dd78c0cad120d7f4d2ad5596b751b35315ac82a65f59a10dca2511498a468b",
+          "path": "copybooks/CPYCIF.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCIF.cpy#L5-L7",
+          "start_line": 5
+        }
+      ],
+      "from": {
+        "@id": "urn:rose:object.account"
+      },
+      "label": "has primary customer",
+      "to": {
+        "@id": "urn:rose:object.customer"
+      }
+    },
+    {
+      "@id": "urn:rose:link.aggregate_assessment",
+      "@type": "rose:LinkType",
+      "description": "BSACTRO threshold, structuring and SAR-query branches interpret totals/counts/status with operation-specific semantics.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 85,
+          "excerpt_sha256": "42e0f3269c249a1878b1de8793f238554f3ac68020e020d8cb174eb4a814245e",
+          "path": "src/BSACTRO.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L73-L85",
+          "start_line": 73
+        },
+        {
+          "end_line": 175,
+          "excerpt_sha256": "47037d6a3f3c8459a9324a67b7c1a39657c1c50981373b1633cbd9b20777da72",
+          "path": "src/BSACTRO.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L154-L175",
+          "start_line": 154
+        },
+        {
+          "end_line": 241,
+          "excerpt_sha256": "132280b5d7d7a3e56dde17ee817384d5c9a423be903e794fd6ff4fda356d6b3e",
+          "path": "src/BSACTRO.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L182-L241",
+          "start_line": 182
+        }
+      ],
+      "from": {
+        "@id": "urn:rose:object.cash_daily_aggregate"
+      },
+      "label": "provides assessment inputs",
+      "to": {
+        "@id": "urn:rose:object.cash_assessment"
+      }
+    },
+    {
+      "@id": "urn:rose:link.aggregate_filing_projection",
+      "@type": "rose:LinkType",
+      "description": "The aggregate and filing state are separate semantic projections of the same CTR-RECORD storage, not a proven event-triggered create workflow.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 34,
+          "excerpt_sha256": "f5316932fd71b69987d0d97c8862648cc34fbafb008f8d968b2720686dfbf4d4",
+          "path": "copybooks/CPYCTR.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCTR.cpy#L5-L34",
+          "start_line": 5
+        },
+        {
+          "end_line": 36,
+          "excerpt_sha256": "3a95002f27b6746fe6634b53599ba77e244578b2bff3148524ac056e409ff0e1",
+          "path": "src/BSACTRO.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L33-L36",
+          "start_line": 33
+        },
+        {
+          "end_line": 39,
+          "excerpt_sha256": "0dcf3d77e3c7142d98081275e82e60b4166721408012e29c23d5c86daa3afb60",
+          "path": "src/CTRFIL0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/CTRFIL0.cob#L37-L39",
+          "start_line": 37
+        }
+      ],
+      "from": {
+        "@id": "urn:rose:object.cash_daily_aggregate"
+      },
+      "label": "shares record with filing state",
+      "to": {
+        "@id": "urn:rose:object.ctr_filing"
+      }
+    },
+    {
+      "@id": "urn:rose:link.audit_event_account",
+      "@type": "rose:LinkType",
+      "description": "EODPROC0 supplies entity type ACCT and the account number to the audit record.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 400,
+          "excerpt_sha256": "7ade84dc0e2a6280069f040a9e6e167ab129ca03049554d6371dcf29ce864d79",
+          "path": "src/EODPROC0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/EODPROC0.cob#L387-L400",
+          "start_line": 387
+        }
+      ],
+      "from": {
+        "@id": "urn:rose:object.audit_event"
+      },
+      "label": "identifies EOD account context",
+      "to": {
+        "@id": "urn:rose:object.account"
+      }
+    },
+    {
+      "@id": "urn:rose:link.cash_event_account",
+      "@type": "rose:LinkType",
+      "description": "Input declares an account number; AGGR does not use it as a bucket key or update the account list.",
+      "epistemic_status": "inferred",
+      "evidence": [
+        {
+          "end_line": 25,
+          "excerpt_sha256": "2283c074b8433cf6fc6c196f591c4522d8a61e1484d8863f07b00c1def665f7a",
+          "path": "src/BSACTRO.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L18-L25",
+          "start_line": 18
+        },
+        {
+          "end_line": 175,
+          "excerpt_sha256": "ee09936ae731954e1a9f436857a15aeb18fc4b09b915f769b5d8ba5134f605c8",
+          "path": "src/BSACTRO.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L93-L175",
+          "start_line": 93
+        }
+      ],
+      "from": {
+        "@id": "urn:rose:object.cash_event"
+      },
+      "label": "declares account context",
+      "to": {
+        "@id": "urn:rose:object.account"
+      }
+    },
+    {
+      "@id": "urn:rose:link.cash_event_customer",
+      "@type": "rose:LinkType",
+      "description": "Input customer identifier denotes a customer; AGGR compares it with the aggregate key without performing a CIF lookup.",
+      "epistemic_status": "inferred",
+      "evidence": [
+        {
+          "end_line": 25,
+          "excerpt_sha256": "2283c074b8433cf6fc6c196f591c4522d8a61e1484d8863f07b00c1def665f7a",
+          "path": "src/BSACTRO.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L18-L25",
+          "start_line": 18
+        },
+        {
+          "end_line": 112,
+          "excerpt_sha256": "e209f5e4389be00e49c177091a90b6608c9fd7fc5e471884826519385cc8b7b0",
+          "path": "src/BSACTRO.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L98-L112",
+          "start_line": 98
+        },
+        {
+          "end_line": 7,
+          "excerpt_sha256": "4f6808eb1007222900275036e76a912353105a816ed040494e112dd7a26faa8a",
+          "path": "copybooks/CPYCIF.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCIF.cpy#L7-L7",
+          "start_line": 7
+        }
+      ],
+      "from": {
+        "@id": "urn:rose:object.cash_event"
+      },
+      "label": "denotes cash customer",
+      "to": {
+        "@id": "urn:rose:object.customer"
+      }
+    },
+    {
+      "@id": "urn:rose:link.cash_event_daily_aggregate",
+      "@type": "rose:LinkType",
+      "description": "AGGR stamps or checks the customer/date pair, then updates the appropriate directional accumulator only when is_cash=Y.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 152,
+          "excerpt_sha256": "b9242a986a263e7b8ad4544f4257f4475fbb2c91f03761799683c708686e9c50",
+          "path": "src/BSACTRO.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L98-L152",
+          "start_line": 98
+        }
+      ],
+      "from": {
+        "@id": "urn:rose:object.cash_event"
+      },
+      "label": "contributes by customer and date",
+      "to": {
+        "@id": "urn:rose:object.cash_daily_aggregate"
+      }
+    },
+    {
+      "@id": "urn:rose:link.ctr_filing_customer",
+      "@type": "rose:LinkType",
+      "description": "The filing customer identifier denotes a CIF identity; CRTE checks only nonzero, not customer existence.",
+      "epistemic_status": "inferred",
+      "evidence": [
+        {
+          "end_line": 10,
+          "excerpt_sha256": "b3ff7b4e808666df1d28014adf117eb549b70a54e2ddb68d4480dcf103da347f",
+          "path": "copybooks/CPYCTR.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCTR.cpy#L10-L10",
+          "start_line": 10
+        },
+        {
+          "end_line": 71,
+          "excerpt_sha256": "9f97e8bba72767d6f489eb26856d07b6a8e4e170c0b78d41387b08645cafb44d",
+          "path": "src/CTRFIL0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/CTRFIL0.cob#L64-L71",
+          "start_line": 64
+        },
+        {
+          "end_line": 7,
+          "excerpt_sha256": "4f6808eb1007222900275036e76a912353105a816ed040494e112dd7a26faa8a",
+          "path": "copybooks/CPYCIF.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCIF.cpy#L7-L7",
+          "start_line": 7
+        }
+      ],
+      "from": {
+        "@id": "urn:rose:object.ctr_filing"
+      },
+      "label": "names filing customer",
+      "to": {
+        "@id": "urn:rose:object.customer"
+      }
+    },
+    {
+      "@id": "urn:rose:link.daily_aggregate_customer",
+      "@type": "rose:LinkType",
+      "description": "CTR-CUST-ID identifies the customer dimension of a daily aggregate; it is not an account-level grouping.",
+      "epistemic_status": "inferred",
+      "evidence": [
+        {
+          "end_line": 10,
+          "excerpt_sha256": "b3ff7b4e808666df1d28014adf117eb549b70a54e2ddb68d4480dcf103da347f",
+          "path": "copybooks/CPYCTR.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCTR.cpy#L10-L10",
+          "start_line": 10
+        },
+        {
+          "end_line": 112,
+          "excerpt_sha256": "e209f5e4389be00e49c177091a90b6608c9fd7fc5e471884826519385cc8b7b0",
+          "path": "src/BSACTRO.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L98-L112",
+          "start_line": 98
+        },
+        {
+          "end_line": 7,
+          "excerpt_sha256": "4f6808eb1007222900275036e76a912353105a816ed040494e112dd7a26faa8a",
+          "path": "copybooks/CPYCIF.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCIF.cpy#L7-L7",
+          "start_line": 7
+        }
+      ],
+      "from": {
+        "@id": "urn:rose:object.cash_daily_aggregate"
+      },
+      "label": "belongs to customer dimension",
+      "to": {
+        "@id": "urn:rose:object.customer"
+      }
+    },
+    {
+      "@id": "urn:rose:link.gl_entry_credit_account",
+      "@type": "rose:LinkType",
+      "description": "Entry credit account number denotes the credit-side GL account; caller must supply the matching GL record.",
+      "epistemic_status": "inferred",
+      "evidence": [
+        {
+          "end_line": 19,
+          "excerpt_sha256": "b1f4727d82defa5d59402fee795faf8f042483a8a897b9a4f25eedd6202911ad",
+          "path": "src/GLPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L16-L19",
+          "start_line": 16
+        },
+        {
+          "end_line": 105,
+          "excerpt_sha256": "d65fde934c8423c7aafdd5519a368eb942dbaf49d9bdddb3bc659c7f376c8f0f",
+          "path": "src/GLPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L98-L105",
+          "start_line": 98
+        },
+        {
+          "end_line": 7,
+          "excerpt_sha256": "af777fcd957e83ba033cb7cde6ef6258a3ecbf1bbad4ae519f82f1e1e4c1f2cb",
+          "path": "copybooks/CPYGL.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYGL.cpy#L7-L7",
+          "start_line": 7
+        }
+      ],
+      "from": {
+        "@id": "urn:rose:object.gl_entry"
+      },
+      "label": "declares credit account",
+      "to": {
+        "@id": "urn:rose:object.gl_account"
+      }
+    },
+    {
+      "@id": "urn:rose:link.gl_entry_debit_account",
+      "@type": "rose:LinkType",
+      "description": "Entry debit account number denotes the debit-side GL account; caller must supply the matching GL record.",
+      "epistemic_status": "inferred",
+      "evidence": [
+        {
+          "end_line": 19,
+          "excerpt_sha256": "b1f4727d82defa5d59402fee795faf8f042483a8a897b9a4f25eedd6202911ad",
+          "path": "src/GLPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L16-L19",
+          "start_line": 16
+        },
+        {
+          "end_line": 166,
+          "excerpt_sha256": "0d435897426c7ff75225dda763aa44d72f24a9f1812189726745c25daed8f15b",
+          "path": "src/GLPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L160-L166",
+          "start_line": 160
+        },
+        {
+          "end_line": 7,
+          "excerpt_sha256": "af777fcd957e83ba033cb7cde6ef6258a3ecbf1bbad4ae519f82f1e1e4c1f2cb",
+          "path": "copybooks/CPYGL.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYGL.cpy#L7-L7",
+          "start_line": 7
+        }
+      ],
+      "from": {
+        "@id": "urn:rose:object.gl_entry"
+      },
+      "label": "declares debit account",
+      "to": {
+        "@id": "urn:rose:object.gl_account"
+      },
+      "uncertainties": [
+        "Unrelated account records are not rejected by POST."
+      ]
+    },
+    {
+      "@id": "urn:rose:link.gl_instruction_gl_entry",
+      "@type": "rose:LinkType",
+      "description": "Proposed caller adapter would copy instruction fields, supply entry description/date and coordinate two POST calls. No such handoff is established in TXNPOST0.",
+      "epistemic_status": "proposed",
+      "evidence": [
+        {
+          "end_line": 20,
+          "excerpt_sha256": "93d7ce096743b81153f32d817fb9ea576d58e6f3721d6c0a06ae88443daea44c",
+          "path": "src/TXNPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L16-L20",
+          "start_line": 16
+        },
+        {
+          "end_line": 21,
+          "excerpt_sha256": "886b3661551725af37a0bf53b5d123b369892ff99557218cb1a4c7a0df565e6f",
+          "path": "src/GLPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L16-L21",
+          "start_line": 16
+        },
+        {
+          "end_line": 64,
+          "excerpt_sha256": "3df14aa48108a9fcea43dbb089614d4f579df66f681688123ecc4bc62fb2ad3e",
+          "path": "src/GLPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L54-L64",
+          "start_line": 54
+        }
+      ],
+      "from": {
+        "@id": "urn:rose:object.gl_instruction"
+      },
+      "label": "could adapt to GL input",
+      "to": {
+        "@id": "urn:rose:object.gl_entry"
+      },
+      "uncertainties": [
+        "The source instruction uses S9(13)V99 amount while the GL input uses S9(15)V99."
+      ]
+    },
+    {
+      "@id": "urn:rose:link.transaction_account",
+      "@type": "rose:LinkType",
+      "description": "TXN-ACCT-NUMBER denotes a target account, but TXNPOST0 mutates the separately supplied ACCT-RECORD without checking key equality.",
+      "epistemic_status": "inferred",
+      "evidence": [
+        {
+          "end_line": 11,
+          "excerpt_sha256": "a2113a8bdcff827a24845521a0631ecd789aff587b735149c1b0cebc8165d676",
+          "path": "copybooks/CPYTXN.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYTXN.cpy#L9-L11",
+          "start_line": 9
+        },
+        {
+          "end_line": 51,
+          "excerpt_sha256": "a5dd2e86959bf47ec2856da42efa92639075f84190ed9af675a4b2eb9cfc7094",
+          "path": "src/TXNPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L25-L51",
+          "start_line": 25
+        }
+      ],
+      "from": {
+        "@id": "urn:rose:object.transaction"
+      },
+      "label": "targets account",
+      "to": {
+        "@id": "urn:rose:object.account"
+      }
+    },
+    {
+      "@id": "urn:rose:link.transaction_audit_event",
+      "@type": "rose:LinkType",
+      "description": "Proposed extension could join transaction ID, before/after snapshots, caller identity and result to a durable audit event. TXNPOST0 currently has no AUDTLOG0 call.",
+      "epistemic_status": "proposed",
+      "evidence": [
+        {
+          "end_line": 51,
+          "excerpt_sha256": "aa9df4ec3dd4c59aeb7389025141e9102abca5dfe2c9d3e88c7f00f9570254fc",
+          "path": "src/TXNPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L29-L51",
+          "start_line": 29
+        },
+        {
+          "end_line": 35,
+          "excerpt_sha256": "17e7f89b6b2cd22d7f8d76ced9d141c27fef383b846953a6807fcc1243520e69",
+          "path": "copybooks/CPYTXN.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYTXN.cpy#L31-L35",
+          "start_line": 31
+        },
+        {
+          "end_line": 23,
+          "excerpt_sha256": "9d617d049965267aca42f6a30f863257d3df561ecd74c8510ebd370084d83340",
+          "path": "copybooks/CPYAUDT.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYAUDT.cpy#L9-L23",
+          "start_line": 9
+        }
+      ],
+      "from": {
+        "@id": "urn:rose:object.transaction"
+      },
+      "label": "could record transaction lineage",
+      "to": {
+        "@id": "urn:rose:object.audit_event"
+      }
+    },
+    {
+      "@id": "urn:rose:link.transaction_gl_instruction",
+      "@type": "rose:LinkType",
+      "description": "After account balance updates, MAP-GL-ENTRIES emits accounts, amount and Y flag in its linkage output.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 47,
+          "excerpt_sha256": "7ac2893cbbd8d67dfd40ea35f3f32dd207ceba6398f9edd65951ba9c79811557",
+          "path": "src/TXNPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L42-L47",
+          "start_line": 42
+        },
+        {
+          "end_line": 293,
+          "excerpt_sha256": "6621724b2c6b449fa808e2ed309fef5ee2137ec5c86869a10657f6ba88779b73",
+          "path": "src/TXNPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L260-L293",
+          "start_line": 260
+        }
+      ],
+      "from": {
+        "@id": "urn:rose:object.transaction"
+      },
+      "label": "yields GL instruction",
+      "to": {
+        "@id": "urn:rose:object.gl_instruction"
+      }
+    },
+    {
+      "@id": "urn:rose:link.trial_balance_gl_account",
+      "@type": "rose:LinkType",
+      "description": "If caller totals are both zero, the calculation copies MTD debits/credits from one GL account.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 247,
+          "excerpt_sha256": "b3cf151192f657a4e665ba1417f94d752eba07fe28593d078761e785b6b4e116",
+          "path": "src/GLPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L241-L247",
+          "start_line": 241
+        }
+      ],
+      "from": {
+        "@id": "urn:rose:object.trial_balance"
+      },
+      "label": "can use single-record totals",
+      "to": {
+        "@id": "urn:rose:object.gl_account"
+      }
+    },
+    {
+      "@id": "urn:rose:object.account",
+      "@type": "rose:ObjectType",
+      "description": "An account record supplied to transaction posting. Monetary balances and restriction flags are distinct signs: a legal hold flag is not the numeric held-funds balance.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 41,
+          "excerpt_sha256": "b7dacf5f92447e50ee78421038f69a92daac836d07d3f3c30c3f34dcd9d5baed",
+          "path": "copybooks/CPYACCT.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYACCT.cpy#L5-L41",
+          "start_line": 5
+        },
+        {
+          "end_line": 98,
+          "excerpt_sha256": "c820f85bab1198b67dacb5b36c25fe02ff3a4f7a834bda5bd2cb05234f27bbb8",
+          "path": "copybooks/CPYACCT.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYACCT.cpy#L92-L98",
+          "start_line": 92
+        }
+      ],
+      "label": "Account",
+      "properties": [
+        {
+          "datatype": "PIC 9(12)",
+          "description": "Twelve-digit source account identifier; not an IBAN.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 7,
+              "excerpt_sha256": "1aaaee21c1341aa91a7ecbaf580ec48ac78b67911e555cefdd3ab22f72c5bda6",
+              "path": "copybooks/CPYACCT.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYACCT.cpy#L7-L7",
+              "start_line": 7
+            }
+          ],
+          "name": "account_number",
+          "source_field": "ACCT-NUMBER"
+        },
+        {
+          "datatype": "PIC 9(10)",
+          "description": "Customer reference for primary ownership.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 10,
+              "excerpt_sha256": "878f65a98367b1f6766887346eef7016ac650e72aa0ecb2541d29694b3cabe44",
+              "path": "copybooks/CPYACCT.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYACCT.cpy#L10-L10",
+              "start_line": 10
+            }
+          ],
+          "name": "primary_customer_id",
+          "source_field": "ACCT-PRIMARY-CIF"
+        },
+        {
+          "datatype": "PIC 9(10)",
+          "description": "Customer reference for joint ownership; source does not resolve beneficial ownership here.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 11,
+              "excerpt_sha256": "e823149361ec3709fd02c426d12f038bf77afb9904526196427729fc6b90dbaf",
+              "path": "copybooks/CPYACCT.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYACCT.cpy#L11-L11",
+              "start_line": 11
+            }
+          ],
+          "name": "joint_customer_id",
+          "source_field": "ACCT-JOINT-CIF"
+        },
+        {
+          "datatype": "PIC X(2)",
+          "description": "Deposit subtype selects deposit GL account in TXNPOST0.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 23,
+              "excerpt_sha256": "821026d85f569ea49a05f63cb8eff79f46ad06ed3d522997604accea7cce4b86",
+              "path": "copybooks/CPYACCT.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYACCT.cpy#L23-L23",
+              "start_line": 23
+            }
+          ],
+          "name": "sub_type",
+          "source_field": "ACCT-SUB-TYPE"
+        },
+        {
+          "datatype": "PIC S9(13)V99",
+          "description": "Signed account ledger amount; currency is not encoded in this field.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 27,
+              "excerpt_sha256": "84e1f8a92f8a4e4536f2fe8210c4a236a910749b6e1b1ca6fdf2c686f64846a0",
+              "path": "copybooks/CPYACCT.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYACCT.cpy#L27-L27",
+              "start_line": 27
+            }
+          ],
+          "name": "ledger_balance",
+          "source_field": "ACCT-LEDGER-BAL"
+        },
+        {
+          "datatype": "PIC S9(13)V99",
+          "description": "Available amount recomputed as ledger balance less hold amount after posting.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 28,
+              "excerpt_sha256": "f6ee0d0a743218385875d2dacb5c92545e84e965ed030d21d5157ce7641ed566",
+              "path": "copybooks/CPYACCT.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYACCT.cpy#L28-L28",
+              "start_line": 28
+            }
+          ],
+          "name": "available_balance",
+          "source_field": "ACCT-AVAIL-BAL"
+        },
+        {
+          "datatype": "PIC S9(13)V99",
+          "description": "Numeric held-funds amount used in available-balance arithmetic.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 30,
+              "excerpt_sha256": "3f253c5f513ec43d3d674ad66ea278cad3478c79ff3810ae12013db6be3fcb44",
+              "path": "copybooks/CPYACCT.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYACCT.cpy#L30-L30",
+              "start_line": 30
+            }
+          ],
+          "name": "hold_amount",
+          "source_field": "ACCT-HOLD-AMOUNT"
+        },
+        {
+          "datatype": "PIC S9(13)V99",
+          "description": "Month-to-date minimum ledger balance updated after successful posting.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 41,
+              "excerpt_sha256": "6d80adda487e4ba1a791fb401acda16401e0d275f9da82054dd2d26472d540b5",
+              "path": "copybooks/CPYACCT.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYACCT.cpy#L41-L41",
+              "start_line": 41
+            }
+          ],
+          "name": "mtd_low_balance",
+          "source_field": "ACCT-MTD-LOW-BAL"
+        },
+        {
+          "datatype": "PIC X(1)",
+          "description": "A/D/F/C/E/R status vocabulary is documented by the copybook.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 93,
+              "excerpt_sha256": "cb8d3234275e212e8949ef50cf77ae031c2b3804fd2730a88850d676bff80ff1",
+              "path": "copybooks/CPYACCT.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYACCT.cpy#L93-L93",
+              "start_line": 93
+            }
+          ],
+          "name": "status",
+          "source_field": "ACCT-STATUS"
+        },
+        {
+          "datatype": "PIC X(1)",
+          "description": "Y blocks debits in TXNPOST0; it is not proof of executed sanctions screening.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 96,
+              "excerpt_sha256": "df9909965454c176314c13ed31a0fbb16cec11883734b0363387d3d1b643fdfe",
+              "path": "copybooks/CPYACCT.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYACCT.cpy#L96-L96",
+              "start_line": 96
+            }
+          ],
+          "name": "legal_hold",
+          "source_field": "ACCT-LEGAL-HOLD"
+        },
+        {
+          "datatype": "PIC X(1)",
+          "description": "Y blocks debits in TXNPOST0.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 97,
+              "excerpt_sha256": "83771de0ff94b62e2c53a77f74d30cb919fbfbae2ba03e797456772b36b798aa",
+              "path": "copybooks/CPYACCT.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYACCT.cpy#L97-L97",
+              "start_line": 97
+            }
+          ],
+          "name": "garnishment",
+          "source_field": "ACCT-GARNISHMENT"
+        },
+        {
+          "datatype": "PIC X(1)",
+          "description": "Y blocks posting in TXNPOST0.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 98,
+              "excerpt_sha256": "d13736f7f2bc8c616b1006652ea83ad0bd2c6cd2e4b5869f8ca9474e4ce8ba07",
+              "path": "copybooks/CPYACCT.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYACCT.cpy#L98-L98",
+              "start_line": 98
+            }
+          ],
+          "name": "deceased",
+          "source_field": "ACCT-DECEASED"
+        },
+        {
+          "datatype": "PIC 9(8)",
+          "description": "Set to the transaction posting date at the successful end of TXNPOST0.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 84,
+              "excerpt_sha256": "53ae77a973b1d9909f9432da5fdb8646f781eefcb6b002d62e9318d8ca8d8ac4",
+              "path": "copybooks/CPYACCT.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYACCT.cpy#L84-L84",
+              "start_line": 84
+            }
+          ],
+          "name": "last_transaction_date",
+          "source_field": "ACCT-LAST-TXN-DATE"
+        }
+      ],
+      "uncertainties": [
+        "No currency identifier is supplied by this record.",
+        "TXNPOST0 accepts caller-supplied account and transaction records without checking their account identifiers match."
+      ]
+    },
+    {
+      "@id": "urn:rose:object.audit_event",
+      "@type": "rose:ObjectType",
+      "description": "Caller-supplied audit context stamped with time, process-local identifier and sequence by AUDTLOG0. The routine has no durable write or lookup implementation.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 23,
+          "excerpt_sha256": "392f9ec0f87eb31bfdc83f300862bd437fddf741762babac88066498498a2c4c",
+          "path": "copybooks/CPYAUDT.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYAUDT.cpy#L5-L23",
+          "start_line": 5
+        },
+        {
+          "end_line": 91,
+          "excerpt_sha256": "8ab9519517fcc4ad918a8735893a06f90a9efd841a127731d7f7e22712f9367b",
+          "path": "src/AUDTLOG0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/AUDTLOG0.cob#L56-L91",
+          "start_line": 56
+        }
+      ],
+      "label": "Audit Event Record",
+      "properties": [
+        {
+          "datatype": "PIC 9(15)",
+          "description": "Process-local ID counter assigned by WRIT.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 7,
+              "excerpt_sha256": "52172b03ffc770499859bd028eec539dfc3802d1d075eb220fafad3cefbb3c04",
+              "path": "copybooks/CPYAUDT.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYAUDT.cpy#L7-L7",
+              "start_line": 7
+            }
+          ],
+          "name": "audit_id",
+          "source_field": "AUDIT-ID"
+        },
+        {
+          "datatype": "PIC 9(5)",
+          "description": "WRIT assigns 1 for every record; no per-entity chain is maintained.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 8,
+              "excerpt_sha256": "92d4ef612b4c019c00ccc4312ab84bdf99f4de0822709c29cd849ac48c1ad1ab",
+              "path": "copybooks/CPYAUDT.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYAUDT.cpy#L8-L8",
+              "start_line": 8
+            }
+          ],
+          "name": "sequence",
+          "source_field": "AUDIT-SEQUENCE"
+        },
+        {
+          "datatype": "PIC 9(14)",
+          "description": "Fourteen-digit local date/time representation without retained offset.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 10,
+              "excerpt_sha256": "dabad0cb9f44fa1d3ede905bcc641dcea9ebc8f564f1aa2213d1714720b7e081",
+              "path": "copybooks/CPYAUDT.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYAUDT.cpy#L10-L10",
+              "start_line": 10
+            }
+          ],
+          "name": "timestamp",
+          "source_field": "AUDIT-TIMESTAMP"
+        },
+        {
+          "datatype": "PIC X(8)",
+          "description": "Caller actor identifier.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 11,
+              "excerpt_sha256": "13918883eb257a94cc8874d795b5508a4cd6a123eb21fece7cc3c113801cbf8c",
+              "path": "copybooks/CPYAUDT.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYAUDT.cpy#L11-L11",
+              "start_line": 11
+            }
+          ],
+          "name": "user_id",
+          "source_field": "AUDIT-USER-ID"
+        },
+        {
+          "datatype": "PIC X(8)",
+          "description": "Caller program identifier.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 13,
+              "excerpt_sha256": "09b0bd705ca81411c511da8a384d7449890bcc963a7b3434a0b820e7d3177074",
+              "path": "copybooks/CPYAUDT.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYAUDT.cpy#L13-L13",
+              "start_line": 13
+            }
+          ],
+          "name": "program_id",
+          "source_field": "AUDIT-PROGRAM-ID"
+        },
+        {
+          "datatype": "PIC X(4)",
+          "description": "Caller action/function code.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 14,
+              "excerpt_sha256": "0a5331db54f24e2375479d8287c3da8d6a1a24e3c40f77ef0483789a59a77f71",
+              "path": "copybooks/CPYAUDT.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYAUDT.cpy#L14-L14",
+              "start_line": 14
+            }
+          ],
+          "name": "function",
+          "source_field": "AUDIT-FUNCTION"
+        },
+        {
+          "datatype": "PIC X(4)",
+          "description": "Caller entity type label.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 15,
+              "excerpt_sha256": "66efab8442f8f6f21717b74b3e438bcf7680c1fd4a2dbc1da805538dddf53b5a",
+              "path": "copybooks/CPYAUDT.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYAUDT.cpy#L15-L15",
+              "start_line": 15
+            }
+          ],
+          "name": "entity_type",
+          "source_field": "AUDIT-ENTITY-TYPE"
+        },
+        {
+          "datatype": "PIC X(20)",
+          "description": "Caller entity identifier, checked only for nonblank by READ.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 16,
+              "excerpt_sha256": "44440e47728780f11a36d5a8b5dc59cd73ecd98a782eff86adee347b3f3614a4",
+              "path": "copybooks/CPYAUDT.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYAUDT.cpy#L16-L16",
+              "start_line": 16
+            }
+          ],
+          "name": "entity_key",
+          "source_field": "AUDIT-ENTITY-KEY"
+        },
+        {
+          "datatype": "PIC X(30)",
+          "description": "Declared changed-field annotation; not auto-populated by the logger.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 18,
+              "excerpt_sha256": "f65dc5c314dc069b7e865e97732a20f30951ef93d4d3eca1e6a49628dbda5fb4",
+              "path": "copybooks/CPYAUDT.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYAUDT.cpy#L18-L18",
+              "start_line": 18
+            }
+          ],
+          "name": "field_name",
+          "source_field": "AUDIT-FIELD-NAME"
+        },
+        {
+          "datatype": "PIC X(50)",
+          "description": "Declared prior-value text; not captured automatically.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 19,
+              "excerpt_sha256": "c7484aa64b4b1f4078769e18ce3a4b4513e5ab7ee463b98fd03463c9a8d708d0",
+              "path": "copybooks/CPYAUDT.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYAUDT.cpy#L19-L19",
+              "start_line": 19
+            }
+          ],
+          "name": "before_value",
+          "source_field": "AUDIT-BEFORE-VALUE"
+        },
+        {
+          "datatype": "PIC X(50)",
+          "description": "Declared resulting-value text; not captured automatically.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 20,
+              "excerpt_sha256": "01e8035ec8d5db18a4376392ab74c251a5f10c68c686d61b523f89e6a87b25b1",
+              "path": "copybooks/CPYAUDT.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYAUDT.cpy#L20-L20",
+              "start_line": 20
+            }
+          ],
+          "name": "after_value",
+          "source_field": "AUDIT-AFTER-VALUE"
+        },
+        {
+          "datatype": "PIC X(5)",
+          "description": "Caller-declared operation outcome, distinct from logger return code.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 22,
+              "excerpt_sha256": "0847d8ccc6bd08a995de0c8bfe40a91876940d8f83d56333e2041a4df2a66fb8",
+              "path": "copybooks/CPYAUDT.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYAUDT.cpy#L22-L22",
+              "start_line": 22
+            }
+          ],
+          "name": "result_code",
+          "source_field": "AUDIT-RESULT-CODE"
+        }
+      ],
+      "uncertainties": [
+        "The presence of fields does not establish immutable audit storage, complete lineage, retention or reconstruction.",
+        "EODPROC0 supplies E0000 and does not inspect AUDTLOG0 result after its call."
+      ]
+    },
+    {
+      "@id": "urn:rose:object.cash_assessment",
+      "@type": "rose:ObjectType",
+      "description": "BSACTRO result whose meaning depends on the function: CHEK/AGGR express CTR threshold assessment, STRC expresses a structuring heuristic and SARQ interprets the shared filing status as a SAR signal.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 31,
+          "excerpt_sha256": "6eda51de15b45307c0ec9e90f37d3e201f7fadfd8700a4178898e537a0db5f1a",
+          "path": "src/BSACTRO.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L16-L31",
+          "start_line": 16
+        },
+        {
+          "end_line": 50,
+          "excerpt_sha256": "56f06e671ed09e1ac64f8310343dafc15f5a82c630d527139a3542f8411308f6",
+          "path": "src/BSACTRO.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L37-L50",
+          "start_line": 37
+        },
+        {
+          "end_line": 240,
+          "excerpt_sha256": "aced69b3ec5d64ed5479c1b97d1b346594a0c99bf1b71f1d6dce0b42b9069f13",
+          "path": "src/BSACTRO.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L209-L240",
+          "start_line": 209
+        }
+      ],
+      "label": "Cash Assessment Result",
+      "properties": [
+        {
+          "datatype": "PIC X(4)",
+          "description": "Caller function code is required interpretive context for the result fields.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 16,
+              "excerpt_sha256": "5e2d6370c94aedc8266f723b5d1ab5cfe2e5289a656ced9476f8a75c85570ed2",
+              "path": "src/BSACTRO.cob",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L16-L16",
+              "start_line": 16
+            }
+          ],
+          "name": "operation",
+          "source_field": "LS-FUNCTION"
+        },
+        {
+          "datatype": "PIC X(5)",
+          "description": "Operation-specific source result code.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 27,
+              "excerpt_sha256": "b5ec301502d613db9aa5e3c1a3b395cdc51fa7405351a53004978b2a399e2047",
+              "path": "src/BSACTRO.cob",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L27-L27",
+              "start_line": 27
+            }
+          ],
+          "name": "result_code",
+          "source_field": "LS-BSA-RESULT-CODE"
+        },
+        {
+          "datatype": "PIC X(50)",
+          "description": "Source diagnostic text; a message naming SAR does not establish an actual SAR case or filing.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 28,
+              "excerpt_sha256": "2d57b40c4253e7972c8b3398649aa11346d4a590a26974726cd9097ca56efaa5",
+              "path": "src/BSACTRO.cob",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L28-L28",
+              "start_line": 28
+            }
+          ],
+          "name": "message",
+          "source_field": "LS-BSA-RESULT-MSG"
+        },
+        {
+          "datatype": "PIC X(1)",
+          "description": "Overloaded flag; preserve the operation when interpreting it.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 29,
+              "excerpt_sha256": "2ca0f6d19603ce3abd25eb6d9fe8f6eaa7946097a2a652616f8caa6ed4314151",
+              "path": "src/BSACTRO.cob",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L29-L29",
+              "start_line": 29
+            }
+          ],
+          "name": "required_flag",
+          "source_field": "LS-BSA-CTR-REQUIRED"
+        },
+        {
+          "datatype": "PIC S9(13)V99",
+          "description": "Result total copied by AGGR/STRC/SARQ; CHEK initializes this to zero.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 30,
+              "excerpt_sha256": "ba118fdf278e12b977fbbbc0c3fa4f4df8a099b6296978b9c36dc60c2a52616f",
+              "path": "src/BSACTRO.cob",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L30-L30",
+              "start_line": 30
+            }
+          ],
+          "name": "cash_in_total",
+          "source_field": "LS-BSA-CASH-IN-TOTAL"
+        },
+        {
+          "datatype": "PIC S9(13)V99",
+          "description": "Result total copied by AGGR/STRC/SARQ; CHEK initializes this to zero.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 31,
+              "excerpt_sha256": "06b7874aee47625a977ac1320dcd1e254111fa88feb63adeeeafb6fd0e50ea3e",
+              "path": "src/BSACTRO.cob",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L31-L31",
+              "start_line": 31
+            }
+          ],
+          "name": "cash_out_total",
+          "source_field": "LS-BSA-CASH-OUT-TOTAL"
+        }
+      ],
+      "uncertainties": [
+        "STRC setting required_flag=Y does not mean a CTR threshold was exceeded.",
+        "SARQ uses CTR-FILING-STATUS=P without consulting a separate SAR record."
+      ]
+    },
+    {
+      "@id": "urn:rose:object.cash_daily_aggregate",
+      "@type": "rose:ObjectType",
+      "description": "Customer/date cash-in and cash-out totals and counts represented in CTR-RECORD. This is a semantic facet of that record, distinct from its filing lifecycle facet.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 22,
+          "excerpt_sha256": "88b5f577d06c3c1a1d29bb2c5ffe5ee09d13b71a73d0234401c75a484aa22111",
+          "path": "copybooks/CPYCTR.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCTR.cpy#L10-L22",
+          "start_line": 10
+        },
+        {
+          "end_line": 175,
+          "excerpt_sha256": "ebd01cbc8bdf05c43e9a6cc4a8f12bae3a19bff1ad585cbc6d0d2d65cff0adbc",
+          "path": "src/BSACTRO.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L98-L175",
+          "start_line": 98
+        }
+      ],
+      "label": "Daily Cash Aggregate",
+      "properties": [
+        {
+          "datatype": "PIC 9(10)",
+          "description": "Customer component of the guarded aggregation key; zero is used as an initialization sentinel.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 10,
+              "excerpt_sha256": "b3ff7b4e808666df1d28014adf117eb549b70a54e2ddb68d4480dcf103da347f",
+              "path": "copybooks/CPYCTR.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCTR.cpy#L10-L10",
+              "start_line": 10
+            }
+          ],
+          "name": "customer_id",
+          "source_field": "CTR-CUST-ID"
+        },
+        {
+          "datatype": "PIC 9(8)",
+          "description": "Date component of the guarded aggregation key.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 18,
+              "excerpt_sha256": "cace2f8d7f54a811ab9e193aa73fb53a7a7e34868b2aadd1dac79ac0dbcc7140",
+              "path": "copybooks/CPYCTR.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCTR.cpy#L18-L18",
+              "start_line": 18
+            }
+          ],
+          "name": "transaction_date",
+          "source_field": "CTR-TXN-DATE"
+        },
+        {
+          "datatype": "PIC S9(13)V99",
+          "description": "Cash-in accumulator, evaluated separately from cash-out for threshold assessment.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 19,
+              "excerpt_sha256": "18270825b65417a4e340d248a1328478614b5103fdf6cbea410bb85368967c2f",
+              "path": "copybooks/CPYCTR.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCTR.cpy#L19-L19",
+              "start_line": 19
+            }
+          ],
+          "name": "cash_in_total",
+          "source_field": "CTR-CASH-IN-TOTAL"
+        },
+        {
+          "datatype": "PIC S9(13)V99",
+          "description": "Cash-out accumulator; not netted against cash-in for the threshold.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 20,
+              "excerpt_sha256": "ec549d4ab3bc050d4596660897b40fd2668b2536462d93e4fa5245bcafbd2330",
+              "path": "copybooks/CPYCTR.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCTR.cpy#L20-L20",
+              "start_line": 20
+            }
+          ],
+          "name": "cash_out_total",
+          "source_field": "CTR-CASH-OUT-TOTAL"
+        },
+        {
+          "datatype": "PIC 9(5)",
+          "description": "Count of I-direction events accumulated by AGGR.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 21,
+              "excerpt_sha256": "032e0bec5a4f87fc6352b18a33f99b977e41d494c5c33772069209938c4f2b5a",
+              "path": "copybooks/CPYCTR.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCTR.cpy#L21-L21",
+              "start_line": 21
+            }
+          ],
+          "name": "cash_in_count",
+          "source_field": "CTR-CASH-IN-COUNT"
+        },
+        {
+          "datatype": "PIC 9(5)",
+          "description": "Count of O-direction events accumulated by AGGR.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 22,
+              "excerpt_sha256": "926036e20c71f399ef42e05d669e9a4f9b2a726d5d1cabdc605fbd72887f9b9f",
+              "path": "copybooks/CPYCTR.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCTR.cpy#L22-L22",
+              "start_line": 22
+            }
+          ],
+          "name": "cash_out_count",
+          "source_field": "CTR-CASH-OUT-COUNT"
+        },
+        {
+          "datatype": "PIC X(1)",
+          "description": "Y suppresses CTR assessment after AGGR accumulation; it does not prevent accumulation.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 31,
+              "excerpt_sha256": "a3453724183d8d60704371db9fb3aa447de122920849a075a0b2cc494ddc0d0f",
+              "path": "copybooks/CPYCTR.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCTR.cpy#L31-L31",
+              "start_line": 31
+            }
+          ],
+          "name": "exempt",
+          "source_field": "CTR-EXEMPT-FLAG"
+        }
+      ],
+      "uncertainties": [
+        "No multi-customer store is implemented by this routine; caller must supply the correct aggregate record.",
+        "CTR-ACCOUNTS OCCURS 10 and CTR-NUM-ACCOUNTS are declared, but AGGR does not populate or deduplicate those account slots.",
+        "Duplicate cash-event replay and zero customer identifiers are not rejected by AGGR."
+      ]
+    },
+    {
+      "@id": "urn:rose:object.cash_event",
+      "@type": "rose:ObjectType",
+      "description": "BSACTRO caller input used by AGGR and CHEK. Its customer and date are aggregation keys; its account number is declared but not used by the aggregation paragraph.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 25,
+          "excerpt_sha256": "2283c074b8433cf6fc6c196f591c4522d8a61e1484d8863f07b00c1def665f7a",
+          "path": "src/BSACTRO.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L18-L25",
+          "start_line": 18
+        },
+        {
+          "end_line": 175,
+          "excerpt_sha256": "ee09936ae731954e1a9f436857a15aeb18fc4b09b915f769b5d8ba5134f605c8",
+          "path": "src/BSACTRO.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L93-L175",
+          "start_line": 93
+        }
+      ],
+      "label": "Cash Event Input",
+      "properties": [
+        {
+          "datatype": "PIC 9(10)",
+          "description": "Customer dimension for the aggregate guard.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 19,
+              "excerpt_sha256": "3e2b72f419be83bd1f3b27241e5be11189c90c9616ba5da42528a7e471fc830a",
+              "path": "src/BSACTRO.cob",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L19-L19",
+              "start_line": 19
+            }
+          ],
+          "name": "customer_id",
+          "source_field": "LS-BSA-CUST-ID"
+        },
+        {
+          "datatype": "PIC 9(8)",
+          "description": "Daily aggregation date supplied by caller.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 20,
+              "excerpt_sha256": "d92d10f7dc56ed53c7f228120a9b78b1df4386d147dad7f20b4b6bdaa574c514",
+              "path": "src/BSACTRO.cob",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L20-L20",
+              "start_line": 20
+            }
+          ],
+          "name": "transaction_date",
+          "source_field": "LS-BSA-TXN-DATE"
+        },
+        {
+          "datatype": "PIC S9(13)V99",
+          "description": "Signed cash amount; AGGR has no explicit positive-value validation.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 21,
+              "excerpt_sha256": "b506ddba71b46d6a329840a56157106fdfc3e9fccec82d24c954d1738a93fc65",
+              "path": "src/BSACTRO.cob",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L21-L21",
+              "start_line": 21
+            }
+          ],
+          "name": "cash_amount",
+          "source_field": "LS-BSA-CASH-AMOUNT"
+        },
+        {
+          "datatype": "PIC X(1)",
+          "description": "I adds cash-in, O adds cash-out when cash flag is Y.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 22,
+              "excerpt_sha256": "09be7640b459039e4c986b03ed8d4ac95ff17973207fddb6c7ecab7996ab0839",
+              "path": "src/BSACTRO.cob",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L22-L22",
+              "start_line": 22
+            }
+          ],
+          "name": "direction",
+          "source_field": "LS-BSA-CASH-DIRECTION"
+        },
+        {
+          "datatype": "PIC X(1)",
+          "description": "Only Y is accumulated by AGGR; CHEK excludes only the explicit N value.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 24,
+              "excerpt_sha256": "71709979396ab6d80a608a5e99585817bc2043df0fef83d217d04b90a3adb0f3",
+              "path": "src/BSACTRO.cob",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L24-L24",
+              "start_line": 24
+            }
+          ],
+          "name": "is_cash",
+          "source_field": "LS-BSA-IS-CASH"
+        },
+        {
+          "datatype": "PIC 9(12)",
+          "description": "Declared account context, unused by AGGR and not a bucket key.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 25,
+              "excerpt_sha256": "b6f8c3f9cd687b3dd7c29f3b0e0f249cdff2b4d2ef779841f139d5dd4010596d",
+              "path": "src/BSACTRO.cob",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L25-L25",
+              "start_line": 25
+            }
+          ],
+          "name": "account_number",
+          "source_field": "LS-BSA-ACCT-NUMBER"
+        }
+      ],
+      "uncertainties": [
+        "No evidenced adapter converts Transaction into CashEvent automatically.",
+        "Currency and business-day/time-zone policy are not represented in the input."
+      ]
+    },
+    {
+      "@id": "urn:rose:object.ctr_filing",
+      "@type": "rose:ObjectType",
+      "description": "Filing identity, timestamp and P/F/V lifecycle projection of CTR-RECORD managed by CTRFIL0. The FILE operation changes an in-memory record; no external submission is implemented here.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 34,
+          "excerpt_sha256": "f5316932fd71b69987d0d97c8862648cc34fbafb008f8d968b2720686dfbf4d4",
+          "path": "copybooks/CPYCTR.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCTR.cpy#L5-L34",
+          "start_line": 5
+        },
+        {
+          "end_line": 181,
+          "excerpt_sha256": "487afe08582cb6c20dbc781e5af23f78047052fb32b8df8eb15f69a317dac53a",
+          "path": "src/CTRFIL0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/CTRFIL0.cob#L64-L181",
+          "start_line": 64
+        }
+      ],
+      "label": "US CTR Filing State",
+      "properties": [
+        {
+          "datatype": "PIC 9(15)",
+          "description": "Process-local sequence assigned on CRTE; restart-safe uniqueness is not implemented.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 7,
+              "excerpt_sha256": "de03bb170fe01d98c2fb3355fc9df459bdb657192c3098fb33358ca181269b6f",
+              "path": "copybooks/CPYCTR.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCTR.cpy#L7-L7",
+              "start_line": 7
+            }
+          ],
+          "name": "filing_id",
+          "source_field": "CTR-FILING-ID"
+        },
+        {
+          "datatype": "PIC 9(8)",
+          "description": "Date stamped at creation; FILE updates timestamp, not this date field.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 8,
+              "excerpt_sha256": "bd5dba03b2e8eba25fe00dfa8195bd01a730455f94ff09c3d446dc8087e1baf1",
+              "path": "copybooks/CPYCTR.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCTR.cpy#L8-L8",
+              "start_line": 8
+            }
+          ],
+          "name": "filing_date",
+          "source_field": "CTR-FILING-DATE"
+        },
+        {
+          "datatype": "PIC 9(10)",
+          "description": "Nonzero required by CRTE and QURY.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 10,
+              "excerpt_sha256": "b3ff7b4e808666df1d28014adf117eb549b70a54e2ddb68d4480dcf103da347f",
+              "path": "copybooks/CPYCTR.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCTR.cpy#L10-L10",
+              "start_line": 10
+            }
+          ],
+          "name": "customer_id",
+          "source_field": "CTR-CUST-ID"
+        },
+        {
+          "datatype": "PIC 9(4)",
+          "description": "Declared branch context, not validated by CTRFIL0.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 29,
+              "excerpt_sha256": "b4972cc821f96d2321be4e7573671c1f60cf3dc1e6adfe54aac5449498987e98",
+              "path": "copybooks/CPYCTR.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCTR.cpy#L29-L29",
+              "start_line": 29
+            }
+          ],
+          "name": "branch_id",
+          "source_field": "CTR-BRANCH-ID"
+        },
+        {
+          "datatype": "PIC X(1)",
+          "description": "P and F are documented in the copybook; CTRFIL0 additionally writes V for void.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 32,
+              "excerpt_sha256": "19419966a3ab40fb2db2571ed8ddd4c4f52c0b6b785279b6a06e727c0583127c",
+              "path": "copybooks/CPYCTR.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCTR.cpy#L32-L32",
+              "start_line": 32
+            }
+          ],
+          "name": "status",
+          "source_field": "CTR-FILING-STATUS"
+        },
+        {
+          "datatype": "PIC 9(14)",
+          "description": "Fourteen-digit local date/time representation; no UTC offset retained.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 34,
+              "excerpt_sha256": "b6c324f533eac79d595e90ea53cec4015d2c6ed8713714730fdf0796ae4c1f11",
+              "path": "copybooks/CPYCTR.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCTR.cpy#L34-L34",
+              "start_line": 34
+            }
+          ],
+          "name": "timestamp",
+          "source_field": "CTR-FILING-TIMESTAMP"
+        }
+      ],
+      "uncertainties": [
+        "CRTE validates positive cash totals, not a 10,000 threshold, exemption policy or existing lifecycle status.",
+        "The copybook comment lists P/F/E but omits V used by executable VOID logic.",
+        "No FinCEN transport, acknowledgement, Italian UIF submission or legal compliance equivalence is evidenced."
+      ]
+    },
+    {
+      "@id": "urn:rose:object.customer",
+      "@type": "rose:ObjectType",
+      "description": "Customer information identity referenced by accounts and daily cash aggregation; customer identity verification logic is outside the selected executable slice.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 20,
+          "excerpt_sha256": "e5346067b185c47cae02780f99216db2fc3375e09cd88d6125d508dfef448a7b",
+          "path": "copybooks/CPYCIF.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCIF.cpy#L5-L20",
+          "start_line": 5
+        },
+        {
+          "end_line": 47,
+          "excerpt_sha256": "c23179610959e851382213cc0d5bc67d7a0b694c1633d3106ad916d7113b5ab4",
+          "path": "copybooks/CPYCIF.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCIF.cpy#L32-L47",
+          "start_line": 32
+        }
+      ],
+      "label": "Customer / CIF",
+      "properties": [
+        {
+          "datatype": "PIC 9(10)",
+          "description": "Ten-digit local CIF identifier; no equivalence to a legal identifier is asserted.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 7,
+              "excerpt_sha256": "4f6808eb1007222900275036e76a912353105a816ed040494e112dd7a26faa8a",
+              "path": "copybooks/CPYCIF.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCIF.cpy#L7-L7",
+              "start_line": 7
+            }
+          ],
+          "name": "customer_id",
+          "source_field": "CIF-CUST-ID"
+        },
+        {
+          "datatype": "PIC X(30)",
+          "description": "Source family/name component.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 9,
+              "excerpt_sha256": "697a88640196606cd67e95fd267d30e951ae7a69f5f628fbcef78179c8a62594",
+              "path": "copybooks/CPYCIF.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCIF.cpy#L9-L9",
+              "start_line": 9
+            }
+          ],
+          "name": "last_name",
+          "source_field": "CIF-NAME-LAST"
+        },
+        {
+          "datatype": "PIC X(20)",
+          "description": "Source given-name component.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 10,
+              "excerpt_sha256": "b1fd4584aeec55dad389a90d147353108a979cf2930fba5703f44a509cd9cfe3",
+              "path": "copybooks/CPYCIF.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCIF.cpy#L10-L10",
+              "start_line": 10
+            }
+          ],
+          "name": "first_name",
+          "source_field": "CIF-NAME-FIRST"
+        },
+        {
+          "datatype": "PIC X(1)",
+          "description": "Source type code for individual, joint, business, trust or estate.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 18,
+              "excerpt_sha256": "1be8aca1a3060fe47666d1d8f03a61435c7ebcf39164e9b8c23883e031d34da9",
+              "path": "copybooks/CPYCIF.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCIF.cpy#L18-L18",
+              "start_line": 18
+            }
+          ],
+          "name": "customer_type",
+          "source_field": "CIF-CUST-TYPE"
+        },
+        {
+          "datatype": "PIC X(1)",
+          "description": "US-oriented source status field; this slice does not execute a sanctions-screening action.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 42,
+              "excerpt_sha256": "18a504146c851eb4f23bf1de3f4c43795689c2724df2262cb8f6e36d13ba6f97",
+              "path": "copybooks/CPYCIF.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCIF.cpy#L42-L42",
+              "start_line": 42
+            }
+          ],
+          "name": "ofac_status",
+          "source_field": "CIF-OFAC-STATUS"
+        },
+        {
+          "datatype": "PIC 9(1)",
+          "description": "Source US BSA risk classification field.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 44,
+              "excerpt_sha256": "490011e2ad51f82c13ac42ab8fa312961725fe5ba2a00cb07542c1aa32e168e2",
+              "path": "copybooks/CPYCIF.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCIF.cpy#L44-L44",
+              "start_line": 44
+            }
+          ],
+          "name": "bsa_risk_rating",
+          "source_field": "CIF-BSA-RISK-RATING"
+        },
+        {
+          "datatype": "PIC X(1)",
+          "description": "CIF exemption sign; no automatic copy to CTR-EXEMPT-FLAG is established in this slice.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 46,
+              "excerpt_sha256": "b8fec937fc52387d54c7b41ef19572dc43193042d09a99c4dd50ea4a5e1dde99",
+              "path": "copybooks/CPYCIF.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCIF.cpy#L46-L46",
+              "start_line": 46
+            }
+          ],
+          "name": "ctr_exempt",
+          "source_field": "CIF-CTR-EXEMPT"
+        }
+      ],
+      "uncertainties": [
+        "Customer-key referential integrity and CIF-to-CTR exemption propagation are caller or surrounding-system concerns in this slice."
+      ]
+    },
+    {
+      "@id": "urn:rose:object.gl_account",
+      "@type": "rose:ObjectType",
+      "description": "One general-ledger record with normal balance direction, current balance and period debit/credit accumulators.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 33,
+          "excerpt_sha256": "5e12085e57327c7f40a8a0734b29cba53b11d66307d1e0926553662717663b37",
+          "path": "copybooks/CPYGL.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYGL.cpy#L5-L33",
+          "start_line": 5
+        },
+        {
+          "end_line": 226,
+          "excerpt_sha256": "1f34e1543d45cc4c090cc897af62ed4260c820ff56c6056c32de46216cc978dd",
+          "path": "src/GLPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L98-L226",
+          "start_line": 98
+        }
+      ],
+      "label": "GL Account",
+      "properties": [
+        {
+          "datatype": "PIC 9(10)",
+          "description": "GL account number, compared with the entry opposite-side number to choose sign.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 7,
+              "excerpt_sha256": "af777fcd957e83ba033cb7cde6ef6258a3ecbf1bbad4ae519f82f1e1e4c1f2cb",
+              "path": "copybooks/CPYGL.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYGL.cpy#L7-L7",
+              "start_line": 7
+            }
+          ],
+          "name": "account_number",
+          "source_field": "GL-ACCOUNT-NUM"
+        },
+        {
+          "datatype": "PIC X(1)",
+          "description": "Source account class: asset, liability, equity, income or expense.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 10,
+              "excerpt_sha256": "33a5afe0a3950fb78f6e0f998815f71e77e7b6c10791d7fb2f28dcbe7f03b364",
+              "path": "copybooks/CPYGL.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYGL.cpy#L10-L10",
+              "start_line": 10
+            }
+          ],
+          "name": "account_type",
+          "source_field": "GL-ACCT-TYPE"
+        },
+        {
+          "datatype": "PIC X(1)",
+          "description": "D/C sign convention for increasing or decreasing current balance.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 15,
+              "excerpt_sha256": "d47efe37e5009f6d0d5e7574f347b57080f0a168b1e4a5bea8057484e05316df",
+              "path": "copybooks/CPYGL.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYGL.cpy#L15-L15",
+              "start_line": 15
+            }
+          ],
+          "name": "normal_balance",
+          "source_field": "GL-NORMAL-BALANCE"
+        },
+        {
+          "datatype": "PIC X(6)",
+          "description": "US Call Report line tag assigned by source lookup; no Italian reporting equivalence.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 17,
+              "excerpt_sha256": "9c0e8664af9a7283cf0af226337b4bf47bbee7c3741a314e36731604fdd03317",
+              "path": "copybooks/CPYGL.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYGL.cpy#L17-L17",
+              "start_line": 17
+            }
+          ],
+          "name": "call_report_line",
+          "source_field": "GL-CALL-RPT-LINE"
+        },
+        {
+          "datatype": "PIC S9(15)V99",
+          "description": "Signed GL balance in the account normal-balance convention.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 19,
+              "excerpt_sha256": "e4989bb290ad3e6e9fe40d4deb1bfafb6c8341a61f8a82073790539fb22d3e31",
+              "path": "copybooks/CPYGL.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYGL.cpy#L19-L19",
+              "start_line": 19
+            }
+          ],
+          "name": "current_balance",
+          "source_field": "GL-CURRENT-BAL"
+        },
+        {
+          "datatype": "PIC S9(15)V99",
+          "description": "Month-to-date debit accumulation.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 20,
+              "excerpt_sha256": "5359fceb1b203cec9cdc2c41767db72cfbb3bb84eaae486d50e92990d7bd90cd",
+              "path": "copybooks/CPYGL.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYGL.cpy#L20-L20",
+              "start_line": 20
+            }
+          ],
+          "name": "mtd_debits",
+          "source_field": "GL-MTD-DEBITS"
+        },
+        {
+          "datatype": "PIC S9(15)V99",
+          "description": "Month-to-date credit accumulation.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 21,
+              "excerpt_sha256": "f81ed08f676b7a61ce7e557f9f55a0bb667d7adb9e795dd2c8954ca6114fcdd5",
+              "path": "copybooks/CPYGL.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYGL.cpy#L21-L21",
+              "start_line": 21
+            }
+          ],
+          "name": "mtd_credits",
+          "source_field": "GL-MTD-CREDITS"
+        },
+        {
+          "datatype": "PIC S9(15)V99",
+          "description": "Year-to-date debit accumulation.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 22,
+              "excerpt_sha256": "6759f2cb20db55f38f107c67a27d5710487c605506bbebfb13ef4be97d163bea",
+              "path": "copybooks/CPYGL.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYGL.cpy#L22-L22",
+              "start_line": 22
+            }
+          ],
+          "name": "ytd_debits",
+          "source_field": "GL-YTD-DEBITS"
+        },
+        {
+          "datatype": "PIC S9(15)V99",
+          "description": "Year-to-date credit accumulation.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 23,
+              "excerpt_sha256": "b03655ea872d9e9d6e49a29176051a961f33b15d01620c1a1c07118a912c692f",
+              "path": "copybooks/CPYGL.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYGL.cpy#L23-L23",
+              "start_line": 23
+            }
+          ],
+          "name": "ytd_credits",
+          "source_field": "GL-YTD-CREDITS"
+        },
+        {
+          "datatype": "PIC X(1)",
+          "description": "POST explicitly rejects I and F; other status values are not rejected by these two checks.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 28,
+              "excerpt_sha256": "853ac0aef6f0f36f3c5a5246847b8bd7fffe9685e85f2a5624031a406b5a56ea",
+              "path": "copybooks/CPYGL.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYGL.cpy#L28-L28",
+              "start_line": 28
+            }
+          ],
+          "name": "status",
+          "source_field": "GL-STATUS"
+        },
+        {
+          "datatype": "PIC 9(8)",
+          "description": "Updated on successful POST.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 32,
+              "excerpt_sha256": "0159629ffa33d02c9e23fe526b767b841557acef27851a20dfa5d86394863ce6",
+              "path": "copybooks/CPYGL.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYGL.cpy#L32-L32",
+              "start_line": 32
+            }
+          ],
+          "name": "last_post_date",
+          "source_field": "GL-LAST-POST-DATE"
+        }
+      ],
+      "uncertainties": [
+        "POST does not reject a GL account whose number matches neither entry side; it defaults to its normal side."
+      ]
+    },
+    {
+      "@id": "urn:rose:object.gl_entry",
+      "@type": "rose:ObjectType",
+      "description": "GLPOST0 linkage input describing a debit account, credit account, amount, description and posting date. POST operates on one separately supplied GLAccount record.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 21,
+          "excerpt_sha256": "886b3661551725af37a0bf53b5d123b369892ff99557218cb1a4c7a0df565e6f",
+          "path": "src/GLPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L16-L21",
+          "start_line": 16
+        },
+        {
+          "end_line": 36,
+          "excerpt_sha256": "265cfac78f0f9ad090f3f57ff4adb7207701ec79d2034838483aad720da4058d",
+          "path": "src/GLPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L32-L36",
+          "start_line": 32
+        },
+        {
+          "end_line": 64,
+          "excerpt_sha256": "3df14aa48108a9fcea43dbb089614d4f579df66f681688123ecc4bc62fb2ad3e",
+          "path": "src/GLPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L54-L64",
+          "start_line": 54
+        }
+      ],
+      "label": "GL Entry Input",
+      "properties": [
+        {
+          "datatype": "PIC 9(10)",
+          "description": "Declared debit-side GL account number.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 17,
+              "excerpt_sha256": "008fea3b5a5d45e760d614af17119331004ca5e2f4de312d06ed24cf08e36851",
+              "path": "src/GLPOST0.cob",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L17-L17",
+              "start_line": 17
+            }
+          ],
+          "name": "debit_account",
+          "source_field": "LS-GLE-DR-ACCT"
+        },
+        {
+          "datatype": "PIC 9(10)",
+          "description": "Declared credit-side GL account number.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 18,
+              "excerpt_sha256": "3afdc8a008c32da1f5d42a5bd0a567edc9760a4b30b5bba9176438230190f477",
+              "path": "src/GLPOST0.cob",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L18-L18",
+              "start_line": 18
+            }
+          ],
+          "name": "credit_account",
+          "source_field": "LS-GLE-CR-ACCT"
+        },
+        {
+          "datatype": "PIC S9(15)V99",
+          "description": "Signed amount field with two fractional digits; POST requires a positive value.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 19,
+              "excerpt_sha256": "24ee5698e6fbd8b8f18dde294bbc1ee0812f255668a87273159cc325761877c0",
+              "path": "src/GLPOST0.cob",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L19-L19",
+              "start_line": 19
+            }
+          ],
+          "name": "amount",
+          "source_field": "LS-GLE-AMOUNT"
+        },
+        {
+          "datatype": "PIC X(40)",
+          "description": "Entry description supplied by caller.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 20,
+              "excerpt_sha256": "e4c86c6c0b0c67718f50614cb6584ba98c4ba1bb1bad9404ab51ab7525614457",
+              "path": "src/GLPOST0.cob",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L20-L20",
+              "start_line": 20
+            }
+          ],
+          "name": "description",
+          "source_field": "LS-GLE-DESCRIPTION"
+        },
+        {
+          "datatype": "PIC 9(8)",
+          "description": "Date copied to the supplied GL account after successful POST.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 21,
+              "excerpt_sha256": "1849202fe632b389f8072fd0471eb17f2b85cd263ee9924f4e3dba6c86115c03",
+              "path": "src/GLPOST0.cob",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L21-L21",
+              "start_line": 21
+            }
+          ],
+          "name": "posting_date",
+          "source_field": "LS-GLE-POST-DATE"
+        }
+      ],
+      "uncertainties": [
+        "The two account references do not create a persisted journal object or an atomic two-sided transaction in this source routine."
+      ]
+    },
+    {
+      "@id": "urn:rose:object.gl_instruction",
+      "@type": "rose:ObjectType",
+      "description": "The LS-GL-ENTRIES output group produced by TXNPOST0: a debit account, credit account, amount and flag. This represents a posting instruction, not evidence that either ledger side was posted.",
+      "epistemic_status": "inferred",
+      "evidence": [
+        {
+          "end_line": 20,
+          "excerpt_sha256": "93d7ce096743b81153f32d817fb9ea576d58e6f3721d6c0a06ae88443daea44c",
+          "path": "src/TXNPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L16-L20",
+          "start_line": 16
+        },
+        {
+          "end_line": 310,
+          "excerpt_sha256": "f33e6da56e29e5d0536816644879a43a4503752bed89a33f94fb5f0088ee8508",
+          "path": "src/TXNPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L260-L310",
+          "start_line": 260
+        }
+      ],
+      "label": "GL Instruction",
+      "properties": [
+        {
+          "datatype": "PIC 9(10)",
+          "description": "GL debit account selected by transaction type and deposit subtype.",
+          "epistemic_status": "inferred",
+          "evidence": [
+            {
+              "end_line": 17,
+              "excerpt_sha256": "1632d7fe3df066aecc05ac6162623b85e894853380158350553e4922ebe2c260",
+              "path": "src/TXNPOST0.cob",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L17-L17",
+              "start_line": 17
+            }
+          ],
+          "name": "debit_account",
+          "source_field": "LS-GL-DR-ACCOUNT"
+        },
+        {
+          "datatype": "PIC 9(10)",
+          "description": "GL credit account selected by transaction type and deposit subtype.",
+          "epistemic_status": "inferred",
+          "evidence": [
+            {
+              "end_line": 18,
+              "excerpt_sha256": "e497f18601982e871537908eecb263586bbdf685d98632080ce01963db448e7d",
+              "path": "src/TXNPOST0.cob",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L18-L18",
+              "start_line": 18
+            }
+          ],
+          "name": "credit_account",
+          "source_field": "LS-GL-CR-ACCOUNT"
+        },
+        {
+          "datatype": "PIC S9(13)V99",
+          "description": "Transaction amount copied to the instruction.",
+          "epistemic_status": "inferred",
+          "evidence": [
+            {
+              "end_line": 19,
+              "excerpt_sha256": "487549037c0f33c68dad6753b528bde03de0c20e01c209b4113361dad347d555",
+              "path": "src/TXNPOST0.cob",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L19-L19",
+              "start_line": 19
+            }
+          ],
+          "name": "amount",
+          "source_field": "LS-GL-AMOUNT"
+        },
+        {
+          "datatype": "PIC X(1)",
+          "description": "Set to Y after mapping, including suspense mappings; does not certify ledger posting.",
+          "epistemic_status": "inferred",
+          "evidence": [
+            {
+              "end_line": 20,
+              "excerpt_sha256": "8f6e31a490ade5d429def4587c0af9f53e3d7df6c0c077ca65b5c86caeb9fc91",
+              "path": "src/TXNPOST0.cob",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L20-L20",
+              "start_line": 20
+            }
+          ],
+          "name": "post_flag",
+          "source_field": "LS-GL-POST-FLAG"
+        }
+      ],
+      "uncertainties": [
+        "No TXNPOST0 CALL to GLPOST0 exists. The output group differs from the GLPOST0 input group and requires an explicit caller adapter."
+      ]
+    },
+    {
+      "@id": "urn:rose:object.transaction",
+      "@type": "rose:ObjectType",
+      "description": "Caller-supplied movement record, including account routing, debit/credit direction, dates and before/after balance snapshots. Successful TXNPOST0 completion does not set all declared transaction lifecycle fields.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 64,
+          "excerpt_sha256": "26f3041ef02f406d484fcf970d466a17f4890b553cfb78785967520662444035",
+          "path": "copybooks/CPYTXN.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYTXN.cpy#L5-L64",
+          "start_line": 5
+        },
+        {
+          "end_line": 51,
+          "excerpt_sha256": "a5dd2e86959bf47ec2856da42efa92639075f84190ed9af675a4b2eb9cfc7094",
+          "path": "src/TXNPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L25-L51",
+          "start_line": 25
+        }
+      ],
+      "label": "Transaction",
+      "properties": [
+        {
+          "datatype": "PIC 9(15)",
+          "description": "Declared transaction identifier; TXNPOST0 does not generate or validate it.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 7,
+              "excerpt_sha256": "e2d594e615896f30178ade6ad7f4e9f9d9a0838d43efa8ce26bf9e911d85dc21",
+              "path": "copybooks/CPYTXN.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYTXN.cpy#L7-L7",
+              "start_line": 7
+            }
+          ],
+          "name": "transaction_id",
+          "source_field": "TXN-ID"
+        },
+        {
+          "datatype": "PIC 9(5)",
+          "description": "Declared sequence component.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 8,
+              "excerpt_sha256": "f186e908df1b4b24b359f9e8485723441291915832073298d7558bdcc110b7a0",
+              "path": "copybooks/CPYTXN.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYTXN.cpy#L8-L8",
+              "start_line": 8
+            }
+          ],
+          "name": "sequence",
+          "source_field": "TXN-SEQUENCE"
+        },
+        {
+          "datatype": "PIC 9(12)",
+          "description": "Declared account routing reference; not compared with ACCT-NUMBER in TXNPOST0.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 10,
+              "excerpt_sha256": "efd757ac20f93fcbb66c125e3cddf27dd570c4ff3aed8f7fb48769b605642480",
+              "path": "copybooks/CPYTXN.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYTXN.cpy#L10-L10",
+              "start_line": 10
+            }
+          ],
+          "name": "account_number",
+          "source_field": "TXN-ACCT-NUMBER"
+        },
+        {
+          "datatype": "PIC X(3)",
+          "description": "Source movement type; GL mapping uses this independently of TXN-DR-CR.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 19,
+              "excerpt_sha256": "cb29c570059a7fd91d1b700e7ae90e3189c500ff331f15338ca5760b28f8ca8d",
+              "path": "copybooks/CPYTXN.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYTXN.cpy#L19-L19",
+              "start_line": 19
+            }
+          ],
+          "name": "type",
+          "source_field": "TXN-TYPE"
+        },
+        {
+          "datatype": "PIC S9(13)V99",
+          "description": "Positive amount required by TXNPOST0; no currency field in this layout.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 26,
+              "excerpt_sha256": "3081361b4cf7b28407b6a72065a9f011b678318065b6a2667ba63b797ab47175",
+              "path": "copybooks/CPYTXN.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYTXN.cpy#L26-L26",
+              "start_line": 26
+            }
+          ],
+          "name": "amount",
+          "source_field": "TXN-AMOUNT"
+        },
+        {
+          "datatype": "PIC X(1)",
+          "description": "D subtracts from customer ledger, C adds; REV swaps this field before account checks.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 27,
+              "excerpt_sha256": "70512b244c59896fee5bc104c08bb19cc87af29276114905d304ef55b5232c97",
+              "path": "copybooks/CPYTXN.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYTXN.cpy#L27-L27",
+              "start_line": 27
+            }
+          ],
+          "name": "debit_credit",
+          "source_field": "TXN-DR-CR"
+        },
+        {
+          "datatype": "PIC S9(13)V99",
+          "description": "Customer ledger snapshot captured before arithmetic.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 32,
+              "excerpt_sha256": "bc5d6b04839390232bf2a39af176609a9d6f36ffbf876db3f211d2009a20ada8",
+              "path": "copybooks/CPYTXN.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYTXN.cpy#L32-L32",
+              "start_line": 32
+            }
+          ],
+          "name": "ledger_before",
+          "source_field": "TXN-BAL-BEFORE"
+        },
+        {
+          "datatype": "PIC S9(13)V99",
+          "description": "Customer ledger snapshot captured after arithmetic.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 33,
+              "excerpt_sha256": "081344e52f8f8f4b271afb8ceece36c55fbeef1c1af578bd387dc311cac73c95",
+              "path": "copybooks/CPYTXN.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYTXN.cpy#L33-L33",
+              "start_line": 33
+            }
+          ],
+          "name": "ledger_after",
+          "source_field": "TXN-BAL-AFTER"
+        },
+        {
+          "datatype": "PIC S9(13)V99",
+          "description": "Available balance snapshot captured before arithmetic.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 34,
+              "excerpt_sha256": "0245ce1064e824d4ee0a6fa96e3990e3072a9041e62f14559bebc1b4e7067502",
+              "path": "copybooks/CPYTXN.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYTXN.cpy#L34-L34",
+              "start_line": 34
+            }
+          ],
+          "name": "available_before",
+          "source_field": "TXN-AVAIL-BEFORE"
+        },
+        {
+          "datatype": "PIC S9(13)V99",
+          "description": "Available balance snapshot captured after arithmetic.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 35,
+              "excerpt_sha256": "570dda699a0c77fc5fc879edecb9b260dec9c36b597368315af36354e9d1e41e",
+              "path": "copybooks/CPYTXN.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYTXN.cpy#L35-L35",
+              "start_line": 35
+            }
+          ],
+          "name": "available_after",
+          "source_field": "TXN-AVAIL-AFTER"
+        },
+        {
+          "datatype": "PIC 9(8)",
+          "description": "Eight-digit posting date supplied by caller; calendar validity is not checked here.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 37,
+              "excerpt_sha256": "ba9409a8966332726feaf621f37f9693ad0fb90ad47aca78510cb8d0f5e0428c",
+              "path": "copybooks/CPYTXN.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYTXN.cpy#L37-L37",
+              "start_line": 37
+            }
+          ],
+          "name": "posting_date",
+          "source_field": "TXN-POST-DATE"
+        },
+        {
+          "datatype": "PIC X(1)",
+          "description": "Declared lifecycle status; no TXNPOST0 assignment is evidenced.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 42,
+              "excerpt_sha256": "e1a9b6cc3955d2617b1acd3001ea7b927c9be87f0506f6a9baad62abadcd5161",
+              "path": "copybooks/CPYTXN.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYTXN.cpy#L42-L42",
+              "start_line": 42
+            }
+          ],
+          "name": "status",
+          "source_field": "TXN-STATUS"
+        },
+        {
+          "datatype": "PIC 9(15)",
+          "description": "Declared original/reversal identifier; no retrieval or validation of the original transaction occurs here.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 46,
+              "excerpt_sha256": "91af6def0ad64350fb249dc98b36dcc018154e6948046dffaa27b652f0d22583",
+              "path": "copybooks/CPYTXN.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYTXN.cpy#L46-L46",
+              "start_line": 46
+            }
+          ],
+          "name": "reversal_transaction_id",
+          "source_field": "TXN-REVERSAL-TXN-ID"
+        },
+        {
+          "datatype": "PIC X(1)",
+          "description": "Y iff TXN-CASH-AMOUNT is strictly above source threshold; no aggregation or exemption check in this operation.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 53,
+              "excerpt_sha256": "6eb9dd3ba4e125b1c56f3bb23e69f64321e47e77afa7435fa3d848a6d2cd8804",
+              "path": "copybooks/CPYTXN.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYTXN.cpy#L53-L53",
+              "start_line": 53
+            }
+          ],
+          "name": "ctr_reportable",
+          "source_field": "TXN-CTR-REPORTABLE"
+        },
+        {
+          "datatype": "PIC S9(13)V99",
+          "description": "Separate cash amount used by the local CHECK-CTR paragraph.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 56,
+              "excerpt_sha256": "d12ace44ba48794e7a3425c85ba38b04c53fd896be98246ab93857b64737931a",
+              "path": "copybooks/CPYTXN.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYTXN.cpy#L56-L56",
+              "start_line": 56
+            }
+          ],
+          "name": "cash_amount",
+          "source_field": "TXN-CASH-AMOUNT"
+        },
+        {
+          "datatype": "PIC X(1)",
+          "description": "Caller acknowledgement flag for a pre-maturity CD debit.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 62,
+              "excerpt_sha256": "5c39bf64d4b046392d8f331094808425b5392fd42849f5435dd98183e54a0048",
+              "path": "copybooks/CPYTXN.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYTXN.cpy#L62-L62",
+              "start_line": 62
+            }
+          ],
+          "name": "cd_early_withdrawal_ack",
+          "source_field": "TXN-CD-EARLY-WD"
+        },
+        {
+          "datatype": "PIC S9(9)V99",
+          "description": "Computed CD penalty amount; TXNPOST0 does not post a separate penalty transaction.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 64,
+              "excerpt_sha256": "facf1b33472199100edc76a0ade5c40afb97e26c398b25bbc66815a387f8b9c1",
+              "path": "copybooks/CPYTXN.cpy",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYTXN.cpy#L64-L64",
+              "start_line": 64
+            }
+          ],
+          "name": "cd_penalty_amount",
+          "source_field": "TXN-CD-PENALTY-AMT"
+        }
+      ],
+      "uncertainties": [
+        "The model does not infer payment settlement, transaction persistence, idempotency or a lifecycle status transition from the routine success code."
+      ]
+    },
+    {
+      "@id": "urn:rose:object.trial_balance",
+      "@type": "rose:ObjectType",
+      "description": "Caller totals, computed difference and equality flag. When both totals are zero, GLPOST0 substitutes the supplied single GL record month-to-date totals.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 27,
+          "excerpt_sha256": "515acf9d01e74ee4f7814ac7557d39c17dfbae7a6fce6b9dd0fbf56ddf906208",
+          "path": "src/GLPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L23-L27",
+          "start_line": 23
+        },
+        {
+          "end_line": 264,
+          "excerpt_sha256": "e31137c43188e08903afb0991bf3b2ff413915d27ff6bf4925ea41a27728263e",
+          "path": "src/GLPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L241-L264",
+          "start_line": 241
+        }
+      ],
+      "label": "Trial Balance Calculation",
+      "properties": [
+        {
+          "datatype": "PIC S9(15)V99",
+          "description": "Caller total or single-record fallback debit total.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 24,
+              "excerpt_sha256": "d8d3a3a9915ca7e3d09dfd1c058deb2b61d5d90586ab1268767fb5d9aa7f1f62",
+              "path": "src/GLPOST0.cob",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L24-L24",
+              "start_line": 24
+            }
+          ],
+          "name": "total_debits",
+          "source_field": "LS-TB-TOTAL-DEBITS"
+        },
+        {
+          "datatype": "PIC S9(15)V99",
+          "description": "Caller total or single-record fallback credit total.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 25,
+              "excerpt_sha256": "f1f916674e2d0bc1d6a40cc99b8ecf52b3ef89f2c4201c13d87a06fdb06ee452",
+              "path": "src/GLPOST0.cob",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L25-L25",
+              "start_line": 25
+            }
+          ],
+          "name": "total_credits",
+          "source_field": "LS-TB-TOTAL-CREDITS"
+        },
+        {
+          "datatype": "PIC S9(15)V99",
+          "description": "Total debits minus total credits.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 26,
+              "excerpt_sha256": "1e6e2a4d54a50fd9242b97df4503b6e6d9e01482d0fce191c86d4764c4fcdacc",
+              "path": "src/GLPOST0.cob",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L26-L26",
+              "start_line": 26
+            }
+          ],
+          "name": "difference",
+          "source_field": "LS-TB-DIFFERENCE"
+        },
+        {
+          "datatype": "PIC X(1)",
+          "description": "Y means the supplied/fallback arithmetic difference is zero; it does not attest complete ledger coverage.",
+          "epistemic_status": "observed",
+          "evidence": [
+            {
+              "end_line": 27,
+              "excerpt_sha256": "3518eebb59d75b85f0cc6fc5ffb207d2f474ffb3f093cd5f31e026bdb2df4cd2",
+              "path": "src/GLPOST0.cob",
+              "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L27-L27",
+              "start_line": 27
+            }
+          ],
+          "name": "is_balanced",
+          "source_field": "LS-TB-IS-BALANCED"
+        }
+      ],
+      "uncertainties": [
+        "EODPROC0 initializes the supplied GL record and totals to zero immediately before TBAL; this path cannot demonstrate reconciled ledger completeness."
+      ]
+    },
+    {
+      "@id": "urn:rose:rule.audit_record_preparation",
+      "@type": "rose:BusinessRule",
+      "description": "WRIT stamps timestamp, process-local ID and sequence=1 then returns success. READ only checks that entity key is nonblank. EODPROC0 provides account identity and fixed E0000 audit result and does not inspect the logger result after calling it.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 91,
+          "excerpt_sha256": "8ab9519517fcc4ad918a8735893a06f90a9efd841a127731d7f7e22712f9367b",
+          "path": "src/AUDTLOG0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/AUDTLOG0.cob#L56-L91",
+          "start_line": 56
+        },
+        {
+          "end_line": 400,
+          "excerpt_sha256": "7ade84dc0e2a6280069f040a9e6e167ab129ca03049554d6371dcf29ce864d79",
+          "path": "src/EODPROC0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/EODPROC0.cob#L387-L400",
+          "start_line": 387
+        }
+      ],
+      "label": "Audit annotation without durable logging",
+      "uncertainties": [
+        "No storage I/O, append-only protection, retrieval, retention or before/after capture is implemented by AUDTLOG0.",
+        "EOD audit result text may not reflect earlier account-processing errors."
+      ]
+    },
+    {
+      "@id": "urn:rose:rule.bsa_contextual_signals",
+      "@type": "rose:BusinessRule",
+      "description": "STRC combines cash-in and cash-out and flags E0082/Y when the sum is within 8000.00 through 9999.99 inclusive and combined count > 1. SARQ sets the same required flag Y when CTR-FILING-STATUS=P. These are distinct meanings of an overloaded result field.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 241,
+          "excerpt_sha256": "132280b5d7d7a3e56dde17ee817384d5c9a423be903e794fd6ff4fda356d6b3e",
+          "path": "src/BSACTRO.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L182-L241",
+          "start_line": 182
+        },
+        {
+          "end_line": 14,
+          "excerpt_sha256": "4e56a180f8964f10a259fe55e2c8cc82cf28c27537a7895156ef17e65429c1aa",
+          "path": "copybooks/CPYCONST.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCONST.cpy#L11-L14",
+          "start_line": 11
+        }
+      ],
+      "label": "Operation-specific SAR signals",
+      "uncertainties": [
+        "The source heuristic is not a verified legal rule or a general suspicious-activity detector.",
+        "SARQ does not retrieve a separate SAR record; pending CTR status is interpreted as a pending SAR signal.",
+        "An Italian SOS cannot be inferred from either flag."
+      ]
+    },
+    {
+      "@id": "urn:rose:rule.bsa_ctr_assessment",
+      "@type": "rose:BusinessRule",
+      "description": "CHEK excludes explicit exempt=Y and is_cash=N before checking single amount and existing directional totals. AGGR accumulates first and then returns without threshold assessment for exempt=Y. Otherwise each path marks required when a checked amount or a directional total is strictly greater than 10000.00; incoming and outgoing totals are not netted or added for CTR threshold comparison.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 88,
+          "excerpt_sha256": "0f6f148b311f2efa0337a402b35ef9947f2a6b853ffd7f26c77307c4e26154e4",
+          "path": "src/BSACTRO.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L56-L88",
+          "start_line": 56
+        },
+        {
+          "end_line": 175,
+          "excerpt_sha256": "47037d6a3f3c8459a9324a67b7c1a39657c1c50981373b1633cbd9b20777da72",
+          "path": "src/BSACTRO.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L154-L175",
+          "start_line": 154
+        },
+        {
+          "end_line": 8,
+          "excerpt_sha256": "7be713b1b12cc5eb7dca79100bff93ce374480bc9188b4f0463575a600d9a7b9",
+          "path": "copybooks/CPYCONST.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCONST.cpy#L7-L8",
+          "start_line": 7
+        }
+      ],
+      "label": "Separate directional CTR threshold assessment",
+      "uncertainties": [
+        "CHEK excludes only the explicit N cash flag; other non-Y values are not rejected before threshold assessment.",
+        "No currency validation or Italian regulatory mapping is implemented by these branches."
+      ]
+    },
+    {
+      "@id": "urn:rose:rule.bsa_customer_day_key",
+      "@type": "rose:BusinessRule",
+      "description": "AGGR initializes CTR-CUST-ID and CTR-TXN-DATE when CTR-CUST-ID=0; otherwise both must match the input or it returns E0002. This guard executes before the cash flag check. Account number is not part of the key.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 114,
+          "excerpt_sha256": "dc5efc1c21e67335a12f8bdf7f4b7484a13a06590892ddc7b23d6c3d94715abb",
+          "path": "src/BSACTRO.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L98-L114",
+          "start_line": 98
+        },
+        {
+          "end_line": 25,
+          "excerpt_sha256": "2283c074b8433cf6fc6c196f591c4522d8a61e1484d8863f07b00c1def665f7a",
+          "path": "src/BSACTRO.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L18-L25",
+          "start_line": 18
+        }
+      ],
+      "label": "Customer/date aggregation guard",
+      "uncertainties": [
+        "An input customer ID of zero is not rejected and leaves the initialization sentinel in use.",
+        "A first non-cash input can stamp customer/date even though it contributes no amount."
+      ]
+    },
+    {
+      "@id": "urn:rose:rule.bsa_directional_accumulation",
+      "@type": "rose:BusinessRule",
+      "description": "For LS-BSA-IS-CASH=Y, I adds amount and increments cash-in count, O adds amount and increments cash-out count; another direction returns E0089. Values other than Y do not accumulate. Size errors return E0040.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 155,
+          "excerpt_sha256": "d4c23e38176007aafdcf6b12f691e305490926ddaafbf3c2aa4c8039b4287f09",
+          "path": "src/BSACTRO.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L114-L155",
+          "start_line": 114
+        }
+      ],
+      "label": "Directional cash accumulation",
+      "uncertainties": [
+        "No positive-amount check, duplicate-event check or account-list population occurs in this paragraph.",
+        "A count overflow can occur after its amount accumulator has already changed; no compensating rollback is implemented."
+      ]
+    },
+    {
+      "@id": "urn:rose:rule.ctr_create",
+      "@type": "rose:BusinessRule",
+      "description": "CRTE requires nonzero customer ID and at least one positive directional cash total. It assigns the next process-local filing ID, stamps current date/time and sets P. It does not check a 10000 threshold, exemption or a previous filing status.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 107,
+          "excerpt_sha256": "1346e3a82966d057331d41b6c9e16031eb2922dede1b6bd0d87c2142bd1db68a",
+          "path": "src/CTRFIL0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/CTRFIL0.cob#L64-L107",
+          "start_line": 64
+        }
+      ],
+      "label": "Create pending CTR state",
+      "uncertainties": [
+        "The header comment at line 7 says >=10000, but executable CRTE does not enforce that threshold; threshold branches in TXNPOST0/BSACTRO use >.",
+        "CRTE is not idempotent and does not ensure filing completeness or transport acceptance."
+      ]
+    },
+    {
+      "@id": "urn:rose:rule.ctr_lifecycle",
+      "@type": "rose:BusinessRule",
+      "description": "FILE rejects F with E0005 and any other non-P state with E0004; otherwise it sets F and updates timestamp. VOID rejects F with E0006 and any other non-P state with E0004; otherwise it sets V. QURY requires a nonzero customer ID and returns the supplied record unchanged.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 181,
+          "excerpt_sha256": "5f6403dcec59fa0ee42fb5249d8556faf94e5d25cedc7557c12b6028d1229aa7",
+          "path": "src/CTRFIL0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/CTRFIL0.cob#L113-L181",
+          "start_line": 113
+        }
+      ],
+      "label": "Pending-to-filed or pending-to-void transitions",
+      "uncertainties": [
+        "The FILE message says filed with FinCEN, but the executable paragraph only changes linkage state and return values.",
+        "The model does not equate the US CTR lifecycle with Italian UIF reporting."
+      ]
+    },
+    {
+      "@id": "urn:rose:rule.gl_local_rollback",
+      "@type": "rose:BusinessRule",
+      "description": "A month-to-date accumulator size error restores the saved GL current balance. A year-to-date accumulator size error restores the saved current balance and corresponding month-to-date accumulator. On successful arithmetic the routine maps the US Call Report line and copies posting date.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 159,
+          "excerpt_sha256": "846674a4ab50b0ba868f13b54c1020954c0303b3bb4e352d5bd60b334edd4483",
+          "path": "src/GLPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L104-L159",
+          "start_line": 104
+        },
+        {
+          "end_line": 220,
+          "excerpt_sha256": "5fa4ad3079c03ba0148800be65f7eba9d8cffec10b30a2fe1f4359883c3e20a7",
+          "path": "src/GLPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L165-L220",
+          "start_line": 165
+        },
+        {
+          "end_line": 236,
+          "excerpt_sha256": "4cb174e3493618d7d42c07093a00a3ab2eed53f3532a54a5460a47e82b70deee",
+          "path": "src/GLPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L228-L236",
+          "start_line": 228
+        }
+      ],
+      "label": "GL local overflow restoration",
+      "uncertainties": [
+        "The source restoration logic is local to one GL record, not a transaction coordinator for debit and credit calls."
+      ]
+    },
+    {
+      "@id": "urn:rose:rule.gl_normal_side",
+      "@type": "rose:BusinessRule",
+      "description": "For debit-normal GL accounts, matching the entry credit account subtracts balance and accumulates credits; otherwise POST adds balance and accumulates debits. For credit-normal accounts, matching entry debit subtracts balance and accumulates debits; otherwise it adds balance and accumulates credits. The caller must perform both sides separately. Double-entry accounting therefore depends on explicit caller orchestration.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 64,
+          "excerpt_sha256": "3df14aa48108a9fcea43dbb089614d4f579df66f681688123ecc4bc62fb2ad3e",
+          "path": "src/GLPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L54-L64",
+          "start_line": 54
+        },
+        {
+          "end_line": 226,
+          "excerpt_sha256": "1f34e1543d45cc4c090cc897af62ed4260c820ff56c6056c32de46216cc978dd",
+          "path": "src/GLPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L98-L226",
+          "start_line": 98
+        }
+      ],
+      "label": "Normal-balance side interpretation",
+      "uncertainties": [
+        "Neither-side matches default to the normal side instead of rejecting.",
+        "This single-record routine does not provide atomic double-entry posting or journal uniqueness."
+      ]
+    },
+    {
+      "@id": "urn:rose:rule.gl_post_guards",
+      "@type": "rose:BusinessRule",
+      "description": "POST rejects status I/E0061 or F/E0062, zero amount/E0063 and negative amount/E0064. Normal-balance values other than D/C return E0063 after the corresponding branch selection.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 90,
+          "excerpt_sha256": "e043ad42b10e84bc0ac650a451343fa3273cba866dd31a8932d71b02fd76f737",
+          "path": "src/GLPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L66-L90",
+          "start_line": 66
+        },
+        {
+          "end_line": 226,
+          "excerpt_sha256": "fb7cdf78946569c7ca2fb6c7ae82c832469389f0b7d8383c7f9666a05cdfad9c",
+          "path": "src/GLPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L221-L226",
+          "start_line": 221
+        }
+      ],
+      "label": "One-side GL input guards",
+      "uncertainties": [
+        "Status values other than I and F pass these status guards, even if not documented by CPYGL.",
+        "E0063 is overloaded for zero amount and invalid normal balance."
+      ]
+    },
+    {
+      "@id": "urn:rose:rule.gl_trial_balance",
+      "@type": "rose:BusinessRule",
+      "description": "TBAL uses caller totals unless both are zero, in which case it copies the supplied GL record MTD totals. It computes debits minus credits and sets Y only for zero difference. EODPROC0 initializes the GL record and totals to zero before calling TBAL.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 264,
+          "excerpt_sha256": "e31137c43188e08903afb0991bf3b2ff413915d27ff6bf4925ea41a27728263e",
+          "path": "src/GLPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L241-L264",
+          "start_line": 241
+        },
+        {
+          "end_line": 172,
+          "excerpt_sha256": "d2d046c8a5b433f7314fbb865fbc982825f5194797449d9cea9e8ca41589af8c",
+          "path": "src/EODPROC0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/EODPROC0.cob#L155-L172",
+          "start_line": 155
+        }
+      ],
+      "label": "Scope of trial-balance equality",
+      "uncertainties": [
+        "A balanced flag from EODPROC0 does not prove ledger reconciliation: the evidenced inputs are initialized zeros.",
+        "No full-ledger scan or coverage check occurs in TBAL."
+      ]
+    },
+    {
+      "@id": "urn:rose:rule.process_local_identifiers",
+      "@type": "rose:BusinessRule",
+      "description": "CTRFIL0 and AUDTLOG0 keep next-ID counters in working storage initialized to 1. Their comments explicitly note restart reset; both increment after assigning the current ID, with overflow errors. Timestamps retain year through second but discard current-date offset fields.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 28,
+          "excerpt_sha256": "9f63a718047c5289b1f0c9a11c1acf08f4e3ff5d6c7d1a6f1cedc786e6ff9b53",
+          "path": "src/CTRFIL0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/CTRFIL0.cob#L12-L28",
+          "start_line": 12
+        },
+        {
+          "end_line": 101,
+          "excerpt_sha256": "c1c1c338e5b2ae53255082109a19b4256303f61046375cd645e288078ed7b0ea",
+          "path": "src/CTRFIL0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/CTRFIL0.cob#L82-L101",
+          "start_line": 82
+        },
+        {
+          "end_line": 26,
+          "excerpt_sha256": "f5157e3ca4cd1956cdab717c967cefb31fb7d3e6ddaf03ec53cd9afd183a8dde",
+          "path": "src/AUDTLOG0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/AUDTLOG0.cob#L11-L26",
+          "start_line": 11
+        },
+        {
+          "end_line": 74,
+          "excerpt_sha256": "72090e26cd8716fa6929813c4dbc98ef916a7ef8f19079724e43cfec2be4ed91",
+          "path": "src/AUDTLOG0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/AUDTLOG0.cob#L58-L74",
+          "start_line": 58
+        }
+      ],
+      "label": "Process-local IDs and timestamps",
+      "uncertainties": [
+        "Neither durable uniqueness across restarts nor offset-aware event ordering is implemented.",
+        "Counter overflow may leave the assigned identifier in the caller record before returning an error."
+      ]
+    },
+    {
+      "@id": "urn:rose:rule.txn_account_restrictions",
+      "@type": "rose:BusinessRule",
+      "description": "Frozen, closed, escheated or deceased records reject both directions. Legal hold, garnishment, dormant status and restricted status reject debits. The tests use the already swapped direction for REV.",
+      "effect": "Return the source-specific error code and GOBACK at the first matching condition.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 136,
+          "excerpt_sha256": "9e933b34823f8aedf171c4c7a243e7cfb25a5cb93a36b1d6d078e605a015493d",
+          "path": "src/TXNPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L88-L136",
+          "start_line": 88
+        }
+      ],
+      "label": "Account posting restrictions",
+      "uncertainties": [
+        "These flag checks do not demonstrate current sanctions screening, legal eligibility validation or customer-level verification."
+      ]
+    },
+    {
+      "@id": "urn:rose:rule.txn_available_funds",
+      "@type": "rose:BusinessRule",
+      "description": "A debit is rejected with E0030 when TXN-AMOUNT exceeds ACCT-AVAIL-BAL. Credits do not use this guard.",
+      "effect": "Reject before balance arithmetic.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 160,
+          "excerpt_sha256": "3e9f4610c0d6e1771b58f32a5c84cb4f63e9c4ece904691056c41322bc45c036",
+          "path": "src/TXNPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L153-L160",
+          "start_line": 153
+        }
+      ],
+      "label": "Debit available-funds guard",
+      "predicate": "TXN-DR-CR = D and TXN-AMOUNT > ACCT-AVAIL-BAL"
+    },
+    {
+      "@id": "urn:rose:rule.txn_balance_transition",
+      "@type": "rose:BusinessRule",
+      "description": "TXNPOST0 captures pre-state, adds amount for C or subtracts for D, computes available=ledger-hold, captures post-state and lowers MTD low balance when needed. Available-balance overflow restores the pre-post ledger snapshot and returns E0040.",
+      "effect": "On success update ACCT-LAST-TXN-DATE and return E0000.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 255,
+          "excerpt_sha256": "9f00b17dca4a2118e4c3b7bcdcc8bf203f0d2f9a6883cb5e97d435c7147c22fc",
+          "path": "src/TXNPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L199-L255",
+          "start_line": 199
+        },
+        {
+          "end_line": 50,
+          "excerpt_sha256": "14aff9812268a76b8c484e353f83f368d52d7af8bcfb8da31e4deaf72ad15608",
+          "path": "src/TXNPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L48-L50",
+          "start_line": 48
+        }
+      ],
+      "label": "Balance update and snapshots",
+      "uncertainties": [
+        "Local rollback for one arithmetic failure is not an atomic transaction across account, GL, cash aggregation and audit."
+      ]
+    },
+    {
+      "@id": "urn:rose:rule.txn_caller_binding",
+      "@type": "rose:BusinessRule",
+      "description": "TXNPOST0 receives transaction and account records separately and performs amount, direction, account-status and balance checks. It does not enforce equality of their account IDs, generate transaction identity, check type/direction consistency, set TXN-STATUS or copy its GL output into the TXN-GL-* fields.",
+      "epistemic_status": "inferred",
+      "evidence": [
+        {
+          "end_line": 51,
+          "excerpt_sha256": "a5dd2e86959bf47ec2856da42efa92639075f84190ed9af675a4b2eb9cfc7094",
+          "path": "src/TXNPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L25-L51",
+          "start_line": 25
+        },
+        {
+          "end_line": 77,
+          "excerpt_sha256": "71b86b98dcb5d5717daef7a1a9df4c6f3a0198b24a2cdb9949ca76e62f916840",
+          "path": "src/TXNPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L56-L77",
+          "start_line": 56
+        },
+        {
+          "end_line": 293,
+          "excerpt_sha256": "6621724b2c6b449fa808e2ed309fef5ee2137ec5c86869a10657f6ba88779b73",
+          "path": "src/TXNPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L260-L293",
+          "start_line": 260
+        },
+        {
+          "end_line": 11,
+          "excerpt_sha256": "4c8e4241e294bda629c3b7a80e914c2a50b91f036b7c75cc459e253856f78c9b",
+          "path": "copybooks/CPYTXN.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYTXN.cpy#L7-L11",
+          "start_line": 7
+        },
+        {
+          "end_line": 51,
+          "excerpt_sha256": "990e8cd4f6b91d3ab8ff7608c7be5a4812a86deed5fb19bd73c0632c98df4669",
+          "path": "copybooks/CPYTXN.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYTXN.cpy#L41-L51",
+          "start_line": 41
+        }
+      ],
+      "label": "Caller-supplied identity and direction assumptions",
+      "uncertainties": [
+        "Callers or other modules could enforce these conditions, but no such guarantee is established for this selected path."
+      ]
+    },
+    {
+      "@id": "urn:rose:rule.txn_cd_penalty",
+      "@type": "rose:BusinessRule",
+      "description": "A CD debit with a positive future maturity date requires TXN-CD-EARLY-WD=Y. If acknowledged, the rounded penalty is (rate/100/365) * ledger_balance * penalty_days. Size error returns E0040; missing acknowledgement returns E0039.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 194,
+          "excerpt_sha256": "0cc7bed47d0023e69a351f5b0c3b5abb63b5f39c8b0398068c335f58979e55a1",
+          "path": "src/TXNPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L168-L194",
+          "start_line": 168
+        },
+        {
+          "end_line": 43,
+          "excerpt_sha256": "1e2d448356a80132395d9c37857ad0d077910ec1279e281ee1898dc725196a68",
+          "path": "copybooks/CPYACCT.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYACCT.cpy#L43-L43",
+          "start_line": 43
+        },
+        {
+          "end_line": 83,
+          "excerpt_sha256": "ea8f75cd21462f4e7299ad0a61c1a7019a9a94aa757c61475e9c081c6a5d6666",
+          "path": "copybooks/CPYACCT.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYACCT.cpy#L83-L83",
+          "start_line": 83
+        },
+        {
+          "end_line": 115,
+          "excerpt_sha256": "a1c67dff53501b7005467cea01abf2ab5cb927b54188b6c1e0c68329dca764d4",
+          "path": "copybooks/CPYACCT.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYACCT.cpy#L115-L115",
+          "start_line": 115
+        },
+        {
+          "end_line": 64,
+          "excerpt_sha256": "c6e4c12ad7ec04abfb6cc5b7bd9a7747230de14c6ff270d09f2b5658e3364aa5",
+          "path": "copybooks/CPYTXN.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYTXN.cpy#L62-L64",
+          "start_line": 62
+        }
+      ],
+      "label": "Pre-maturity CD acknowledgement",
+      "uncertainties": [
+        "The computed penalty is an output field; this paragraph does not subtract it or emit a separate fee posting."
+      ]
+    },
+    {
+      "@id": "urn:rose:rule.txn_direction_and_reversal",
+      "@type": "rose:BusinessRule",
+      "description": "D/C is validated first. REV then mutates TXN-DR-CR by swapping C and D before account status and balance checks.",
+      "effect": "Swap direction before subsequent authorization checks.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 39,
+          "excerpt_sha256": "d9456dc584ce43c57f357944aeb20761f82cd7a378063904eaf8cc5b35952b66",
+          "path": "src/TXNPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L30-L39",
+          "start_line": 30
+        },
+        {
+          "end_line": 77,
+          "excerpt_sha256": "6bc94b6b4cfe128453de9d5e4656c0dacecb97c5274b409ac6badb86ea7d8831",
+          "path": "src/TXNPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L71-L77",
+          "start_line": 71
+        },
+        {
+          "end_line": 148,
+          "excerpt_sha256": "b71cc9c571b64130deb3169735c2ba57c79e1c80744d816011ae3065470938e9",
+          "path": "src/TXNPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L143-L148",
+          "start_line": 143
+        }
+      ],
+      "label": "Validate direction, then reverse",
+      "predicate": "TXN-TYPE = REV after TXN-DR-CR validated as D or C",
+      "uncertainties": [
+        "A rejected reversal can leave its input direction swapped; replaying the same record can toggle it again.",
+        "No original transaction lookup or original journal validation is implemented."
+      ]
+    },
+    {
+      "@id": "urn:rose:rule.txn_gl_routing",
+      "@type": "rose:BusinessRule",
+      "description": "Deposit subtype CH/SV/MM/CD maps to GL 4010/4030/4040/4050, otherwise 9999. DEP emits debit 1010 / credit deposit-GL; WDL debit deposit-GL / credit 1010; FEE debit deposit-GL / credit 7500; INT debit 8010 / credit deposit-GL. REV uses swapped direction for cash/deposit mapping. Other types emit 9999/9999. Amount is copied and post flag is Y.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 310,
+          "excerpt_sha256": "f33e6da56e29e5d0536816644879a43a4503752bed89a33f94fb5f0088ee8508",
+          "path": "src/TXNPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L260-L310",
+          "start_line": 260
+        }
+      ],
+      "label": "Map a GL instruction",
+      "uncertainties": [
+        "Transaction type and debit/credit direction are independent inputs; DEP with D is not rejected, so account arithmetic and GL intent can disagree.",
+        "REV uses cash/deposit routing and does not reconstruct arbitrary original fee/interest journals.",
+        "A suspense mapping still returns post flag Y; no manual-review workflow is implemented."
+      ]
+    },
+    {
+      "@id": "urn:rose:rule.txn_local_ctr_flag",
+      "@type": "rose:BusinessRule",
+      "description": "CHECK-CTR sets TXN-CTR-REPORTABLE=Y only when TXN-CASH-AMOUNT > 10000.00; equality yields N. This local check does not call BSACTRO or examine exemption/customer totals.",
+      "effect": "Set Y, otherwise N. Source constant is US-oriented and not an Italian regulatory rule.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 320,
+          "excerpt_sha256": "c67361f6e18f5f9c7f01fd24d04e03dd24a99aa7807e9b58a4d6a1d2d2732594",
+          "path": "src/TXNPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L315-L320",
+          "start_line": 315
+        },
+        {
+          "end_line": 8,
+          "excerpt_sha256": "7be713b1b12cc5eb7dca79100bff93ce374480bc9188b4f0463575a600d9a7b9",
+          "path": "copybooks/CPYCONST.cpy",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCONST.cpy#L7-L8",
+          "start_line": 7
+        }
+      ],
+      "label": "Local cash threshold flag",
+      "predicate": "TXN-CASH-AMOUNT > WS-CTR-THRESHOLD"
+    },
+    {
+      "@id": "urn:rose:rule.txn_positive_amount",
+      "@type": "rose:BusinessRule",
+      "description": "TXNPOST0 rejects zero with E0031 and negative amounts with E0032 before account changes.",
+      "effect": "GOBACK with E0031 for zero or E0032 for negative amount.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "end_line": 31,
+          "excerpt_sha256": "0a6b38cb2d31502966667884991b8ef9a0a1f7b7408d7bdb332bfd76d71a6539",
+          "path": "src/TXNPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L30-L31",
+          "start_line": 30
+        },
+        {
+          "end_line": 66,
+          "excerpt_sha256": "8313921f4e1a58478d4083fb56a45773404c6312232bbade856c231afabcec93",
+          "path": "src/TXNPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L56-L66",
+          "start_line": 56
+        }
+      ],
+      "label": "Positive transaction amount",
+      "predicate": "TXN-AMOUNT <= 0"
+    },
+    {
+      "@id": "urn:rose:rule.workflow_integration_boundaries",
+      "@type": "rose:BusinessRule",
+      "description": "TXNPOST0 executes local PERFORM paragraphs and returns a GL instruction and a cash flag. It does not call GLPOST0, BSACTRO, CTRFIL0 or AUDTLOG0. EODPROC0 calls TXNPOST0 for interest and later AUDTLOG0, but does not consume the GL instruction with POST calls or implement the CTR aggregation claimed by its comment.",
+      "epistemic_status": "inferred",
+      "evidence": [
+        {
+          "end_line": 51,
+          "excerpt_sha256": "aa9df4ec3dd4c59aeb7389025141e9102abca5dfe2c9d3e88c7f00f9570254fc",
+          "path": "src/TXNPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L29-L51",
+          "start_line": 29
+        },
+        {
+          "end_line": 320,
+          "excerpt_sha256": "bb9e1816a122f0ab34e63ffab46dcbedf7a1035be46a7f0a1154f2e889b434e0",
+          "path": "src/TXNPOST0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L260-L320",
+          "start_line": 260
+        },
+        {
+          "end_line": 217,
+          "excerpt_sha256": "da2cea97174cbd2ccdf4538bd0ba2bec8ac5849ddf31349815044b47be71478a",
+          "path": "src/EODPROC0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/EODPROC0.cob#L197-L217",
+          "start_line": 197
+        },
+        {
+          "end_line": 294,
+          "excerpt_sha256": "79210e07ca348dcbfe4d8741697b12064e806f54da878a09ceaff30d4b01eab8",
+          "path": "src/EODPROC0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/EODPROC0.cob#L251-L294",
+          "start_line": 251
+        },
+        {
+          "end_line": 400,
+          "excerpt_sha256": "7ade84dc0e2a6280069f040a9e6e167ab129ca03049554d6371dcf29ce864d79",
+          "path": "src/EODPROC0.cob",
+          "permalink": "https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/EODPROC0.cob#L387-L400",
+          "start_line": 387
+        }
+      ],
+      "label": "Separate routines do not establish an integrated workflow",
+      "uncertainties": [
+        "An end-to-end atomic double-entry posting/GL/AML/audit workflow would require additional orchestration and verification.",
+        "Commented intent at EODPROC0:211-214 is not executable integration evidence."
+      ]
+    }
+  ],
+  "@id": "urn:rose:model:03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4",
+  "schema_version": "1.0",
+  "source": {
+    "commit": "03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4",
+    "repository": "NSEvent/cobol-banking-system"
+  }
+}

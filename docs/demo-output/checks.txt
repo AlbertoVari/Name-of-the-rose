@@ -1,0 +1,60 @@
+python3 -m unittest discover -s tests -v
+test_dangling_source_reference_and_model_id_fail (test_crosswalk.CrosswalkValidationTests.test_dangling_source_reference_and_model_id_fail) ... ok
+test_date_and_reference_metadata_are_required (test_crosswalk.CrosswalkValidationTests.test_date_and_reference_metadata_are_required) ... ok
+test_duplicate_ids_are_rejected (test_crosswalk.CrosswalkValidationTests.test_duplicate_ids_are_rejected) ... ok
+test_equivalence_and_observed_compliance_are_not_accepted (test_crosswalk.CrosswalkValidationTests.test_equivalence_and_observed_compliance_are_not_accepted) ... ok
+test_missing_gaps_and_required_evidence_fail (test_crosswalk.CrosswalkValidationTests.test_missing_gaps_and_required_evidence_fail) ... ok
+test_proposed_crosswalk_passes (test_crosswalk.CrosswalkValidationTests.test_proposed_crosswalk_passes) ... ok
+test_excerpt_hash_preserves_original_bytes_and_links_pin_the_commit (test_extraction.ExtractionTests.test_excerpt_hash_preserves_original_bytes_and_links_pin_the_commit) ... ok
+test_group_hierarchy_88_conditions_and_multiline_numeric_value (test_extraction.ExtractionTests.test_group_hierarchy_88_conditions_and_multiline_numeric_value) ... ok
+test_literal_keywords_do_not_become_clauses_or_comments (test_extraction.ExtractionTests.test_literal_keywords_do_not_become_clauses_or_comments) ... ok
+test_only_lexical_call_and_named_perform_references (test_extraction.ExtractionTests.test_only_lexical_call_and_named_perform_references) ... ok
+test_unsupported_fixed_format_and_continued_literals_fail_explicitly (test_extraction.ExtractionTests.test_unsupported_fixed_format_and_continued_literals_fail_explicitly) ... ok
+test_no_invented_transaction_to_gl_or_regulatory_call_edges (test_release.ReleaseEvidenceTests.test_no_invented_transaction_to_gl_or_regulatory_call_edges) ... ok
+test_source_pin_constants_and_condition_names_are_not_guesses (test_release.ReleaseEvidenceTests.test_source_pin_constants_and_condition_names_are_not_guesses) ... ok
+test_bad_evidence_ranges_and_unlocked_paths_fail (test_validation.ValidationTests.test_bad_evidence_ranges_and_unlocked_paths_fail) ... ok
+test_build_is_deterministic_and_check_never_repairs_drift (test_validation.ValidationTests.test_build_is_deterministic_and_check_never_repairs_drift) ... ok
+test_duplicate_ids_dangling_links_and_wrong_kind_action_refs_fail (test_validation.ValidationTests.test_duplicate_ids_dangling_links_and_wrong_kind_action_refs_fail) ... ok
+test_field_must_be_declared_in_cited_range_and_have_matching_picture (test_validation.ValidationTests.test_field_must_be_declared_in_cited_range_and_have_matching_picture) ... ok
+test_git_blob_mismatch_fails_even_with_correct_sha256 (test_validation.ValidationTests.test_git_blob_mismatch_fails_even_with_correct_sha256) ... ok
+test_model_cannot_silently_change_source_commit (test_validation.ValidationTests.test_model_cannot_silently_change_source_commit) ... ok
+test_observed_requires_evidence_proposed_remains_explicit (test_validation.ValidationTests.test_observed_requires_evidence_proposed_remains_explicit) ... ok
+test_path_traversal_absolute_path_and_symlink_escape_rejected (test_validation.ValidationTests.test_path_traversal_absolute_path_and_symlink_escape_rejected) ... ok
+test_query_returns_reviewed_records_with_status_and_absolute_pinned_links (test_validation.ValidationTests.test_query_returns_reviewed_records_with_status_and_absolute_pinned_links) ... ok
+test_source_drift_including_line_endings_fails (test_validation.ValidationTests.test_source_drift_including_line_endings_fails) ... ok
+test_valid_source_and_model (test_validation.ValidationTests.test_valid_source_and_model) ... ok
+test_wrong_excerpt_digest_rejected (test_validation.ValidationTests.test_wrong_excerpt_digest_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 25 tests in 0.013s
+
+OK
+python3 -m unittest discover -s orchestration -p 'test_*.py' -v
+test_five_profiles_have_expected_capability_boundaries (test_check.CopilotConfigurationTests.test_five_profiles_have_expected_capability_boundaries) ... ok
+test_prompt_agent_names_resolve (test_check.CopilotConfigurationTests.test_prompt_agent_names_resolve) ... ok
+test_skill_is_project_scoped_without_blanket_tool_preapproval (test_check.CopilotConfigurationTests.test_skill_is_project_scoped_without_blanket_tool_preapproval) ... ok
+test_budget_and_noninteger_iterations_fail (test_check.LedgerTests.test_budget_and_noninteger_iterations_fail) ... ok
+test_conflict_blocks_acceptance_and_needs_evidence_to_resolve (test_check.LedgerTests.test_conflict_blocks_acceptance_and_needs_evidence_to_resolve) ... ok
+test_duplicate_and_dangling_references_fail (test_check.LedgerTests.test_duplicate_and_dangling_references_fail) ... ok
+test_failed_check_can_be_retried_without_erasing_history (test_check.LedgerTests.test_failed_check_can_be_retried_without_erasing_history) ... ok
+test_live_claim_requires_transcript_and_consistent_mode (test_check.LedgerTests.test_live_claim_requires_transcript_and_consistent_mode) ... ok
+test_prior_snapshot_prevents_evidence_rewrite (test_check.LedgerTests.test_prior_snapshot_prevents_evidence_rewrite) ... ok
+test_rejects_unpinned_source_and_wrong_range_link (test_check.LedgerTests.test_rejects_unpinned_source_and_wrong_range_link) ... ok
+test_rejects_unsupported_observed_claim (test_check.LedgerTests.test_rejects_unsupported_observed_claim) ... ok
+test_release_gate_and_checks_cannot_be_skipped (test_check.LedgerTests.test_release_gate_and_checks_cannot_be_skipped) ... ok
+test_scope_change_invalidates_old_model_acceptance (test_check.LedgerTests.test_scope_change_invalidates_old_model_acceptance) ... ok
+test_standard_does_not_prove_source_behavior (test_check.LedgerTests.test_standard_does_not_prove_source_behavior) ... ok
+test_template_has_no_fabricated_history (test_check.LedgerTests.test_template_has_no_fabricated_history) ... ok
+test_valid_accepted_fixture (test_check.LedgerTests.test_valid_accepted_fixture) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.004s
+
+OK
+python3 orchestration/check.py orchestration/run.example.json
+Ledger structure and review invariants passed; execution/source truth is not attested.
+python3 -m rose validate --source .upstream
+Validated 15 exact source files and 58 semantic records. Static evidence checks only.
+Validated 8 proposed standards mappings and their reference IDs; no compliance certification.
+python3 -m rose build --source .upstream --output build --check
+Verified 4 deterministic artifacts in build

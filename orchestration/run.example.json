@@ -1,0 +1,26 @@
+{
+  "$schema": "./run.schema.json",
+  "schema_version": "1.0",
+  "run_id": "template-not-an-execution",
+  "source": {
+    "repository": "https://github.com/NSEvent/cobol-banking-system",
+    "commit": "03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4"
+  },
+  "execution": {
+    "mode": "manual",
+    "host": "template; no host execution recorded",
+    "live_copilot": false
+  },
+  "question": "Trace transaction posting, GL boundaries, and the US CTR path with explicit Italian-alignment gaps.",
+  "scope": ["transaction posting", "GL double-entry semantics", "US CTR boundary"],
+  "iteration": 0,
+  "max_iterations": 3,
+  "phase": "intake",
+  "evidence": [],
+  "claims": [],
+  "handoffs": [],
+  "conflicts": [],
+  "decisions": [],
+  "checks": [],
+  "notes": ["Template only. No agent invocation, successful test, or review is asserted."]
+}

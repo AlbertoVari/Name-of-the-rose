@@ -1,0 +1,219 @@
+{
+  "reviewed_on": "2026-10-18",
+  "references": [
+    {
+      "id": "B1",
+      "title": "BIAN landscape",
+      "url": "https://bian.org/deliverables/service-landscape/",
+      "version_scope": "Reviewed 2026-10-18; scope and version qualifications in docs/compliance-italy.md"
+    },
+    {
+      "id": "B2",
+      "title": "Current Account, 12.0 capability",
+      "url": "https://bian.org/servicelandscape-12-0-0/object_21.html?object=37122",
+      "version_scope": "Reviewed 2026-10-18; scope and version qualifications in docs/compliance-italy.md"
+    },
+    {
+      "id": "I1",
+      "title": "ISO 20022 catalogue",
+      "url": "https://www.iso20022.org/iso-20022-message-definitions",
+      "version_scope": "Reviewed 2026-10-18; scope and version qualifications in docs/compliance-italy.md"
+    },
+    {
+      "id": "E1",
+      "title": "EPC SCT rulebook and IGs",
+      "url": "https://www.europeanpaymentscouncil.eu/what-we-do/epc-payment-schemes/sepa-credit-transfer-sct/sepa-credit-transfer-rulebook-and",
+      "version_scope": "Reviewed 2026-10-18; scope and version qualifications in docs/compliance-italy.md"
+    },
+    {
+      "id": "C1",
+      "title": "CBI public release notice",
+      "url": "https://www.cbi-org.eu/News/Servizio-CBI-pubblicazione-nell-8217-area-8220-Prossime-Release-8221-della-versione-IPR-compliant-della-funzione-8220-Disposizioni-di-Pagamento-XML-SEPA-8220",
+      "version_scope": "Reviewed 2026-10-18; scope and version qualifications in docs/compliance-italy.md"
+    },
+    {
+      "id": "U1",
+      "title": "UIF SOS",
+      "url": "https://uif.bancaditalia.it/adempimenti-operatori/segnalazioni-sos/index.html",
+      "version_scope": "Reviewed 2026-10-18; scope and version qualifications in docs/compliance-italy.md"
+    },
+    {
+      "id": "U2",
+      "title": "UIF OGG",
+      "url": "https://uif.bancaditalia.it/adempimenti-operatori/comunicazioni-oggettive/index.html",
+      "version_scope": "Reviewed 2026-10-18; scope and version qualifications in docs/compliance-italy.md"
+    },
+    {
+      "id": "R1",
+      "title": "Basel Framework SRP36",
+      "url": "https://www.bis.org/committees/bcbs/basel-framework/standard/srp/36/inforce/2019-12-15/published/2019-12-15",
+      "version_scope": "Reviewed 2026-10-18; scope and version qualifications in docs/compliance-italy.md"
+    },
+    {
+      "id": "D1",
+      "title": "Banca d'Italia ICT communication",
+      "url": "https://www.bancaditalia.it/compiti/vigilanza/avvisi-pub/2024.12.23-com-ict/Comunicazione-ICT.pdf",
+      "version_scope": "Reviewed 2026-10-18; scope and version qualifications in docs/compliance-italy.md"
+    },
+    {
+      "id": "D2",
+      "title": "DORA, Regulation (EU) 2022/2554",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022R2554",
+      "version_scope": "Reviewed 2026-10-18; scope and version qualifications in docs/compliance-italy.md"
+    }
+  ],
+  "mappings": [
+    {
+      "id": "bian-account",
+      "model_ids": [
+        "object.account",
+        "action.post_transaction"
+      ],
+      "reference_ids": [
+        "B1",
+        "B2"
+      ],
+      "relation": "conceptual_alignment",
+      "status": "proposed",
+      "target_concept": "BIAN deposit servicing / Current Account",
+      "gap": "Account subtype must select the correct versioned domain; no BIAN API implemented.",
+      "required_evidence": [
+        "Versioned domain and service operation review"
+      ]
+    },
+    {
+      "id": "bian-accounting",
+      "model_ids": [
+        "object.gl_instruction",
+        "object.gl_account",
+        "action.post_gl_side"
+      ],
+      "reference_ids": [
+        "B1"
+      ],
+      "relation": "conceptual_alignment",
+      "status": "proposed",
+      "target_concept": "BIAN Financial Accounting candidate",
+      "gap": "One-side record changes do not establish atomic journals.",
+      "required_evidence": [
+        "Versioned service contract",
+        "Atomic posting and reconciliation tests"
+      ]
+    },
+    {
+      "id": "iso-payments",
+      "model_ids": [
+        "object.transaction",
+        "object.customer",
+        "object.account"
+      ],
+      "reference_ids": [
+        "I1",
+        "E1"
+      ],
+      "relation": "conceptual_alignment",
+      "status": "proposed",
+      "target_concept": "pain.001 / pacs.008 / camt.053 business concepts",
+      "gap": "Internal movement is not necessarily a payment; currency, party roles and message identity are missing.",
+      "required_evidence": [
+        "Selected message version and profile",
+        "XSD and usage-rule tests"
+      ]
+    },
+    {
+      "id": "cbi-sepa",
+      "model_ids": [
+        "object.transaction",
+        "object.account"
+      ],
+      "reference_ids": [
+        "C1",
+        "E1"
+      ],
+      "relation": "gap",
+      "status": "proposed",
+      "target_concept": "CBI SEPA payment profile",
+      "gap": "Restricted CBI specifications were not retrieved; no CBI or SEPA message generator.",
+      "required_evidence": [
+        "Authorized current CBI profile",
+        "Scheme acceptance tests"
+      ]
+    },
+    {
+      "id": "uif-sos",
+      "model_ids": [
+        "object.cash_assessment",
+        "object.ctr_filing"
+      ],
+      "reference_ids": [
+        "U1"
+      ],
+      "relation": "gap",
+      "status": "proposed",
+      "target_concept": "Italian suspicious-operation assessment and SOS",
+      "gap": "US CTR threshold and overloaded SAR signals are not an Italian suspicion assessment.",
+      "required_evidence": [
+        "Reviewed case rationale and authorization",
+        "Current UIF format and acknowledgement evidence"
+      ]
+    },
+    {
+      "id": "uif-ogg",
+      "model_ids": [
+        "object.cash_event",
+        "object.cash_daily_aggregate"
+      ],
+      "reference_ids": [
+        "U2"
+      ],
+      "relation": "gap",
+      "status": "proposed",
+      "target_concept": "Italian monthly objective cash communications",
+      "gap": "US daily directional aggregation lacks Italian month, currency and executor attribution policy.",
+      "required_evidence": [
+        "2026 UIF technical documentation",
+        "Event-level subject and currency lineage",
+        "Reviewed monthly aggregation tests"
+      ]
+    },
+    {
+      "id": "lineage",
+      "model_ids": [
+        "object.audit_event",
+        "action.prepare_audit_record"
+      ],
+      "reference_ids": [
+        "R1"
+      ],
+      "relation": "conceptual_alignment",
+      "status": "proposed",
+      "target_concept": "Risk-data traceability and governance",
+      "gap": "Code-to-model lineage is present; runtime persistence and complete event lineage are absent.",
+      "required_evidence": [
+        "Institutional applicability review",
+        "Durable event-to-report lineage and access evidence"
+      ]
+    },
+    {
+      "id": "resilience",
+      "model_ids": [
+        "action.post_transaction",
+        "action.post_gl_side",
+        "rule.workflow_integration_boundaries"
+      ],
+      "reference_ids": [
+        "D1",
+        "D2"
+      ],
+      "relation": "gap",
+      "status": "proposed",
+      "target_concept": "Operational resilience and ICT change governance",
+      "gap": "Static evidence checks do not establish recovery, incident management or third-party controls.",
+      "required_evidence": [
+        "Critical-function scope",
+        "Failure/replay/recovery exercises",
+        "Reviewed incident and third-party controls"
+      ]
+    }
+  ]
+}

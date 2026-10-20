@@ -1,0 +1,77 @@
+name: Evidence and semantic checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out semantic toolkit
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Read immutable source pin
+        id: source
+        run: |
+          python - <<'PY'
+          import json, os, re
+          lock = json.load(open('source-lock.json', encoding='utf-8'))
+          commit = lock['commit']
+          assert re.fullmatch(r'[0-9a-f]{40}', commit), 'Full commit required'
+          assert lock['repository'] == 'NSEvent/cobol-banking-system'
+          with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as out:
+              out.write('commit=' + commit + '\n')
+          PY
+      - name: Check out locked upstream separately
+        uses: actions/checkout@v4
+        with:
+          repository: NSEvent/cobol-banking-system
+          ref: ${{ steps.source.outputs.commit }}
+          path: .upstream
+          persist-credentials: false
+      - name: Run extractor and validation regression tests
+        run: python -m unittest discover -s tests -v
+      - name: Check orchestration protocol
+        run: |
+          python -m unittest discover -s orchestration -p 'test_*.py' -v
+          python orchestration/check.py orchestration/run.example.json
+      - name: Validate model against exact source bytes
+        run: python -m rose validate --source .upstream
+      - name: Detect generated artifact drift
+        run: python -m rose build --source .upstream --output build --check
+
+  release:
+    name: Publish v0.1.0 after validation
+    needs: validate
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: release-v0.1.0
+      cancel-in-progress: false
+    steps:
+      - name: Check out validated release content
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Publish release once
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          if gh release view v0.1.0 >/dev/null 2>&1; then
+            echo 'v0.1.0 already exists; leaving the published release unchanged.'
+            exit 0
+          fi
+          gh release create v0.1.0 --target "$GITHUB_SHA" --title "The Name of the Rose v0.1.0" --notes-file CHANGELOG.md

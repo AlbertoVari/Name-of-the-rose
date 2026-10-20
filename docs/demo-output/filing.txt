@@ -1,0 +1,12 @@
+Reviewed annotations at 03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4; search does not execute or revalidate source.
+
+action.manage_ctr_state — Explain CTR record lifecycle [observed]
+Describes CRTE/FILE/QURY/VOID transitions in the supplied US CTR record. This is an explanatory action with no external filing side effect.
+  https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/CTRFIL0.cob#L37-L57
+  https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/CTRFIL0.cob#L64-L181
+
+link.aggregate_filing_projection — shares record with filing state [observed]
+The aggregate and filing state are separate semantic projections of the same CTR-RECORD storage, not a proven event-triggered create workflow.
+  https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCTR.cpy#L5-L34
+  https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L33-L36
+  https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/CTRFIL0.cob#L37-L39

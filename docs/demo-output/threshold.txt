@@ -1,0 +1,12 @@
+Reviewed annotations at 03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4; search does not execute or revalidate source.
+
+rule.bsa_ctr_assessment — Separate directional CTR threshold assessment [observed]
+CHEK excludes explicit exempt=Y and is_cash=N before checking single amount and existing directional totals. AGGR accumulates first and then returns without threshold assessment for exempt=Y. Otherwise each path marks required when a checked amount or a directional total is strictly greater than 10000.00; incoming and outgoing totals are not netted or added for CTR threshold comparison.
+  https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L56-L88
+  https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/BSACTRO.cob#L154-L175
+  https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCONST.cpy#L7-L8
+
+rule.txn_local_ctr_flag — Local cash threshold flag [observed]
+CHECK-CTR sets TXN-CTR-REPORTABLE=Y only when TXN-CASH-AMOUNT > 10000.00; equality yields N. This local check does not call BSACTRO or examine exemption/customer totals.
+  https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L315-L320
+  https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/copybooks/CPYCONST.cpy#L7-L8

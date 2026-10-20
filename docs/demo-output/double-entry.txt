@@ -1,0 +1,14 @@
+Reviewed annotations at 03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4; search does not execute or revalidate source.
+
+rule.gl_normal_side — Normal-balance side interpretation [observed]
+For debit-normal GL accounts, matching the entry credit account subtracts balance and accumulates credits; otherwise POST adds balance and accumulates debits. For credit-normal accounts, matching entry debit subtracts balance and accumulates debits; otherwise it adds balance and accumulates credits. The caller must perform both sides separately. Double-entry accounting therefore depends on explicit caller orchestration.
+  https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L54-L64
+  https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/GLPOST0.cob#L98-L226
+
+rule.workflow_integration_boundaries — Separate routines do not establish an integrated workflow [inferred]
+TXNPOST0 executes local PERFORM paragraphs and returns a GL instruction and a cash flag. It does not call GLPOST0, BSACTRO, CTRFIL0 or AUDTLOG0. EODPROC0 calls TXNPOST0 for interest and later AUDTLOG0, but does not consume the GL instruction with POST calls or implement the CTR aggregation claimed by its comment.
+  https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L29-L51
+  https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/TXNPOST0.cob#L260-L320
+  https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/EODPROC0.cob#L197-L217
+  https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/EODPROC0.cob#L251-L294
+  https://github.com/NSEvent/cobol-banking-system/blob/03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4/src/EODPROC0.cob#L387-L400

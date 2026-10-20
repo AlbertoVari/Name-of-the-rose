@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/name-of-the-rose/orchestration/run.schema.json",
+  "title": "The Name of the Rose collaboration ledger",
+  "description": "Evidence and review records; this schema does not authenticate agent execution.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "run_id", "source", "execution", "question", "scope", "iteration", "max_iterations", "phase", "evidence", "claims", "handoffs", "conflicts", "decisions", "checks", "notes"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schema_version": {"const": "1.0"},
+    "run_id": {"type": "string", "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]{2,79}$"},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "commit"],
+      "properties": {
+        "repository": {"const": "https://github.com/NSEvent/cobol-banking-system"},
+        "commit": {"const": "03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4"}
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "host", "live_copilot"],
+      "properties": {
+        "mode": {"enum": ["manual", "copilot-delegated", "local-static"]},
+        "host": {"type": "string", "minLength": 1},
+        "live_copilot": {"type": "boolean"},
+        "transcript_path": {"type": "string", "minLength": 1}
+      }
+    },
+    "question": {"type": "string", "minLength": 1},
+    "scope": {"$ref": "#/$defs/nonempty_strings"},
+    "iteration": {"type": "integer", "minimum": 0, "maximum": 3},
+    "max_iterations": {"const": 3},
+    "phase": {"enum": ["intake", "evidence", "model", "implement", "validate", "review", "accepted", "blocked"]},
+    "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}},
+    "claims": {"type": "array", "items": {"$ref": "#/$defs/claim"}},
+    "handoffs": {"type": "array", "items": {"$ref": "#/$defs/handoff"}},
+    "conflicts": {"type": "array", "items": {"$ref": "#/$defs/conflict"}},
+    "decisions": {"type": "array", "items": {"$ref": "#/$defs/decision"}},
+    "checks": {"type": "array", "items": {"$ref": "#/$defs/check"}},
+    "notes": {"$ref": "#/$defs/strings"}
+  },
+  "$defs": {
+    "text": {"type": "string", "minLength": 1},
+    "strings": {"type": "array", "items": {"$ref": "#/$defs/text"}},
+    "nonempty_strings": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/text"}},
+    "role": {"enum": ["Umberto", "Peter", "Satya", "Boris", "Eric"]},
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "uri", "description"],
+      "properties": {
+        "id": {"$ref": "#/$defs/text"},
+        "kind": {"enum": ["source", "tool-output", "standard", "review", "artifact"]},
+        "uri": {"$ref": "#/$defs/text"},
+        "description": {"$ref": "#/$defs/text"},
+        "source_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "path": {"$ref": "#/$defs/text"},
+        "start_line": {"type": "integer", "minimum": 1},
+        "end_line": {"type": "integer", "minimum": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "argv": {"$ref": "#/$defs/nonempty_strings"},
+        "exit_code": {"type": "integer"},
+        "log_path": {"$ref": "#/$defs/text"},
+        "accessed_on": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+        "version": {"$ref": "#/$defs/text"},
+        "jurisdiction": {"$ref": "#/$defs/text"}
+      }
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "author", "classification", "status", "statement", "evidence_refs", "model_refs"],
+      "properties": {
+        "id": {"$ref": "#/$defs/text"},
+        "author": {"$ref": "#/$defs/role"},
+        "classification": {"enum": ["observed", "inferred", "proposed", "unknown"]},
+        "status": {"enum": ["proposed", "accepted", "disputed", "rejected"]},
+        "statement": {"$ref": "#/$defs/text"},
+        "evidence_refs": {"$ref": "#/$defs/strings"},
+        "model_refs": {"$ref": "#/$defs/strings"},
+        "supersedes": {"$ref": "#/$defs/text"}
+      }
+    },
+    "handoff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "from", "to", "iteration", "question", "context_paths", "claim_ids", "status", "result"],
+      "properties": {
+        "id": {"$ref": "#/$defs/text"},
+        "from": {"$ref": "#/$defs/role"},
+        "to": {"$ref": "#/$defs/role"},
+        "iteration": {"type": "integer", "minimum": 1, "maximum": 3},
+        "question": {"$ref": "#/$defs/text"},
+        "context_paths": {"$ref": "#/$defs/nonempty_strings"},
+        "claim_ids": {"$ref": "#/$defs/strings"},
+        "status": {"enum": ["completed", "blocked"]},
+        "result": {"$ref": "#/$defs/text"}
+      }
+    },
+    "conflict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "claim_ids", "owner", "status", "resolution", "evidence_refs"],
+      "properties": {
+        "id": {"$ref": "#/$defs/text"},
+        "claim_ids": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/text"}},
+        "owner": {"const": "Eric"},
+        "status": {"enum": ["open", "resolved", "deferred"]},
+        "resolution": {"type": "string"},
+        "evidence_refs": {"$ref": "#/$defs/strings"}
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "gate", "verdict", "reviewer", "iteration", "rationale", "evidence_refs"],
+      "properties": {
+        "id": {"$ref": "#/$defs/text"},
+        "gate": {"enum": ["scope", "model", "release"]},
+        "verdict": {"enum": ["accept", "revise", "block"]},
+        "reviewer": {"const": "Eric"},
+        "iteration": {"type": "integer", "minimum": 1, "maximum": 3},
+        "rationale": {"$ref": "#/$defs/text"},
+        "evidence_refs": {"$ref": "#/$defs/strings"}
+      }
+    },
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "argv", "cwd", "exit_code", "log_path"],
+      "properties": {
+        "id": {"$ref": "#/$defs/text"},
+        "argv": {"$ref": "#/$defs/nonempty_strings"},
+        "cwd": {"$ref": "#/$defs/text"},
+        "exit_code": {"type": "integer"},
+        "log_path": {"$ref": "#/$defs/text"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    }
+  }
+}

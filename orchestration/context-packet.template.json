@@ -1,0 +1,34 @@
+{
+  "packet_version": "1.0",
+  "packet_id": "replace-with-unique-packet-id",
+  "run_id": "replace-with-run-id",
+  "iteration": 1,
+  "from": "Satya",
+  "to": "Umberto",
+  "question": "Explain the observed posting-to-GL relationship without inferring an unobserved caller.",
+  "source": {
+    "repository": "https://github.com/NSEvent/cobol-banking-system",
+    "commit": "03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4"
+  },
+  "ledger_path": "build/runs/replace-with-run-id.json",
+  "context_paths": [
+    "model/ontology.json",
+    "docs/semiotics.md",
+    "docs/findings.md",
+    "orchestration/workflow.md"
+  ],
+  "evidence_refs": [],
+  "accepted_decision_ids": [],
+  "claim_ids": [],
+  "open_conflict_ids": [],
+  "shared_findings": {
+    "Umberto": [],
+    "Peter": [],
+    "Satya": [],
+    "Boris": []
+  },
+  "allowed_actions": ["read supplied files", "return an evidence-grounded proposal"],
+  "expected_output": ["agent", "question", "claims", "evidence_refs", "proposals", "conflicts", "unknowns", "next_owner"],
+  "stop_conditions": ["missing evidence", "source pin mismatch", "task requires an unavailable tool"],
+  "template_notice": "This is a handoff template, not an invocation or an execution record. Replace placeholder IDs and populate real evidence before use."
+}

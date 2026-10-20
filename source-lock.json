@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0",
+  "repository": "NSEvent/cobol-banking-system",
+  "commit": "03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4",
+  "files": [
+    {
+      "path": "copybooks/CPYACCT.cpy",
+      "sha256": "cffa8607592825014187c0106b6808a10a0e6095055bb6ebd885970f68942292",
+      "git_blob_sha": "4e66f46fb79c6686caa6be10cf32a7f03b003970"
+    },
+    {
+      "path": "copybooks/CPYAUDT.cpy",
+      "sha256": "e74fe32fcc83ce28fa944d9a12d9c98fc7255a3b271b91d0a700e99f6632bda4",
+      "git_blob_sha": "b173445b41f05d089d9dc779f5dd3619984c6b0b"
+    },
+    {
+      "path": "copybooks/CPYBATCH.cpy",
+      "sha256": "e99f93fee31b469031fcb3bbeb6001126cb6a4cf893f4310510df49e2ee25408",
+      "git_blob_sha": "344f87962c6da1d9a9379159803a72a3e7be2ae1"
+    },
+    {
+      "path": "copybooks/CPYCIF.cpy",
+      "sha256": "af4774a0960f269e9a8b92549c1a7116601cfe3359f925ecdc40d9de6fda2a42",
+      "git_blob_sha": "0a1dbdcea8acf8ed62cad3b8a879bc1f74213405"
+    },
+    {
+      "path": "copybooks/CPYCONST.cpy",
+      "sha256": "11387c7f70e3322636b6123bf962d78a3a56c08e8f004a734c9af85c11e4f159",
+      "git_blob_sha": "909bd43a8cb66d562c1df5e3ae79243478233ca9"
+    },
+    {
+      "path": "copybooks/CPYCTR.cpy",
+      "sha256": "5ef40aa95ff2fd5d2e51f84e9cbc74e1f2c314637c7c780134b1c82a2dd76cde",
+      "git_blob_sha": "b1a31ba7dad95c2e25a798b74df2eff1ccc280a4"
+    },
+    {
+      "path": "copybooks/CPYFIO.cpy",
+      "sha256": "a60784662d99d70a176e980a74ab982b2d12a8be15b7e45a85eab0299ca4119f",
+      "git_blob_sha": "418f0205cb95a26329b9c242e2329891dc2376df"
+    },
+    {
+      "path": "copybooks/CPYGL.cpy",
+      "sha256": "f6e37eb894466f0d8c55c302c71782bc7ad67d196ae71628111ab5efd1c04e39",
+      "git_blob_sha": "6269de1ec19b5eb2c94f6009f450867193167d8f"
+    },
+    {
+      "path": "copybooks/CPYTXN.cpy",
+      "sha256": "3d0abf81c5561a7b0f6eb382c1e67369bd6218117d01b7e2de05efa0dc2436e9",
+      "git_blob_sha": "13d06be8a2209525f0fa984c2718e5adb828b52a"
+    },
+    {
+      "path": "src/AUDTLOG0.cob",
+      "sha256": "d225e9488d12c7cbe2b4f759a92c6391072e3f300178802539924e3900ea68a5",
+      "git_blob_sha": "24249d58a572f83670a771fd9a462c779916c7d1"
+    },
+    {
+      "path": "src/BSACTRO.cob",
+      "sha256": "820b951b8f006370e14f18adab576b4d8b7140e14391c1c1ec399b05e5a9245e",
+      "git_blob_sha": "9d175e0174c9ea7794482a91858cdc06bd90d854"
+    },
+    {
+      "path": "src/CTRFIL0.cob",
+      "sha256": "4b4085f8e2be13ec153f165973eb1debb11f9452ce7784c08489ad7a7ceb1632",
+      "git_blob_sha": "7fdc93c61da5be1def99c46d4ca3156a2e33330e"
+    },
+    {
+      "path": "src/EODPROC0.cob",
+      "sha256": "9f0b142d6e67c8386da6f0644702333afc5359c215ba52eaa7116d13fe27cedb",
+      "git_blob_sha": "9fb80636560e8e6f14c649d2118bda2065c441a5"
+    },
+    {
+      "path": "src/GLPOST0.cob",
+      "sha256": "e60a8c2f342be6a0491e0c2d13b211640c313316f423460d30a1116b832ebd0a",
+      "git_blob_sha": "55f152d2741752a14b3b44937879e4800701bfe9"
+    },
+    {
+      "path": "src/TXNPOST0.cob",
+      "sha256": "15b5938ecfbe770c203e7e3ce8c0b2df5cf246b18fefa6fbf18fe115055ecaf3",
+      "git_blob_sha": "af689f12f027775d987bef816fbc4ae99f42b187"
+    }
+  ]
+}

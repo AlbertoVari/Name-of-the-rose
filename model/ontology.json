@@ -1,0 +1,2700 @@
+{
+  "schema_version": "1.0",
+  "source": {
+    "repository": "NSEvent/cobol-banking-system",
+    "commit": "03ea874c84b5c00b11b78c6ca1498ec1a9cb7bb4"
+  },
+  "objects": [
+    {
+      "id": "object.account",
+      "label": "Account",
+      "description": "An account record supplied to transaction posting. Monetary balances and restriction flags are distinct signs: a legal hold flag is not the numeric held-funds balance.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "copybooks/CPYACCT.cpy",
+          "start_line": 5,
+          "end_line": 41
+        },
+        {
+          "path": "copybooks/CPYACCT.cpy",
+          "start_line": 92,
+          "end_line": 98
+        }
+      ],
+      "properties": [
+        {
+          "name": "account_number",
+          "datatype": "PIC 9(12)",
+          "source_field": "ACCT-NUMBER",
+          "description": "Twelve-digit source account identifier; not an IBAN.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYACCT.cpy",
+              "start_line": 7,
+              "end_line": 7
+            }
+          ]
+        },
+        {
+          "name": "primary_customer_id",
+          "datatype": "PIC 9(10)",
+          "source_field": "ACCT-PRIMARY-CIF",
+          "description": "Customer reference for primary ownership.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYACCT.cpy",
+              "start_line": 10,
+              "end_line": 10
+            }
+          ]
+        },
+        {
+          "name": "joint_customer_id",
+          "datatype": "PIC 9(10)",
+          "source_field": "ACCT-JOINT-CIF",
+          "description": "Customer reference for joint ownership; source does not resolve beneficial ownership here.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYACCT.cpy",
+              "start_line": 11,
+              "end_line": 11
+            }
+          ]
+        },
+        {
+          "name": "sub_type",
+          "datatype": "PIC X(2)",
+          "source_field": "ACCT-SUB-TYPE",
+          "description": "Deposit subtype selects deposit GL account in TXNPOST0.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYACCT.cpy",
+              "start_line": 23,
+              "end_line": 23
+            }
+          ]
+        },
+        {
+          "name": "ledger_balance",
+          "datatype": "PIC S9(13)V99",
+          "source_field": "ACCT-LEDGER-BAL",
+          "description": "Signed account ledger amount; currency is not encoded in this field.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYACCT.cpy",
+              "start_line": 27,
+              "end_line": 27
+            }
+          ]
+        },
+        {
+          "name": "available_balance",
+          "datatype": "PIC S9(13)V99",
+          "source_field": "ACCT-AVAIL-BAL",
+          "description": "Available amount recomputed as ledger balance less hold amount after posting.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYACCT.cpy",
+              "start_line": 28,
+              "end_line": 28
+            }
+          ]
+        },
+        {
+          "name": "hold_amount",
+          "datatype": "PIC S9(13)V99",
+          "source_field": "ACCT-HOLD-AMOUNT",
+          "description": "Numeric held-funds amount used in available-balance arithmetic.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYACCT.cpy",
+              "start_line": 30,
+              "end_line": 30
+            }
+          ]
+        },
+        {
+          "name": "mtd_low_balance",
+          "datatype": "PIC S9(13)V99",
+          "source_field": "ACCT-MTD-LOW-BAL",
+          "description": "Month-to-date minimum ledger balance updated after successful posting.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYACCT.cpy",
+              "start_line": 41,
+              "end_line": 41
+            }
+          ]
+        },
+        {
+          "name": "status",
+          "datatype": "PIC X(1)",
+          "source_field": "ACCT-STATUS",
+          "description": "A/D/F/C/E/R status vocabulary is documented by the copybook.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYACCT.cpy",
+              "start_line": 93,
+              "end_line": 93
+            }
+          ]
+        },
+        {
+          "name": "legal_hold",
+          "datatype": "PIC X(1)",
+          "source_field": "ACCT-LEGAL-HOLD",
+          "description": "Y blocks debits in TXNPOST0; it is not proof of executed sanctions screening.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYACCT.cpy",
+              "start_line": 96,
+              "end_line": 96
+            }
+          ]
+        },
+        {
+          "name": "garnishment",
+          "datatype": "PIC X(1)",
+          "source_field": "ACCT-GARNISHMENT",
+          "description": "Y blocks debits in TXNPOST0.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYACCT.cpy",
+              "start_line": 97,
+              "end_line": 97
+            }
+          ]
+        },
+        {
+          "name": "deceased",
+          "datatype": "PIC X(1)",
+          "source_field": "ACCT-DECEASED",
+          "description": "Y blocks posting in TXNPOST0.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYACCT.cpy",
+              "start_line": 98,
+              "end_line": 98
+            }
+          ]
+        },
+        {
+          "name": "last_transaction_date",
+          "datatype": "PIC 9(8)",
+          "source_field": "ACCT-LAST-TXN-DATE",
+          "description": "Set to the transaction posting date at the successful end of TXNPOST0.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYACCT.cpy",
+              "start_line": 84,
+              "end_line": 84
+            }
+          ]
+        }
+      ],
+      "uncertainties": [
+        "No currency identifier is supplied by this record.",
+        "TXNPOST0 accepts caller-supplied account and transaction records without checking their account identifiers match."
+      ]
+    },
+    {
+      "id": "object.customer",
+      "label": "Customer / CIF",
+      "description": "Customer information identity referenced by accounts and daily cash aggregation; customer identity verification logic is outside the selected executable slice.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "copybooks/CPYCIF.cpy",
+          "start_line": 5,
+          "end_line": 20
+        },
+        {
+          "path": "copybooks/CPYCIF.cpy",
+          "start_line": 32,
+          "end_line": 47
+        }
+      ],
+      "properties": [
+        {
+          "name": "customer_id",
+          "datatype": "PIC 9(10)",
+          "source_field": "CIF-CUST-ID",
+          "description": "Ten-digit local CIF identifier; no equivalence to a legal identifier is asserted.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYCIF.cpy",
+              "start_line": 7,
+              "end_line": 7
+            }
+          ]
+        },
+        {
+          "name": "last_name",
+          "datatype": "PIC X(30)",
+          "source_field": "CIF-NAME-LAST",
+          "description": "Source family/name component.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYCIF.cpy",
+              "start_line": 9,
+              "end_line": 9
+            }
+          ]
+        },
+        {
+          "name": "first_name",
+          "datatype": "PIC X(20)",
+          "source_field": "CIF-NAME-FIRST",
+          "description": "Source given-name component.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYCIF.cpy",
+              "start_line": 10,
+              "end_line": 10
+            }
+          ]
+        },
+        {
+          "name": "customer_type",
+          "datatype": "PIC X(1)",
+          "source_field": "CIF-CUST-TYPE",
+          "description": "Source type code for individual, joint, business, trust or estate.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYCIF.cpy",
+              "start_line": 18,
+              "end_line": 18
+            }
+          ]
+        },
+        {
+          "name": "ofac_status",
+          "datatype": "PIC X(1)",
+          "source_field": "CIF-OFAC-STATUS",
+          "description": "US-oriented source status field; this slice does not execute a sanctions-screening action.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYCIF.cpy",
+              "start_line": 42,
+              "end_line": 42
+            }
+          ]
+        },
+        {
+          "name": "bsa_risk_rating",
+          "datatype": "PIC 9(1)",
+          "source_field": "CIF-BSA-RISK-RATING",
+          "description": "Source US BSA risk classification field.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYCIF.cpy",
+              "start_line": 44,
+              "end_line": 44
+            }
+          ]
+        },
+        {
+          "name": "ctr_exempt",
+          "datatype": "PIC X(1)",
+          "source_field": "CIF-CTR-EXEMPT",
+          "description": "CIF exemption sign; no automatic copy to CTR-EXEMPT-FLAG is established in this slice.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYCIF.cpy",
+              "start_line": 46,
+              "end_line": 46
+            }
+          ]
+        }
+      ],
+      "uncertainties": [
+        "Customer-key referential integrity and CIF-to-CTR exemption propagation are caller or surrounding-system concerns in this slice."
+      ]
+    },
+    {
+      "id": "object.transaction",
+      "label": "Transaction",
+      "description": "Caller-supplied movement record, including account routing, debit/credit direction, dates and before/after balance snapshots. Successful TXNPOST0 completion does not set all declared transaction lifecycle fields.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "copybooks/CPYTXN.cpy",
+          "start_line": 5,
+          "end_line": 64
+        },
+        {
+          "path": "src/TXNPOST0.cob",
+          "start_line": 25,
+          "end_line": 51
+        }
+      ],
+      "properties": [
+        {
+          "name": "transaction_id",
+          "datatype": "PIC 9(15)",
+          "source_field": "TXN-ID",
+          "description": "Declared transaction identifier; TXNPOST0 does not generate or validate it.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYTXN.cpy",
+              "start_line": 7,
+              "end_line": 7
+            }
+          ]
+        },
+        {
+          "name": "sequence",
+          "datatype": "PIC 9(5)",
+          "source_field": "TXN-SEQUENCE",
+          "description": "Declared sequence component.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYTXN.cpy",
+              "start_line": 8,
+              "end_line": 8
+            }
+          ]
+        },
+        {
+          "name": "account_number",
+          "datatype": "PIC 9(12)",
+          "source_field": "TXN-ACCT-NUMBER",
+          "description": "Declared account routing reference; not compared with ACCT-NUMBER in TXNPOST0.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYTXN.cpy",
+              "start_line": 10,
+              "end_line": 10
+            }
+          ]
+        },
+        {
+          "name": "type",
+          "datatype": "PIC X(3)",
+          "source_field": "TXN-TYPE",
+          "description": "Source movement type; GL mapping uses this independently of TXN-DR-CR.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYTXN.cpy",
+              "start_line": 19,
+              "end_line": 19
+            }
+          ]
+        },
+        {
+          "name": "amount",
+          "datatype": "PIC S9(13)V99",
+          "source_field": "TXN-AMOUNT",
+          "description": "Positive amount required by TXNPOST0; no currency field in this layout.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYTXN.cpy",
+              "start_line": 26,
+              "end_line": 26
+            }
+          ]
+        },
+        {
+          "name": "debit_credit",
+          "datatype": "PIC X(1)",
+          "source_field": "TXN-DR-CR",
+          "description": "D subtracts from customer ledger, C adds; REV swaps this field before account checks.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYTXN.cpy",
+              "start_line": 27,
+              "end_line": 27
+            }
+          ]
+        },
+        {
+          "name": "ledger_before",
+          "datatype": "PIC S9(13)V99",
+          "source_field": "TXN-BAL-BEFORE",
+          "description": "Customer ledger snapshot captured before arithmetic.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYTXN.cpy",
+              "start_line": 32,
+              "end_line": 32
+            }
+          ]
+        },
+        {
+          "name": "ledger_after",
+          "datatype": "PIC S9(13)V99",
+          "source_field": "TXN-BAL-AFTER",
+          "description": "Customer ledger snapshot captured after arithmetic.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYTXN.cpy",
+              "start_line": 33,
+              "end_line": 33
+            }
+          ]
+        },
+        {
+          "name": "available_before",
+          "datatype": "PIC S9(13)V99",
+          "source_field": "TXN-AVAIL-BEFORE",
+          "description": "Available balance snapshot captured before arithmetic.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYTXN.cpy",
+              "start_line": 34,
+              "end_line": 34
+            }
+          ]
+        },
+        {
+          "name": "available_after",
+          "datatype": "PIC S9(13)V99",
+          "source_field": "TXN-AVAIL-AFTER",
+          "description": "Available balance snapshot captured after arithmetic.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYTXN.cpy",
+              "start_line": 35,
+              "end_line": 35
+            }
+          ]
+        },
+        {
+          "name": "posting_date",
+          "datatype": "PIC 9(8)",
+          "source_field": "TXN-POST-DATE",
+          "description": "Eight-digit posting date supplied by caller; calendar validity is not checked here.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYTXN.cpy",
+              "start_line": 37,
+              "end_line": 37
+            }
+          ]
+        },
+        {
+          "name": "status",
+          "datatype": "PIC X(1)",
+          "source_field": "TXN-STATUS",
+          "description": "Declared lifecycle status; no TXNPOST0 assignment is evidenced.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYTXN.cpy",
+              "start_line": 42,
+              "end_line": 42
+            }
+          ]
+        },
+        {
+          "name": "reversal_transaction_id",
+          "datatype": "PIC 9(15)",
+          "source_field": "TXN-REVERSAL-TXN-ID",
+          "description": "Declared original/reversal identifier; no retrieval or validation of the original transaction occurs here.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYTXN.cpy",
+              "start_line": 46,
+              "end_line": 46
+            }
+          ]
+        },
+        {
+          "name": "ctr_reportable",
+          "datatype": "PIC X(1)",
+          "source_field": "TXN-CTR-REPORTABLE",
+          "description": "Y iff TXN-CASH-AMOUNT is strictly above source threshold; no aggregation or exemption check in this operation.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYTXN.cpy",
+              "start_line": 53,
+              "end_line": 53
+            }
+          ]
+        },
+        {
+          "name": "cash_amount",
+          "datatype": "PIC S9(13)V99",
+          "source_field": "TXN-CASH-AMOUNT",
+          "description": "Separate cash amount used by the local CHECK-CTR paragraph.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYTXN.cpy",
+              "start_line": 56,
+              "end_line": 56
+            }
+          ]
+        },
+        {
+          "name": "cd_early_withdrawal_ack",
+          "datatype": "PIC X(1)",
+          "source_field": "TXN-CD-EARLY-WD",
+          "description": "Caller acknowledgement flag for a pre-maturity CD debit.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYTXN.cpy",
+              "start_line": 62,
+              "end_line": 62
+            }
+          ]
+        },
+        {
+          "name": "cd_penalty_amount",
+          "datatype": "PIC S9(9)V99",
+          "source_field": "TXN-CD-PENALTY-AMT",
+          "description": "Computed CD penalty amount; TXNPOST0 does not post a separate penalty transaction.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYTXN.cpy",
+              "start_line": 64,
+              "end_line": 64
+            }
+          ]
+        }
+      ],
+      "uncertainties": [
+        "The model does not infer payment settlement, transaction persistence, idempotency or a lifecycle status transition from the routine success code."
+      ]
+    },
+    {
+      "id": "object.gl_instruction",
+      "label": "GL Instruction",
+      "description": "The LS-GL-ENTRIES output group produced by TXNPOST0: a debit account, credit account, amount and flag. This represents a posting instruction, not evidence that either ledger side was posted.",
+      "epistemic_status": "inferred",
+      "evidence": [
+        {
+          "path": "src/TXNPOST0.cob",
+          "start_line": 16,
+          "end_line": 20
+        },
+        {
+          "path": "src/TXNPOST0.cob",
+          "start_line": 260,
+          "end_line": 310
+        }
+      ],
+      "properties": [
+        {
+          "name": "debit_account",
+          "datatype": "PIC 9(10)",
+          "source_field": "LS-GL-DR-ACCOUNT",
+          "description": "GL debit account selected by transaction type and deposit subtype.",
+          "evidence": [
+            {
+              "path": "src/TXNPOST0.cob",
+              "start_line": 17,
+              "end_line": 17
+            }
+          ]
+        },
+        {
+          "name": "credit_account",
+          "datatype": "PIC 9(10)",
+          "source_field": "LS-GL-CR-ACCOUNT",
+          "description": "GL credit account selected by transaction type and deposit subtype.",
+          "evidence": [
+            {
+              "path": "src/TXNPOST0.cob",
+              "start_line": 18,
+              "end_line": 18
+            }
+          ]
+        },
+        {
+          "name": "amount",
+          "datatype": "PIC S9(13)V99",
+          "source_field": "LS-GL-AMOUNT",
+          "description": "Transaction amount copied to the instruction.",
+          "evidence": [
+            {
+              "path": "src/TXNPOST0.cob",
+              "start_line": 19,
+              "end_line": 19
+            }
+          ]
+        },
+        {
+          "name": "post_flag",
+          "datatype": "PIC X(1)",
+          "source_field": "LS-GL-POST-FLAG",
+          "description": "Set to Y after mapping, including suspense mappings; does not certify ledger posting.",
+          "evidence": [
+            {
+              "path": "src/TXNPOST0.cob",
+              "start_line": 20,
+              "end_line": 20
+            }
+          ]
+        }
+      ],
+      "uncertainties": [
+        "No TXNPOST0 CALL to GLPOST0 exists. The output group differs from the GLPOST0 input group and requires an explicit caller adapter."
+      ]
+    },
+    {
+      "id": "object.gl_entry",
+      "label": "GL Entry Input",
+      "description": "GLPOST0 linkage input describing a debit account, credit account, amount, description and posting date. POST operates on one separately supplied GLAccount record.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/GLPOST0.cob",
+          "start_line": 16,
+          "end_line": 21
+        },
+        {
+          "path": "src/GLPOST0.cob",
+          "start_line": 32,
+          "end_line": 36
+        },
+        {
+          "path": "src/GLPOST0.cob",
+          "start_line": 54,
+          "end_line": 64
+        }
+      ],
+      "properties": [
+        {
+          "name": "debit_account",
+          "datatype": "PIC 9(10)",
+          "source_field": "LS-GLE-DR-ACCT",
+          "description": "Declared debit-side GL account number.",
+          "evidence": [
+            {
+              "path": "src/GLPOST0.cob",
+              "start_line": 17,
+              "end_line": 17
+            }
+          ]
+        },
+        {
+          "name": "credit_account",
+          "datatype": "PIC 9(10)",
+          "source_field": "LS-GLE-CR-ACCT",
+          "description": "Declared credit-side GL account number.",
+          "evidence": [
+            {
+              "path": "src/GLPOST0.cob",
+              "start_line": 18,
+              "end_line": 18
+            }
+          ]
+        },
+        {
+          "name": "amount",
+          "datatype": "PIC S9(15)V99",
+          "source_field": "LS-GLE-AMOUNT",
+          "description": "Signed amount field with two fractional digits; POST requires a positive value.",
+          "evidence": [
+            {
+              "path": "src/GLPOST0.cob",
+              "start_line": 19,
+              "end_line": 19
+            }
+          ]
+        },
+        {
+          "name": "description",
+          "datatype": "PIC X(40)",
+          "source_field": "LS-GLE-DESCRIPTION",
+          "description": "Entry description supplied by caller.",
+          "evidence": [
+            {
+              "path": "src/GLPOST0.cob",
+              "start_line": 20,
+              "end_line": 20
+            }
+          ]
+        },
+        {
+          "name": "posting_date",
+          "datatype": "PIC 9(8)",
+          "source_field": "LS-GLE-POST-DATE",
+          "description": "Date copied to the supplied GL account after successful POST.",
+          "evidence": [
+            {
+              "path": "src/GLPOST0.cob",
+              "start_line": 21,
+              "end_line": 21
+            }
+          ]
+        }
+      ],
+      "uncertainties": [
+        "The two account references do not create a persisted journal object or an atomic two-sided transaction in this source routine."
+      ]
+    },
+    {
+      "id": "object.gl_account",
+      "label": "GL Account",
+      "description": "One general-ledger record with normal balance direction, current balance and period debit/credit accumulators.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "copybooks/CPYGL.cpy",
+          "start_line": 5,
+          "end_line": 33
+        },
+        {
+          "path": "src/GLPOST0.cob",
+          "start_line": 98,
+          "end_line": 226
+        }
+      ],
+      "properties": [
+        {
+          "name": "account_number",
+          "datatype": "PIC 9(10)",
+          "source_field": "GL-ACCOUNT-NUM",
+          "description": "GL account number, compared with the entry opposite-side number to choose sign.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYGL.cpy",
+              "start_line": 7,
+              "end_line": 7
+            }
+          ]
+        },
+        {
+          "name": "account_type",
+          "datatype": "PIC X(1)",
+          "source_field": "GL-ACCT-TYPE",
+          "description": "Source account class: asset, liability, equity, income or expense.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYGL.cpy",
+              "start_line": 10,
+              "end_line": 10
+            }
+          ]
+        },
+        {
+          "name": "normal_balance",
+          "datatype": "PIC X(1)",
+          "source_field": "GL-NORMAL-BALANCE",
+          "description": "D/C sign convention for increasing or decreasing current balance.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYGL.cpy",
+              "start_line": 15,
+              "end_line": 15
+            }
+          ]
+        },
+        {
+          "name": "call_report_line",
+          "datatype": "PIC X(6)",
+          "source_field": "GL-CALL-RPT-LINE",
+          "description": "US Call Report line tag assigned by source lookup; no Italian reporting equivalence.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYGL.cpy",
+              "start_line": 17,
+              "end_line": 17
+            }
+          ]
+        },
+        {
+          "name": "current_balance",
+          "datatype": "PIC S9(15)V99",
+          "source_field": "GL-CURRENT-BAL",
+          "description": "Signed GL balance in the account normal-balance convention.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYGL.cpy",
+              "start_line": 19,
+              "end_line": 19
+            }
+          ]
+        },
+        {
+          "name": "mtd_debits",
+          "datatype": "PIC S9(15)V99",
+          "source_field": "GL-MTD-DEBITS",
+          "description": "Month-to-date debit accumulation.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYGL.cpy",
+              "start_line": 20,
+              "end_line": 20
+            }
+          ]
+        },
+        {
+          "name": "mtd_credits",
+          "datatype": "PIC S9(15)V99",
+          "source_field": "GL-MTD-CREDITS",
+          "description": "Month-to-date credit accumulation.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYGL.cpy",
+              "start_line": 21,
+              "end_line": 21
+            }
+          ]
+        },
+        {
+          "name": "ytd_debits",
+          "datatype": "PIC S9(15)V99",
+          "source_field": "GL-YTD-DEBITS",
+          "description": "Year-to-date debit accumulation.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYGL.cpy",
+              "start_line": 22,
+              "end_line": 22
+            }
+          ]
+        },
+        {
+          "name": "ytd_credits",
+          "datatype": "PIC S9(15)V99",
+          "source_field": "GL-YTD-CREDITS",
+          "description": "Year-to-date credit accumulation.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYGL.cpy",
+              "start_line": 23,
+              "end_line": 23
+            }
+          ]
+        },
+        {
+          "name": "status",
+          "datatype": "PIC X(1)",
+          "source_field": "GL-STATUS",
+          "description": "POST explicitly rejects I and F; other status values are not rejected by these two checks.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYGL.cpy",
+              "start_line": 28,
+              "end_line": 28
+            }
+          ]
+        },
+        {
+          "name": "last_post_date",
+          "datatype": "PIC 9(8)",
+          "source_field": "GL-LAST-POST-DATE",
+          "description": "Updated on successful POST.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYGL.cpy",
+              "start_line": 32,
+              "end_line": 32
+            }
+          ]
+        }
+      ],
+      "uncertainties": [
+        "POST does not reject a GL account whose number matches neither entry side; it defaults to its normal side."
+      ]
+    },
+    {
+      "id": "object.trial_balance",
+      "label": "Trial Balance Calculation",
+      "description": "Caller totals, computed difference and equality flag. When both totals are zero, GLPOST0 substitutes the supplied single GL record month-to-date totals.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/GLPOST0.cob",
+          "start_line": 23,
+          "end_line": 27
+        },
+        {
+          "path": "src/GLPOST0.cob",
+          "start_line": 241,
+          "end_line": 264
+        }
+      ],
+      "properties": [
+        {
+          "name": "total_debits",
+          "datatype": "PIC S9(15)V99",
+          "source_field": "LS-TB-TOTAL-DEBITS",
+          "description": "Caller total or single-record fallback debit total.",
+          "evidence": [
+            {
+              "path": "src/GLPOST0.cob",
+              "start_line": 24,
+              "end_line": 24
+            }
+          ]
+        },
+        {
+          "name": "total_credits",
+          "datatype": "PIC S9(15)V99",
+          "source_field": "LS-TB-TOTAL-CREDITS",
+          "description": "Caller total or single-record fallback credit total.",
+          "evidence": [
+            {
+              "path": "src/GLPOST0.cob",
+              "start_line": 25,
+              "end_line": 25
+            }
+          ]
+        },
+        {
+          "name": "difference",
+          "datatype": "PIC S9(15)V99",
+          "source_field": "LS-TB-DIFFERENCE",
+          "description": "Total debits minus total credits.",
+          "evidence": [
+            {
+              "path": "src/GLPOST0.cob",
+              "start_line": 26,
+              "end_line": 26
+            }
+          ]
+        },
+        {
+          "name": "is_balanced",
+          "datatype": "PIC X(1)",
+          "source_field": "LS-TB-IS-BALANCED",
+          "description": "Y means the supplied/fallback arithmetic difference is zero; it does not attest complete ledger coverage.",
+          "evidence": [
+            {
+              "path": "src/GLPOST0.cob",
+              "start_line": 27,
+              "end_line": 27
+            }
+          ]
+        }
+      ],
+      "uncertainties": [
+        "EODPROC0 initializes the supplied GL record and totals to zero immediately before TBAL; this path cannot demonstrate reconciled ledger completeness."
+      ]
+    },
+    {
+      "id": "object.cash_event",
+      "label": "Cash Event Input",
+      "description": "BSACTRO caller input used by AGGR and CHEK. Its customer and date are aggregation keys; its account number is declared but not used by the aggregation paragraph.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/BSACTRO.cob",
+          "start_line": 18,
+          "end_line": 25
+        },
+        {
+          "path": "src/BSACTRO.cob",
+          "start_line": 93,
+          "end_line": 175
+        }
+      ],
+      "properties": [
+        {
+          "name": "customer_id",
+          "datatype": "PIC 9(10)",
+          "source_field": "LS-BSA-CUST-ID",
+          "description": "Customer dimension for the aggregate guard.",
+          "evidence": [
+            {
+              "path": "src/BSACTRO.cob",
+              "start_line": 19,
+              "end_line": 19
+            }
+          ]
+        },
+        {
+          "name": "transaction_date",
+          "datatype": "PIC 9(8)",
+          "source_field": "LS-BSA-TXN-DATE",
+          "description": "Daily aggregation date supplied by caller.",
+          "evidence": [
+            {
+              "path": "src/BSACTRO.cob",
+              "start_line": 20,
+              "end_line": 20
+            }
+          ]
+        },
+        {
+          "name": "cash_amount",
+          "datatype": "PIC S9(13)V99",
+          "source_field": "LS-BSA-CASH-AMOUNT",
+          "description": "Signed cash amount; AGGR has no explicit positive-value validation.",
+          "evidence": [
+            {
+              "path": "src/BSACTRO.cob",
+              "start_line": 21,
+              "end_line": 21
+            }
+          ]
+        },
+        {
+          "name": "direction",
+          "datatype": "PIC X(1)",
+          "source_field": "LS-BSA-CASH-DIRECTION",
+          "description": "I adds cash-in, O adds cash-out when cash flag is Y.",
+          "evidence": [
+            {
+              "path": "src/BSACTRO.cob",
+              "start_line": 22,
+              "end_line": 22
+            }
+          ]
+        },
+        {
+          "name": "is_cash",
+          "datatype": "PIC X(1)",
+          "source_field": "LS-BSA-IS-CASH",
+          "description": "Only Y is accumulated by AGGR; CHEK excludes only the explicit N value.",
+          "evidence": [
+            {
+              "path": "src/BSACTRO.cob",
+              "start_line": 24,
+              "end_line": 24
+            }
+          ]
+        },
+        {
+          "name": "account_number",
+          "datatype": "PIC 9(12)",
+          "source_field": "LS-BSA-ACCT-NUMBER",
+          "description": "Declared account context, unused by AGGR and not a bucket key.",
+          "evidence": [
+            {
+              "path": "src/BSACTRO.cob",
+              "start_line": 25,
+              "end_line": 25
+            }
+          ]
+        }
+      ],
+      "uncertainties": [
+        "No evidenced adapter converts Transaction into CashEvent automatically.",
+        "Currency and business-day/time-zone policy are not represented in the input."
+      ]
+    },
+    {
+      "id": "object.cash_daily_aggregate",
+      "label": "Daily Cash Aggregate",
+      "description": "Customer/date cash-in and cash-out totals and counts represented in CTR-RECORD. This is a semantic facet of that record, distinct from its filing lifecycle facet.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "copybooks/CPYCTR.cpy",
+          "start_line": 10,
+          "end_line": 22
+        },
+        {
+          "path": "src/BSACTRO.cob",
+          "start_line": 98,
+          "end_line": 175
+        }
+      ],
+      "properties": [
+        {
+          "name": "customer_id",
+          "datatype": "PIC 9(10)",
+          "source_field": "CTR-CUST-ID",
+          "description": "Customer component of the guarded aggregation key; zero is used as an initialization sentinel.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYCTR.cpy",
+              "start_line": 10,
+              "end_line": 10
+            }
+          ]
+        },
+        {
+          "name": "transaction_date",
+          "datatype": "PIC 9(8)",
+          "source_field": "CTR-TXN-DATE",
+          "description": "Date component of the guarded aggregation key.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYCTR.cpy",
+              "start_line": 18,
+              "end_line": 18
+            }
+          ]
+        },
+        {
+          "name": "cash_in_total",
+          "datatype": "PIC S9(13)V99",
+          "source_field": "CTR-CASH-IN-TOTAL",
+          "description": "Cash-in accumulator, evaluated separately from cash-out for threshold assessment.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYCTR.cpy",
+              "start_line": 19,
+              "end_line": 19
+            }
+          ]
+        },
+        {
+          "name": "cash_out_total",
+          "datatype": "PIC S9(13)V99",
+          "source_field": "CTR-CASH-OUT-TOTAL",
+          "description": "Cash-out accumulator; not netted against cash-in for the threshold.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYCTR.cpy",
+              "start_line": 20,
+              "end_line": 20
+            }
+          ]
+        },
+        {
+          "name": "cash_in_count",
+          "datatype": "PIC 9(5)",
+          "source_field": "CTR-CASH-IN-COUNT",
+          "description": "Count of I-direction events accumulated by AGGR.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYCTR.cpy",
+              "start_line": 21,
+              "end_line": 21
+            }
+          ]
+        },
+        {
+          "name": "cash_out_count",
+          "datatype": "PIC 9(5)",
+          "source_field": "CTR-CASH-OUT-COUNT",
+          "description": "Count of O-direction events accumulated by AGGR.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYCTR.cpy",
+              "start_line": 22,
+              "end_line": 22
+            }
+          ]
+        },
+        {
+          "name": "exempt",
+          "datatype": "PIC X(1)",
+          "source_field": "CTR-EXEMPT-FLAG",
+          "description": "Y suppresses CTR assessment after AGGR accumulation; it does not prevent accumulation.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYCTR.cpy",
+              "start_line": 31,
+              "end_line": 31
+            }
+          ]
+        }
+      ],
+      "uncertainties": [
+        "No multi-customer store is implemented by this routine; caller must supply the correct aggregate record.",
+        "CTR-ACCOUNTS OCCURS 10 and CTR-NUM-ACCOUNTS are declared, but AGGR does not populate or deduplicate those account slots.",
+        "Duplicate cash-event replay and zero customer identifiers are not rejected by AGGR."
+      ]
+    },
+    {
+      "id": "object.cash_assessment",
+      "label": "Cash Assessment Result",
+      "description": "BSACTRO result whose meaning depends on the function: CHEK/AGGR express CTR threshold assessment, STRC expresses a structuring heuristic and SARQ interprets the shared filing status as a SAR signal.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/BSACTRO.cob",
+          "start_line": 16,
+          "end_line": 31
+        },
+        {
+          "path": "src/BSACTRO.cob",
+          "start_line": 37,
+          "end_line": 50
+        },
+        {
+          "path": "src/BSACTRO.cob",
+          "start_line": 209,
+          "end_line": 240
+        }
+      ],
+      "properties": [
+        {
+          "name": "operation",
+          "datatype": "PIC X(4)",
+          "source_field": "LS-FUNCTION",
+          "description": "Caller function code is required interpretive context for the result fields.",
+          "evidence": [
+            {
+              "path": "src/BSACTRO.cob",
+              "start_line": 16,
+              "end_line": 16
+            }
+          ]
+        },
+        {
+          "name": "result_code",
+          "datatype": "PIC X(5)",
+          "source_field": "LS-BSA-RESULT-CODE",
+          "description": "Operation-specific source result code.",
+          "evidence": [
+            {
+              "path": "src/BSACTRO.cob",
+              "start_line": 27,
+              "end_line": 27
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "datatype": "PIC X(50)",
+          "source_field": "LS-BSA-RESULT-MSG",
+          "description": "Source diagnostic text; a message naming SAR does not establish an actual SAR case or filing.",
+          "evidence": [
+            {
+              "path": "src/BSACTRO.cob",
+              "start_line": 28,
+              "end_line": 28
+            }
+          ]
+        },
+        {
+          "name": "required_flag",
+          "datatype": "PIC X(1)",
+          "source_field": "LS-BSA-CTR-REQUIRED",
+          "description": "Overloaded flag; preserve the operation when interpreting it.",
+          "evidence": [
+            {
+              "path": "src/BSACTRO.cob",
+              "start_line": 29,
+              "end_line": 29
+            }
+          ]
+        },
+        {
+          "name": "cash_in_total",
+          "datatype": "PIC S9(13)V99",
+          "source_field": "LS-BSA-CASH-IN-TOTAL",
+          "description": "Result total copied by AGGR/STRC/SARQ; CHEK initializes this to zero.",
+          "evidence": [
+            {
+              "path": "src/BSACTRO.cob",
+              "start_line": 30,
+              "end_line": 30
+            }
+          ]
+        },
+        {
+          "name": "cash_out_total",
+          "datatype": "PIC S9(13)V99",
+          "source_field": "LS-BSA-CASH-OUT-TOTAL",
+          "description": "Result total copied by AGGR/STRC/SARQ; CHEK initializes this to zero.",
+          "evidence": [
+            {
+              "path": "src/BSACTRO.cob",
+              "start_line": 31,
+              "end_line": 31
+            }
+          ]
+        }
+      ],
+      "uncertainties": [
+        "STRC setting required_flag=Y does not mean a CTR threshold was exceeded.",
+        "SARQ uses CTR-FILING-STATUS=P without consulting a separate SAR record."
+      ]
+    },
+    {
+      "id": "object.ctr_filing",
+      "label": "US CTR Filing State",
+      "description": "Filing identity, timestamp and P/F/V lifecycle projection of CTR-RECORD managed by CTRFIL0. The FILE operation changes an in-memory record; no external submission is implemented here.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "copybooks/CPYCTR.cpy",
+          "start_line": 5,
+          "end_line": 34
+        },
+        {
+          "path": "src/CTRFIL0.cob",
+          "start_line": 64,
+          "end_line": 181
+        }
+      ],
+      "properties": [
+        {
+          "name": "filing_id",
+          "datatype": "PIC 9(15)",
+          "source_field": "CTR-FILING-ID",
+          "description": "Process-local sequence assigned on CRTE; restart-safe uniqueness is not implemented.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYCTR.cpy",
+              "start_line": 7,
+              "end_line": 7
+            }
+          ]
+        },
+        {
+          "name": "filing_date",
+          "datatype": "PIC 9(8)",
+          "source_field": "CTR-FILING-DATE",
+          "description": "Date stamped at creation; FILE updates timestamp, not this date field.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYCTR.cpy",
+              "start_line": 8,
+              "end_line": 8
+            }
+          ]
+        },
+        {
+          "name": "customer_id",
+          "datatype": "PIC 9(10)",
+          "source_field": "CTR-CUST-ID",
+          "description": "Nonzero required by CRTE and QURY.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYCTR.cpy",
+              "start_line": 10,
+              "end_line": 10
+            }
+          ]
+        },
+        {
+          "name": "branch_id",
+          "datatype": "PIC 9(4)",
+          "source_field": "CTR-BRANCH-ID",
+          "description": "Declared branch context, not validated by CTRFIL0.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYCTR.cpy",
+              "start_line": 29,
+              "end_line": 29
+            }
+          ]
+        },
+        {
+          "name": "status",
+          "datatype": "PIC X(1)",
+          "source_field": "CTR-FILING-STATUS",
+          "description": "P and F are documented in the copybook; CTRFIL0 additionally writes V for void.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYCTR.cpy",
+              "start_line": 32,
+              "end_line": 32
+            }
+          ]
+        },
+        {
+          "name": "timestamp",
+          "datatype": "PIC 9(14)",
+          "source_field": "CTR-FILING-TIMESTAMP",
+          "description": "Fourteen-digit local date/time representation; no UTC offset retained.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYCTR.cpy",
+              "start_line": 34,
+              "end_line": 34
+            }
+          ]
+        }
+      ],
+      "uncertainties": [
+        "CRTE validates positive cash totals, not a 10,000 threshold, exemption policy or existing lifecycle status.",
+        "The copybook comment lists P/F/E but omits V used by executable VOID logic.",
+        "No FinCEN transport, acknowledgement, Italian UIF submission or legal compliance equivalence is evidenced."
+      ]
+    },
+    {
+      "id": "object.audit_event",
+      "label": "Audit Event Record",
+      "description": "Caller-supplied audit context stamped with time, process-local identifier and sequence by AUDTLOG0. The routine has no durable write or lookup implementation.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "copybooks/CPYAUDT.cpy",
+          "start_line": 5,
+          "end_line": 23
+        },
+        {
+          "path": "src/AUDTLOG0.cob",
+          "start_line": 56,
+          "end_line": 91
+        }
+      ],
+      "properties": [
+        {
+          "name": "audit_id",
+          "datatype": "PIC 9(15)",
+          "source_field": "AUDIT-ID",
+          "description": "Process-local ID counter assigned by WRIT.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYAUDT.cpy",
+              "start_line": 7,
+              "end_line": 7
+            }
+          ]
+        },
+        {
+          "name": "sequence",
+          "datatype": "PIC 9(5)",
+          "source_field": "AUDIT-SEQUENCE",
+          "description": "WRIT assigns 1 for every record; no per-entity chain is maintained.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYAUDT.cpy",
+              "start_line": 8,
+              "end_line": 8
+            }
+          ]
+        },
+        {
+          "name": "timestamp",
+          "datatype": "PIC 9(14)",
+          "source_field": "AUDIT-TIMESTAMP",
+          "description": "Fourteen-digit local date/time representation without retained offset.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYAUDT.cpy",
+              "start_line": 10,
+              "end_line": 10
+            }
+          ]
+        },
+        {
+          "name": "user_id",
+          "datatype": "PIC X(8)",
+          "source_field": "AUDIT-USER-ID",
+          "description": "Caller actor identifier.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYAUDT.cpy",
+              "start_line": 11,
+              "end_line": 11
+            }
+          ]
+        },
+        {
+          "name": "program_id",
+          "datatype": "PIC X(8)",
+          "source_field": "AUDIT-PROGRAM-ID",
+          "description": "Caller program identifier.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYAUDT.cpy",
+              "start_line": 13,
+              "end_line": 13
+            }
+          ]
+        },
+        {
+          "name": "function",
+          "datatype": "PIC X(4)",
+          "source_field": "AUDIT-FUNCTION",
+          "description": "Caller action/function code.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYAUDT.cpy",
+              "start_line": 14,
+              "end_line": 14
+            }
+          ]
+        },
+        {
+          "name": "entity_type",
+          "datatype": "PIC X(4)",
+          "source_field": "AUDIT-ENTITY-TYPE",
+          "description": "Caller entity type label.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYAUDT.cpy",
+              "start_line": 15,
+              "end_line": 15
+            }
+          ]
+        },
+        {
+          "name": "entity_key",
+          "datatype": "PIC X(20)",
+          "source_field": "AUDIT-ENTITY-KEY",
+          "description": "Caller entity identifier, checked only for nonblank by READ.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYAUDT.cpy",
+              "start_line": 16,
+              "end_line": 16
+            }
+          ]
+        },
+        {
+          "name": "field_name",
+          "datatype": "PIC X(30)",
+          "source_field": "AUDIT-FIELD-NAME",
+          "description": "Declared changed-field annotation; not auto-populated by the logger.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYAUDT.cpy",
+              "start_line": 18,
+              "end_line": 18
+            }
+          ]
+        },
+        {
+          "name": "before_value",
+          "datatype": "PIC X(50)",
+          "source_field": "AUDIT-BEFORE-VALUE",
+          "description": "Declared prior-value text; not captured automatically.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYAUDT.cpy",
+              "start_line": 19,
+              "end_line": 19
+            }
+          ]
+        },
+        {
+          "name": "after_value",
+          "datatype": "PIC X(50)",
+          "source_field": "AUDIT-AFTER-VALUE",
+          "description": "Declared resulting-value text; not captured automatically.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYAUDT.cpy",
+              "start_line": 20,
+              "end_line": 20
+            }
+          ]
+        },
+        {
+          "name": "result_code",
+          "datatype": "PIC X(5)",
+          "source_field": "AUDIT-RESULT-CODE",
+          "description": "Caller-declared operation outcome, distinct from logger return code.",
+          "evidence": [
+            {
+              "path": "copybooks/CPYAUDT.cpy",
+              "start_line": 22,
+              "end_line": 22
+            }
+          ]
+        }
+      ],
+      "uncertainties": [
+        "The presence of fields does not establish immutable audit storage, complete lineage, retention or reconstruction.",
+        "EODPROC0 supplies E0000 and does not inspect AUDTLOG0 result after its call."
+      ]
+    }
+  ],
+  "links": [
+    {
+      "id": "link.account_primary_customer",
+      "label": "has primary customer",
+      "description": "ACCT-PRIMARY-CIF denotes a CIF key; this slice does not resolve or validate the target record.",
+      "epistemic_status": "inferred",
+      "evidence": [
+        {
+          "path": "copybooks/CPYACCT.cpy",
+          "start_line": 9,
+          "end_line": 11
+        },
+        {
+          "path": "copybooks/CPYCIF.cpy",
+          "start_line": 5,
+          "end_line": 7
+        }
+      ],
+      "from": "object.account",
+      "to": "object.customer"
+    },
+    {
+      "id": "link.transaction_account",
+      "label": "targets account",
+      "description": "TXN-ACCT-NUMBER denotes a target account, but TXNPOST0 mutates the separately supplied ACCT-RECORD without checking key equality.",
+      "epistemic_status": "inferred",
+      "evidence": [
+        {
+          "path": "copybooks/CPYTXN.cpy",
+          "start_line": 9,
+          "end_line": 11
+        },
+        {
+          "path": "src/TXNPOST0.cob",
+          "start_line": 25,
+          "end_line": 51
+        }
+      ],
+      "from": "object.transaction",
+      "to": "object.account"
+    },
+    {
+      "id": "link.transaction_gl_instruction",
+      "label": "yields GL instruction",
+      "description": "After account balance updates, MAP-GL-ENTRIES emits accounts, amount and Y flag in its linkage output.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/TXNPOST0.cob",
+          "start_line": 42,
+          "end_line": 47
+        },
+        {
+          "path": "src/TXNPOST0.cob",
+          "start_line": 260,
+          "end_line": 293
+        }
+      ],
+      "from": "object.transaction",
+      "to": "object.gl_instruction"
+    },
+    {
+      "id": "link.gl_instruction_gl_entry",
+      "label": "could adapt to GL input",
+      "description": "Proposed caller adapter would copy instruction fields, supply entry description/date and coordinate two POST calls. No such handoff is established in TXNPOST0.",
+      "epistemic_status": "proposed",
+      "evidence": [
+        {
+          "path": "src/TXNPOST0.cob",
+          "start_line": 16,
+          "end_line": 20
+        },
+        {
+          "path": "src/GLPOST0.cob",
+          "start_line": 16,
+          "end_line": 21
+        },
+        {
+          "path": "src/GLPOST0.cob",
+          "start_line": 54,
+          "end_line": 64
+        }
+      ],
+      "from": "object.gl_instruction",
+      "to": "object.gl_entry",
+      "uncertainties": [
+        "The source instruction uses S9(13)V99 amount while the GL input uses S9(15)V99."
+      ]
+    },
+    {
+      "id": "link.gl_entry_debit_account",
+      "label": "declares debit account",
+      "description": "Entry debit account number denotes the debit-side GL account; caller must supply the matching GL record.",
+      "epistemic_status": "inferred",
+      "evidence": [
+        {
+          "path": "src/GLPOST0.cob",
+          "start_line": 16,
+          "end_line": 19
+        },
+        {
+          "path": "src/GLPOST0.cob",
+          "start_line": 160,
+          "end_line": 166
+        },
+        {
+          "path": "copybooks/CPYGL.cpy",
+          "start_line": 7,
+          "end_line": 7
+        }
+      ],
+      "from": "object.gl_entry",
+      "to": "object.gl_account",
+      "uncertainties": [
+        "Unrelated account records are not rejected by POST."
+      ]
+    },
+    {
+      "id": "link.gl_entry_credit_account",
+      "label": "declares credit account",
+      "description": "Entry credit account number denotes the credit-side GL account; caller must supply the matching GL record.",
+      "epistemic_status": "inferred",
+      "evidence": [
+        {
+          "path": "src/GLPOST0.cob",
+          "start_line": 16,
+          "end_line": 19
+        },
+        {
+          "path": "src/GLPOST0.cob",
+          "start_line": 98,
+          "end_line": 105
+        },
+        {
+          "path": "copybooks/CPYGL.cpy",
+          "start_line": 7,
+          "end_line": 7
+        }
+      ],
+      "from": "object.gl_entry",
+      "to": "object.gl_account"
+    },
+    {
+      "id": "link.trial_balance_gl_account",
+      "label": "can use single-record totals",
+      "description": "If caller totals are both zero, the calculation copies MTD debits/credits from one GL account.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/GLPOST0.cob",
+          "start_line": 241,
+          "end_line": 247
+        }
+      ],
+      "from": "object.trial_balance",
+      "to": "object.gl_account"
+    },
+    {
+      "id": "link.cash_event_customer",
+      "label": "denotes cash customer",
+      "description": "Input customer identifier denotes a customer; AGGR compares it with the aggregate key without performing a CIF lookup.",
+      "epistemic_status": "inferred",
+      "evidence": [
+        {
+          "path": "src/BSACTRO.cob",
+          "start_line": 18,
+          "end_line": 25
+        },
+        {
+          "path": "src/BSACTRO.cob",
+          "start_line": 98,
+          "end_line": 112
+        },
+        {
+          "path": "copybooks/CPYCIF.cpy",
+          "start_line": 7,
+          "end_line": 7
+        }
+      ],
+      "from": "object.cash_event",
+      "to": "object.customer"
+    },
+    {
+      "id": "link.cash_event_account",
+      "label": "declares account context",
+      "description": "Input declares an account number; AGGR does not use it as a bucket key or update the account list.",
+      "epistemic_status": "inferred",
+      "evidence": [
+        {
+          "path": "src/BSACTRO.cob",
+          "start_line": 18,
+          "end_line": 25
+        },
+        {
+          "path": "src/BSACTRO.cob",
+          "start_line": 93,
+          "end_line": 175
+        }
+      ],
+      "from": "object.cash_event",
+      "to": "object.account"
+    },
+    {
+      "id": "link.cash_event_daily_aggregate",
+      "label": "contributes by customer and date",
+      "description": "AGGR stamps or checks the customer/date pair, then updates the appropriate directional accumulator only when is_cash=Y.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/BSACTRO.cob",
+          "start_line": 98,
+          "end_line": 152
+        }
+      ],
+      "from": "object.cash_event",
+      "to": "object.cash_daily_aggregate"
+    },
+    {
+      "id": "link.daily_aggregate_customer",
+      "label": "belongs to customer dimension",
+      "description": "CTR-CUST-ID identifies the customer dimension of a daily aggregate; it is not an account-level grouping.",
+      "epistemic_status": "inferred",
+      "evidence": [
+        {
+          "path": "copybooks/CPYCTR.cpy",
+          "start_line": 10,
+          "end_line": 10
+        },
+        {
+          "path": "src/BSACTRO.cob",
+          "start_line": 98,
+          "end_line": 112
+        },
+        {
+          "path": "copybooks/CPYCIF.cpy",
+          "start_line": 7,
+          "end_line": 7
+        }
+      ],
+      "from": "object.cash_daily_aggregate",
+      "to": "object.customer"
+    },
+    {
+      "id": "link.aggregate_assessment",
+      "label": "provides assessment inputs",
+      "description": "BSACTRO threshold, structuring and SAR-query branches interpret totals/counts/status with operation-specific semantics.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/BSACTRO.cob",
+          "start_line": 73,
+          "end_line": 85
+        },
+        {
+          "path": "src/BSACTRO.cob",
+          "start_line": 154,
+          "end_line": 175
+        },
+        {
+          "path": "src/BSACTRO.cob",
+          "start_line": 182,
+          "end_line": 241
+        }
+      ],
+      "from": "object.cash_daily_aggregate",
+      "to": "object.cash_assessment"
+    },
+    {
+      "id": "link.aggregate_filing_projection",
+      "label": "shares record with filing state",
+      "description": "The aggregate and filing state are separate semantic projections of the same CTR-RECORD storage, not a proven event-triggered create workflow.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "copybooks/CPYCTR.cpy",
+          "start_line": 5,
+          "end_line": 34
+        },
+        {
+          "path": "src/BSACTRO.cob",
+          "start_line": 33,
+          "end_line": 36
+        },
+        {
+          "path": "src/CTRFIL0.cob",
+          "start_line": 37,
+          "end_line": 39
+        }
+      ],
+      "from": "object.cash_daily_aggregate",
+      "to": "object.ctr_filing"
+    },
+    {
+      "id": "link.ctr_filing_customer",
+      "label": "names filing customer",
+      "description": "The filing customer identifier denotes a CIF identity; CRTE checks only nonzero, not customer existence.",
+      "epistemic_status": "inferred",
+      "evidence": [
+        {
+          "path": "copybooks/CPYCTR.cpy",
+          "start_line": 10,
+          "end_line": 10
+        },
+        {
+          "path": "src/CTRFIL0.cob",
+          "start_line": 64,
+          "end_line": 71
+        },
+        {
+          "path": "copybooks/CPYCIF.cpy",
+          "start_line": 7,
+          "end_line": 7
+        }
+      ],
+      "from": "object.ctr_filing",
+      "to": "object.customer"
+    },
+    {
+      "id": "link.audit_event_account",
+      "label": "identifies EOD account context",
+      "description": "EODPROC0 supplies entity type ACCT and the account number to the audit record.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/EODPROC0.cob",
+          "start_line": 387,
+          "end_line": 400
+        }
+      ],
+      "from": "object.audit_event",
+      "to": "object.account"
+    },
+    {
+      "id": "link.transaction_audit_event",
+      "label": "could record transaction lineage",
+      "description": "Proposed extension could join transaction ID, before/after snapshots, caller identity and result to a durable audit event. TXNPOST0 currently has no AUDTLOG0 call.",
+      "epistemic_status": "proposed",
+      "evidence": [
+        {
+          "path": "src/TXNPOST0.cob",
+          "start_line": 29,
+          "end_line": 51
+        },
+        {
+          "path": "copybooks/CPYTXN.cpy",
+          "start_line": 31,
+          "end_line": 35
+        },
+        {
+          "path": "copybooks/CPYAUDT.cpy",
+          "start_line": 9,
+          "end_line": 23
+        }
+      ],
+      "from": "object.transaction",
+      "to": "object.audit_event"
+    }
+  ],
+  "actions": [
+    {
+      "id": "action.post_transaction",
+      "label": "Explain account posting",
+      "description": "Describes TXNPOST0 validation and in-memory account/transaction changes, including its GL instruction output; this ontology action is explanatory and never executes financial changes.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/TXNPOST0.cob",
+          "start_line": 25,
+          "end_line": 51
+        }
+      ],
+      "inputs": [
+        "object.transaction",
+        "object.account"
+      ],
+      "outputs": [
+        "object.transaction",
+        "object.account",
+        "object.gl_instruction"
+      ],
+      "rule_ids": [
+        "rule.txn_positive_amount",
+        "rule.txn_direction_and_reversal",
+        "rule.txn_account_restrictions",
+        "rule.txn_available_funds",
+        "rule.txn_cd_penalty",
+        "rule.txn_balance_transition",
+        "rule.txn_local_ctr_flag",
+        "rule.txn_caller_binding",
+        "rule.workflow_integration_boundaries"
+      ]
+    },
+    {
+      "id": "action.map_gl_instruction",
+      "label": "Explain GL instruction mapping",
+      "description": "Describes TXNPOST0 account routing for the GL output. It does not post to the GL or assert a journal exists.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/TXNPOST0.cob",
+          "start_line": 260,
+          "end_line": 310
+        }
+      ],
+      "inputs": [
+        "object.transaction",
+        "object.account"
+      ],
+      "outputs": [
+        "object.gl_instruction"
+      ],
+      "rule_ids": [
+        "rule.txn_gl_routing",
+        "rule.workflow_integration_boundaries"
+      ]
+    },
+    {
+      "id": "action.post_gl_side",
+      "label": "Explain one GL side",
+      "description": "Describes the POST branch on one supplied GL account; explanatory only, with the caller responsibility for the other side retained.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/GLPOST0.cob",
+          "start_line": 38,
+          "end_line": 40
+        },
+        {
+          "path": "src/GLPOST0.cob",
+          "start_line": 54,
+          "end_line": 236
+        }
+      ],
+      "inputs": [
+        "object.gl_entry",
+        "object.gl_account"
+      ],
+      "outputs": [
+        "object.gl_account"
+      ],
+      "rule_ids": [
+        "rule.gl_post_guards",
+        "rule.gl_normal_side",
+        "rule.gl_local_rollback"
+      ]
+    },
+    {
+      "id": "action.evaluate_trial_balance",
+      "label": "Explain trial-balance calculation",
+      "description": "Describes arithmetic equality over supplied or fallback totals, including its coverage limitation; does not certify a balanced complete ledger.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/GLPOST0.cob",
+          "start_line": 241,
+          "end_line": 264
+        },
+        {
+          "path": "src/EODPROC0.cob",
+          "start_line": 155,
+          "end_line": 172
+        }
+      ],
+      "inputs": [
+        "object.gl_account",
+        "object.trial_balance"
+      ],
+      "outputs": [
+        "object.trial_balance"
+      ],
+      "rule_ids": [
+        "rule.gl_trial_balance"
+      ]
+    },
+    {
+      "id": "action.aggregate_cash",
+      "label": "Explain customer/day aggregation",
+      "description": "Describes AGGR key guard, directional accumulation and CTR assessment. The ontology never accumulates real customer funds or initiates reporting.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/BSACTRO.cob",
+          "start_line": 93,
+          "end_line": 175
+        }
+      ],
+      "inputs": [
+        "object.cash_event",
+        "object.cash_daily_aggregate"
+      ],
+      "outputs": [
+        "object.cash_daily_aggregate",
+        "object.cash_assessment"
+      ],
+      "rule_ids": [
+        "rule.bsa_customer_day_key",
+        "rule.bsa_directional_accumulation",
+        "rule.bsa_ctr_assessment"
+      ]
+    },
+    {
+      "id": "action.assess_cash",
+      "label": "Explain operation-specific cash assessment",
+      "description": "Describes CHEK, STRC or SARQ with explicit function context. The required flag is interpreted according to the selected branch and is not a general filing instruction.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/BSACTRO.cob",
+          "start_line": 37,
+          "end_line": 45
+        },
+        {
+          "path": "src/BSACTRO.cob",
+          "start_line": 56,
+          "end_line": 88
+        },
+        {
+          "path": "src/BSACTRO.cob",
+          "start_line": 182,
+          "end_line": 241
+        }
+      ],
+      "inputs": [
+        "object.cash_event",
+        "object.cash_daily_aggregate",
+        "object.ctr_filing"
+      ],
+      "outputs": [
+        "object.cash_assessment"
+      ],
+      "rule_ids": [
+        "rule.bsa_ctr_assessment",
+        "rule.bsa_contextual_signals"
+      ],
+      "uncertainties": [
+        "Inputs are the union of branch-specific context, not a requirement that each branch consumes every listed object."
+      ]
+    },
+    {
+      "id": "action.manage_ctr_state",
+      "label": "Explain CTR record lifecycle",
+      "description": "Describes CRTE/FILE/QURY/VOID transitions in the supplied US CTR record. This is an explanatory action with no external filing side effect.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/CTRFIL0.cob",
+          "start_line": 37,
+          "end_line": 57
+        },
+        {
+          "path": "src/CTRFIL0.cob",
+          "start_line": 64,
+          "end_line": 181
+        }
+      ],
+      "inputs": [
+        "object.cash_daily_aggregate",
+        "object.ctr_filing"
+      ],
+      "outputs": [
+        "object.ctr_filing"
+      ],
+      "rule_ids": [
+        "rule.ctr_create",
+        "rule.ctr_lifecycle",
+        "rule.process_local_identifiers"
+      ]
+    },
+    {
+      "id": "action.prepare_audit_record",
+      "label": "Explain audit record preparation",
+      "description": "Describes AUDTLOG0 WRIT stamping and READ nonblank-key check, and the observed EOD account annotation. This action neither writes a durable trail nor operates a bank.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/AUDTLOG0.cob",
+          "start_line": 35,
+          "end_line": 51
+        },
+        {
+          "path": "src/AUDTLOG0.cob",
+          "start_line": 56,
+          "end_line": 91
+        },
+        {
+          "path": "src/EODPROC0.cob",
+          "start_line": 387,
+          "end_line": 400
+        }
+      ],
+      "inputs": [
+        "object.audit_event"
+      ],
+      "outputs": [
+        "object.audit_event"
+      ],
+      "rule_ids": [
+        "rule.process_local_identifiers",
+        "rule.audit_record_preparation"
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "rule.txn_positive_amount",
+      "label": "Positive transaction amount",
+      "description": "TXNPOST0 rejects zero with E0031 and negative amounts with E0032 before account changes.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/TXNPOST0.cob",
+          "start_line": 30,
+          "end_line": 31
+        },
+        {
+          "path": "src/TXNPOST0.cob",
+          "start_line": 56,
+          "end_line": 66
+        }
+      ],
+      "predicate": "TXN-AMOUNT <= 0",
+      "effect": "GOBACK with E0031 for zero or E0032 for negative amount."
+    },
+    {
+      "id": "rule.txn_direction_and_reversal",
+      "label": "Validate direction, then reverse",
+      "description": "D/C is validated first. REV then mutates TXN-DR-CR by swapping C and D before account status and balance checks.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/TXNPOST0.cob",
+          "start_line": 30,
+          "end_line": 39
+        },
+        {
+          "path": "src/TXNPOST0.cob",
+          "start_line": 71,
+          "end_line": 77
+        },
+        {
+          "path": "src/TXNPOST0.cob",
+          "start_line": 143,
+          "end_line": 148
+        }
+      ],
+      "predicate": "TXN-TYPE = REV after TXN-DR-CR validated as D or C",
+      "effect": "Swap direction before subsequent authorization checks.",
+      "uncertainties": [
+        "A rejected reversal can leave its input direction swapped; replaying the same record can toggle it again.",
+        "No original transaction lookup or original journal validation is implemented."
+      ]
+    },
+    {
+      "id": "rule.txn_account_restrictions",
+      "label": "Account posting restrictions",
+      "description": "Frozen, closed, escheated or deceased records reject both directions. Legal hold, garnishment, dormant status and restricted status reject debits. The tests use the already swapped direction for REV.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/TXNPOST0.cob",
+          "start_line": 88,
+          "end_line": 136
+        }
+      ],
+      "effect": "Return the source-specific error code and GOBACK at the first matching condition.",
+      "uncertainties": [
+        "These flag checks do not demonstrate current sanctions screening, legal eligibility validation or customer-level verification."
+      ]
+    },
+    {
+      "id": "rule.txn_available_funds",
+      "label": "Debit available-funds guard",
+      "description": "A debit is rejected with E0030 when TXN-AMOUNT exceeds ACCT-AVAIL-BAL. Credits do not use this guard.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/TXNPOST0.cob",
+          "start_line": 153,
+          "end_line": 160
+        }
+      ],
+      "predicate": "TXN-DR-CR = D and TXN-AMOUNT > ACCT-AVAIL-BAL",
+      "effect": "Reject before balance arithmetic."
+    },
+    {
+      "id": "rule.txn_cd_penalty",
+      "label": "Pre-maturity CD acknowledgement",
+      "description": "A CD debit with a positive future maturity date requires TXN-CD-EARLY-WD=Y. If acknowledged, the rounded penalty is (rate/100/365) * ledger_balance * penalty_days. Size error returns E0040; missing acknowledgement returns E0039.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/TXNPOST0.cob",
+          "start_line": 168,
+          "end_line": 194
+        },
+        {
+          "path": "copybooks/CPYACCT.cpy",
+          "start_line": 43,
+          "end_line": 43
+        },
+        {
+          "path": "copybooks/CPYACCT.cpy",
+          "start_line": 83,
+          "end_line": 83
+        },
+        {
+          "path": "copybooks/CPYACCT.cpy",
+          "start_line": 115,
+          "end_line": 115
+        },
+        {
+          "path": "copybooks/CPYTXN.cpy",
+          "start_line": 62,
+          "end_line": 64
+        }
+      ],
+      "uncertainties": [
+        "The computed penalty is an output field; this paragraph does not subtract it or emit a separate fee posting."
+      ]
+    },
+    {
+      "id": "rule.txn_balance_transition",
+      "label": "Balance update and snapshots",
+      "description": "TXNPOST0 captures pre-state, adds amount for C or subtracts for D, computes available=ledger-hold, captures post-state and lowers MTD low balance when needed. Available-balance overflow restores the pre-post ledger snapshot and returns E0040.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/TXNPOST0.cob",
+          "start_line": 199,
+          "end_line": 255
+        },
+        {
+          "path": "src/TXNPOST0.cob",
+          "start_line": 48,
+          "end_line": 50
+        }
+      ],
+      "effect": "On success update ACCT-LAST-TXN-DATE and return E0000.",
+      "uncertainties": [
+        "Local rollback for one arithmetic failure is not an atomic transaction across account, GL, cash aggregation and audit."
+      ]
+    },
+    {
+      "id": "rule.txn_gl_routing",
+      "label": "Map a GL instruction",
+      "description": "Deposit subtype CH/SV/MM/CD maps to GL 4010/4030/4040/4050, otherwise 9999. DEP emits debit 1010 / credit deposit-GL; WDL debit deposit-GL / credit 1010; FEE debit deposit-GL / credit 7500; INT debit 8010 / credit deposit-GL. REV uses swapped direction for cash/deposit mapping. Other types emit 9999/9999. Amount is copied and post flag is Y.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/TXNPOST0.cob",
+          "start_line": 260,
+          "end_line": 310
+        }
+      ],
+      "uncertainties": [
+        "Transaction type and debit/credit direction are independent inputs; DEP with D is not rejected, so account arithmetic and GL intent can disagree.",
+        "REV uses cash/deposit routing and does not reconstruct arbitrary original fee/interest journals.",
+        "A suspense mapping still returns post flag Y; no manual-review workflow is implemented."
+      ]
+    },
+    {
+      "id": "rule.txn_local_ctr_flag",
+      "label": "Local cash threshold flag",
+      "description": "CHECK-CTR sets TXN-CTR-REPORTABLE=Y only when TXN-CASH-AMOUNT > 10000.00; equality yields N. This local check does not call BSACTRO or examine exemption/customer totals.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/TXNPOST0.cob",
+          "start_line": 315,
+          "end_line": 320
+        },
+        {
+          "path": "copybooks/CPYCONST.cpy",
+          "start_line": 7,
+          "end_line": 8
+        }
+      ],
+      "predicate": "TXN-CASH-AMOUNT > WS-CTR-THRESHOLD",
+      "effect": "Set Y, otherwise N. Source constant is US-oriented and not an Italian regulatory rule."
+    },
+    {
+      "id": "rule.gl_post_guards",
+      "label": "One-side GL input guards",
+      "description": "POST rejects status I/E0061 or F/E0062, zero amount/E0063 and negative amount/E0064. Normal-balance values other than D/C return E0063 after the corresponding branch selection.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/GLPOST0.cob",
+          "start_line": 66,
+          "end_line": 90
+        },
+        {
+          "path": "src/GLPOST0.cob",
+          "start_line": 221,
+          "end_line": 226
+        }
+      ],
+      "uncertainties": [
+        "Status values other than I and F pass these status guards, even if not documented by CPYGL.",
+        "E0063 is overloaded for zero amount and invalid normal balance."
+      ]
+    },
+    {
+      "id": "rule.gl_normal_side",
+      "label": "Normal-balance side interpretation",
+      "description": "For debit-normal GL accounts, matching the entry credit account subtracts balance and accumulates credits; otherwise POST adds balance and accumulates debits. For credit-normal accounts, matching entry debit subtracts balance and accumulates debits; otherwise it adds balance and accumulates credits. The caller must perform both sides separately. Double-entry accounting therefore depends on explicit caller orchestration.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/GLPOST0.cob",
+          "start_line": 54,
+          "end_line": 64
+        },
+        {
+          "path": "src/GLPOST0.cob",
+          "start_line": 98,
+          "end_line": 226
+        }
+      ],
+      "uncertainties": [
+        "Neither-side matches default to the normal side instead of rejecting.",
+        "This single-record routine does not provide atomic double-entry posting or journal uniqueness."
+      ]
+    },
+    {
+      "id": "rule.gl_local_rollback",
+      "label": "GL local overflow restoration",
+      "description": "A month-to-date accumulator size error restores the saved GL current balance. A year-to-date accumulator size error restores the saved current balance and corresponding month-to-date accumulator. On successful arithmetic the routine maps the US Call Report line and copies posting date.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/GLPOST0.cob",
+          "start_line": 104,
+          "end_line": 159
+        },
+        {
+          "path": "src/GLPOST0.cob",
+          "start_line": 165,
+          "end_line": 220
+        },
+        {
+          "path": "src/GLPOST0.cob",
+          "start_line": 228,
+          "end_line": 236
+        }
+      ],
+      "uncertainties": [
+        "The source restoration logic is local to one GL record, not a transaction coordinator for debit and credit calls."
+      ]
+    },
+    {
+      "id": "rule.gl_trial_balance",
+      "label": "Scope of trial-balance equality",
+      "description": "TBAL uses caller totals unless both are zero, in which case it copies the supplied GL record MTD totals. It computes debits minus credits and sets Y only for zero difference. EODPROC0 initializes the GL record and totals to zero before calling TBAL.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/GLPOST0.cob",
+          "start_line": 241,
+          "end_line": 264
+        },
+        {
+          "path": "src/EODPROC0.cob",
+          "start_line": 155,
+          "end_line": 172
+        }
+      ],
+      "uncertainties": [
+        "A balanced flag from EODPROC0 does not prove ledger reconciliation: the evidenced inputs are initialized zeros.",
+        "No full-ledger scan or coverage check occurs in TBAL."
+      ]
+    },
+    {
+      "id": "rule.bsa_customer_day_key",
+      "label": "Customer/date aggregation guard",
+      "description": "AGGR initializes CTR-CUST-ID and CTR-TXN-DATE when CTR-CUST-ID=0; otherwise both must match the input or it returns E0002. This guard executes before the cash flag check. Account number is not part of the key.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/BSACTRO.cob",
+          "start_line": 98,
+          "end_line": 114
+        },
+        {
+          "path": "src/BSACTRO.cob",
+          "start_line": 18,
+          "end_line": 25
+        }
+      ],
+      "uncertainties": [
+        "An input customer ID of zero is not rejected and leaves the initialization sentinel in use.",
+        "A first non-cash input can stamp customer/date even though it contributes no amount."
+      ]
+    },
+    {
+      "id": "rule.bsa_directional_accumulation",
+      "label": "Directional cash accumulation",
+      "description": "For LS-BSA-IS-CASH=Y, I adds amount and increments cash-in count, O adds amount and increments cash-out count; another direction returns E0089. Values other than Y do not accumulate. Size errors return E0040.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/BSACTRO.cob",
+          "start_line": 114,
+          "end_line": 155
+        }
+      ],
+      "uncertainties": [
+        "No positive-amount check, duplicate-event check or account-list population occurs in this paragraph.",
+        "A count overflow can occur after its amount accumulator has already changed; no compensating rollback is implemented."
+      ]
+    },
+    {
+      "id": "rule.bsa_ctr_assessment",
+      "label": "Separate directional CTR threshold assessment",
+      "description": "CHEK excludes explicit exempt=Y and is_cash=N before checking single amount and existing directional totals. AGGR accumulates first and then returns without threshold assessment for exempt=Y. Otherwise each path marks required when a checked amount or a directional total is strictly greater than 10000.00; incoming and outgoing totals are not netted or added for CTR threshold comparison.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/BSACTRO.cob",
+          "start_line": 56,
+          "end_line": 88
+        },
+        {
+          "path": "src/BSACTRO.cob",
+          "start_line": 154,
+          "end_line": 175
+        },
+        {
+          "path": "copybooks/CPYCONST.cpy",
+          "start_line": 7,
+          "end_line": 8
+        }
+      ],
+      "uncertainties": [
+        "CHEK excludes only the explicit N cash flag; other non-Y values are not rejected before threshold assessment.",
+        "No currency validation or Italian regulatory mapping is implemented by these branches."
+      ]
+    },
+    {
+      "id": "rule.bsa_contextual_signals",
+      "label": "Operation-specific SAR signals",
+      "description": "STRC combines cash-in and cash-out and flags E0082/Y when the sum is within 8000.00 through 9999.99 inclusive and combined count > 1. SARQ sets the same required flag Y when CTR-FILING-STATUS=P. These are distinct meanings of an overloaded result field.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/BSACTRO.cob",
+          "start_line": 182,
+          "end_line": 241
+        },
+        {
+          "path": "copybooks/CPYCONST.cpy",
+          "start_line": 11,
+          "end_line": 14
+        }
+      ],
+      "uncertainties": [
+        "The source heuristic is not a verified legal rule or a general suspicious-activity detector.",
+        "SARQ does not retrieve a separate SAR record; pending CTR status is interpreted as a pending SAR signal.",
+        "An Italian SOS cannot be inferred from either flag."
+      ]
+    },
+    {
+      "id": "rule.ctr_create",
+      "label": "Create pending CTR state",
+      "description": "CRTE requires nonzero customer ID and at least one positive directional cash total. It assigns the next process-local filing ID, stamps current date/time and sets P. It does not check a 10000 threshold, exemption or a previous filing status.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/CTRFIL0.cob",
+          "start_line": 64,
+          "end_line": 107
+        }
+      ],
+      "uncertainties": [
+        "The header comment at line 7 says >=10000, but executable CRTE does not enforce that threshold; threshold branches in TXNPOST0/BSACTRO use >.",
+        "CRTE is not idempotent and does not ensure filing completeness or transport acceptance."
+      ]
+    },
+    {
+      "id": "rule.ctr_lifecycle",
+      "label": "Pending-to-filed or pending-to-void transitions",
+      "description": "FILE rejects F with E0005 and any other non-P state with E0004; otherwise it sets F and updates timestamp. VOID rejects F with E0006 and any other non-P state with E0004; otherwise it sets V. QURY requires a nonzero customer ID and returns the supplied record unchanged.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/CTRFIL0.cob",
+          "start_line": 113,
+          "end_line": 181
+        }
+      ],
+      "uncertainties": [
+        "The FILE message says filed with FinCEN, but the executable paragraph only changes linkage state and return values.",
+        "The model does not equate the US CTR lifecycle with Italian UIF reporting."
+      ]
+    },
+    {
+      "id": "rule.process_local_identifiers",
+      "label": "Process-local IDs and timestamps",
+      "description": "CTRFIL0 and AUDTLOG0 keep next-ID counters in working storage initialized to 1. Their comments explicitly note restart reset; both increment after assigning the current ID, with overflow errors. Timestamps retain year through second but discard current-date offset fields.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/CTRFIL0.cob",
+          "start_line": 12,
+          "end_line": 28
+        },
+        {
+          "path": "src/CTRFIL0.cob",
+          "start_line": 82,
+          "end_line": 101
+        },
+        {
+          "path": "src/AUDTLOG0.cob",
+          "start_line": 11,
+          "end_line": 26
+        },
+        {
+          "path": "src/AUDTLOG0.cob",
+          "start_line": 58,
+          "end_line": 74
+        }
+      ],
+      "uncertainties": [
+        "Neither durable uniqueness across restarts nor offset-aware event ordering is implemented.",
+        "Counter overflow may leave the assigned identifier in the caller record before returning an error."
+      ]
+    },
+    {
+      "id": "rule.audit_record_preparation",
+      "label": "Audit annotation without durable logging",
+      "description": "WRIT stamps timestamp, process-local ID and sequence=1 then returns success. READ only checks that entity key is nonblank. EODPROC0 provides account identity and fixed E0000 audit result and does not inspect the logger result after calling it.",
+      "epistemic_status": "observed",
+      "evidence": [
+        {
+          "path": "src/AUDTLOG0.cob",
+          "start_line": 56,
+          "end_line": 91
+        },
+        {
+          "path": "src/EODPROC0.cob",
+          "start_line": 387,
+          "end_line": 400
+        }
+      ],
+      "uncertainties": [
+        "No storage I/O, append-only protection, retrieval, retention or before/after capture is implemented by AUDTLOG0.",
+        "EOD audit result text may not reflect earlier account-processing errors."
+      ]
+    },
+    {
+      "id": "rule.txn_caller_binding",
+      "label": "Caller-supplied identity and direction assumptions",
+      "description": "TXNPOST0 receives transaction and account records separately and performs amount, direction, account-status and balance checks. It does not enforce equality of their account IDs, generate transaction identity, check type/direction consistency, set TXN-STATUS or copy its GL output into the TXN-GL-* fields.",
+      "epistemic_status": "inferred",
+      "evidence": [
+        {
+          "path": "src/TXNPOST0.cob",
+          "start_line": 25,
+          "end_line": 51
+        },
+        {
+          "path": "src/TXNPOST0.cob",
+          "start_line": 56,
+          "end_line": 77
+        },
+        {
+          "path": "src/TXNPOST0.cob",
+          "start_line": 260,
+          "end_line": 293
+        },
+        {
+          "path": "copybooks/CPYTXN.cpy",
+          "start_line": 7,
+          "end_line": 11
+        },
+        {
+          "path": "copybooks/CPYTXN.cpy",
+          "start_line": 41,
+          "end_line": 51
+        }
+      ],
+      "uncertainties": [
+        "Callers or other modules could enforce these conditions, but no such guarantee is established for this selected path."
+      ]
+    },
+    {
+      "id": "rule.workflow_integration_boundaries",
+      "label": "Separate routines do not establish an integrated workflow",
+      "description": "TXNPOST0 executes local PERFORM paragraphs and returns a GL instruction and a cash flag. It does not call GLPOST0, BSACTRO, CTRFIL0 or AUDTLOG0. EODPROC0 calls TXNPOST0 for interest and later AUDTLOG0, but does not consume the GL instruction with POST calls or implement the CTR aggregation claimed by its comment.",
+      "epistemic_status": "inferred",
+      "evidence": [
+        {
+          "path": "src/TXNPOST0.cob",
+          "start_line": 29,
+          "end_line": 51
+        },
+        {
+          "path": "src/TXNPOST0.cob",
+          "start_line": 260,
+          "end_line": 320
+        },
+        {
+          "path": "src/EODPROC0.cob",
+          "start_line": 197,
+          "end_line": 217
+        },
+        {
+          "path": "src/EODPROC0.cob",
+          "start_line": 251,
+          "end_line": 294
+        },
+        {
+          "path": "src/EODPROC0.cob",
+          "start_line": 387,
+          "end_line": 400
+        }
+      ],
+      "uncertainties": [
+        "An end-to-end atomic double-entry posting/GL/AML/audit workflow would require additional orchestration and verification.",
+        "Commented intent at EODPROC0:211-214 is not executable integration evidence."
+      ]
+    }
+  ]
+}
