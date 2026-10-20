@@ -11,7 +11,8 @@ separate. Start with transaction posting, GL accounting and the US CTR path in
 **v0.1.0 POC:** 12 objects, 98 properties, 16 links, 8 descriptive actions,
 22 rules, 15 source files and 5 Copilot profiles. This is an exploration and
 documentation tool; it does not execute financial actions or certify compliance.
-The GitHub workflow publishes v0.1.0 only after validation passes on main.
+[v0.1.0 is published](https://github.com/AlbertoVari/Name-of-the-rose/releases/tag/v0.1.0); the
+[hosted validation and release workflow](https://github.com/AlbertoVari/Name-of-the-rose/actions/runs/39421953635) passed.
 A live Copilot smoke test remains a separate delivery gate.
 
 ## Try it in two minutes

@@ -38,14 +38,12 @@ limitation in the table below does not itself block an interpretive POC.
 
 ## GitHub delivery gate
 
-`PUB-01` remains required: publish the reviewed project to a GitHub repository
-and create a discoverable versioned release. Local package acceptance does not
-satisfy this delivery gate. Publication is currently blocked by the available
-environment: the connected GitHub interface exposes neither repository creation
-nor release creation, and browser/CLI access to create the missing destination
-is unavailable. An initialized writable repository would enable source delivery
-through the connector; release publication additionally requires a supported
-release operation. This is a delivery blocker, not an approved scope cut.
+`PUB-01` completed on 2026-10-20: the repository and
+[versioned release](https://github.com/AlbertoVari/Name-of-the-rose/releases/tag/v0.1.0) are published. The
+[hosted workflow](https://github.com/AlbertoVari/Name-of-the-rose/actions/runs/39421953635) passed validation and release publication.
+Tag `v0.1.0` resolves to `5c49334872b4cd99d3a3df3b38b18888fe3cd4d6`.
+The earlier environment blocker was resolved by the user providing a writable
+repository and by publishing through a validation-dependent GitHub Actions job.
 
 ## Approved scope cuts
 

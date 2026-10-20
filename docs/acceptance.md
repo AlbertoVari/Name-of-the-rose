@@ -1,11 +1,10 @@
 # MVP acceptance
 
-**Status: v0.1.0 technical release package accepted on 2026-10-18.** GitHub
-publication remains blocked; a live Copilot smoke test is deferred. The requested
-hosted release is therefore not yet delivered. Eric reviewed concrete artifacts
-and executed the checks recorded below. Eric is an AI product-owner role; this
-decision cannot certify banking compliance or substitute for a bank's accountable
-human review.
+**Status: v0.1.0 technical package accepted on 2026-10-18; GitHub release
+published and verified on 2026-10-20.** A live Copilot smoke test remains deferred.
+Eric reviewed the package artifacts and executed the checks recorded below.
+Eric is an AI product-owner role; this decision cannot certify banking compliance
+or substitute for a bank's accountable human review.
 
 ## Review basis
 
@@ -30,15 +29,21 @@ human review.
 | A7 — Reproducibility | Documented commands run; automated checks cover meaningful failure cases and output determinism. | 25 extractor/model/export/crosswalk tests; 16 orchestration tests; four generated artifacts verified byte-for-byte. | Reviewed; pass |
 | A8 — Demonstrated value | A source-linked example answers business questions and exposes at least one consequential integration/regulatory gap. | `docs/demo.md`, actual saved CLI/check outputs, reproducible queries, and explicit Copilot prompts; empty run template accurately labeled. | Reviewed; pass for local demonstration |
 | A9 — Release hygiene | Original work is licensed, upstream provenance is retained, source redistribution is avoided, and usage/limitations are clear. | README, MIT license, third-party notice, release instructions, release file inventory, and valid local documentation links. | Reviewed; pass for package |
-| A10 — Honest claims | Documentation says exactly which local checks were executed and does not claim a live Copilot run, executed COBOL behavior, or certified compliance without evidence. | README, demo labels, saved test outputs, release notes, and explicit blocked publication gate. | Reviewed; pass |
+| A10 — Honest claims | Documentation says exactly which local checks were executed and does not claim a live Copilot run, executed COBOL behavior, or certified compliance without evidence. | README, demo labels, saved test outputs, release notes, and separate, evidence-backed publication gate. | Reviewed; pass |
 
-**Separate delivery gate — GitHub publication: blocked.** The requested new
-repository/release has not been published. The current connector does not expose
-repository or release creation, and attempted browser/CLI access to create the
-missing destination is unavailable in this environment. A local commit, tag, or
-downloadable package can be accepted as release-ready work; none is proof of a
-hosted GitHub repository or release. This gate remains open after technical MVP
-acceptance and is not waived by Eric.
+**Separate delivery gate — GitHub publication: passed on 2026-10-20.**
+
+- Repository: https://github.com/AlbertoVari/Name-of-the-rose
+- Release: https://github.com/AlbertoVari/Name-of-the-rose/releases/tag/v0.1.0 (published, not draft).
+- Tag `v0.1.0` resolves to `5c49334872b4cd99d3a3df3b38b18888fe3cd4d6`.
+- Hosted validation and release workflow: https://github.com/AlbertoVari/Name-of-the-rose/actions/runs/39421953635 — success.
+- All 55 uploaded file blob hashes were checked against the prepared content.
+
+The earlier 2026-10-18 package recorded a publication blocker. The user supplied
+an initialized writable repository on 2026-10-20. Source was committed through
+the GitHub connector; a validation-dependent Actions job created the release.
+These later facts supersede the historical blocker in the original source archive.
+Live Copilot and COBOL execution remain outside the verified evidence.
 
 ## Required demonstration questions
 
@@ -100,12 +105,9 @@ controls needed for an Italian-bank adaptation. All ten technical package gates
 above pass within their stated limits. The 41 automated tests, source validation,
 deterministic artifact comparison, and reviewed demonstration support this scope.
 
-The approved cuts in [backlog.md](backlog.md) remain visible. Next actions are
-to create the local release commit/tag and archive, complete `PUB-01` with a
-writable GitHub repository and supported release operation, and perform the
-separately documented live Copilot smoke test. Only the actual hosted repository
-and release URLs can close publication; only a genuine host transcript can close
-live Copilot validation.
+The approved cuts in [backlog.md](backlog.md) remain visible. `PUB-01` is now
+complete. The next validation step is the separately documented live Copilot
+smoke test; only an actual host transcript can close that gate.
 
 No local test result or model mapping establishes production readiness, legal
 compliance, regulator acceptance, complete banking accounting, or operational

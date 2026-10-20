@@ -9,35 +9,21 @@ Pull requests cannot run the release job. An existing release is left unchanged.
 Confirm the hosted run and release URL before claiming publication.
 The commands below remain an alternative for an authorized local maintainer.
 
-## From an extracted source archive
+## Published release and future versions
 
-Run the README checks first. Install/authenticate the official GitHub CLI in
-your own development environment if needed. From the extracted project root:
+v0.1.0 is published at https://github.com/AlbertoVari/Name-of-the-rose/releases/tag/v0.1.0.
+Its tag points to `5c49334872b4cd99d3a3df3b38b18888fe3cd4d6`; subsequent
+publication-status documentation commits do not move that immutable release tag.
 
-```sh
-git init -b main
-git add .
-git commit -m "Release The Name of the Rose v0.1.0 POC"
-git tag -a v0.1.0 -m "First evidence-linked COBOL semantic POC"
-gh repo create AlbertoVari/Name-of-the-rose --public --source=. --remote=origin --push
-git push origin v0.1.0
-gh release create v0.1.0 --repo AlbertoVari/Name-of-the-rose --verify-tag --title "The Name of the Rose v0.1.0" --notes-file CHANGELOG.md
-```
+For a future release, review the version, changelog and workflow tag together.
+The current workflow intentionally leaves v0.1.0 unchanged on later pushes.
+Use a fresh version tag; never overwrite a published release to hide corrections.
+An authorized maintainer can publish manually after checks using the official
+GitHub CLI and `gh release create`, with an explicit validated target commit and
+release notes file. Do not recreate the existing repository.
 
-These commands create a public repository. Change the owner/name or visibility
-deliberately if required. If the repository already exists, inspect it before
-adding a remote or pushing; do not overwrite unrelated work. Do not force-push.
-The `.upstream` directory and caches are ignored and must remain absent from the
-commit. The versioned `build/` directory is intentionally included.
-
-## Connector-assisted continuation
-
-Create a repository with an initial README commit, grant the existing GitHub
-connection access to it, and provide its URL. An initial commit is needed for the
-connector's commit API. The prepared tree can then be committed after checking
-the existing contents. The connector exposed in the build session has no release
-creation endpoint; creating the final tag/release requires an available GitHub UI
-or CLI. Never describe a committed tree as a published GitHub release.
+The `.upstream` directory and caches remain excluded. The versioned `build/`
+directory is intentionally included. No upstream COBOL source is redistributed.
 
 ## Final gate
 
